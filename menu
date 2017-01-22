@@ -10,7 +10,7 @@
 
 export FRAMEBUFFER=/dev/fb1
 export MENUDIR="/home/pi/Kali-Pi/Menu/"
-export DISPLAY=3.5
+export SCREENSIZE=3.5     ## Options= 3.5, 2.8
 startpage="menu-1.py"
 /usr/bin/clear
 
