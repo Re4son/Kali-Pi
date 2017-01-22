@@ -1,7 +1,9 @@
 # KALI-PI Launcher
 
-Simple touch menu for Raspberry Pi projects using the [3.5" Adafruit PiTFT](http://www.adafruit.com/products/2097) 480x320 touch screen based on garthvh's original project.
-It's been slightly improved to be more resource friendly, allow to scroll through multiple themes and return after closing an application.
+Simple touch menu for Raspberry Pi projects using a 3.5" (480x320) or 2.8" (320x240) touch screen based on garthvh's original project.
+
+Thanks to JPearn for porting it to 2.8" and to ArmyGuy255a for cleaning up the code and layout.
+
 
 It runs as a python script in the framebuffer without needing a desktop environment.
 
