@@ -90,7 +90,7 @@ def make_button(button):
     screen.blit(label,(button.xpo,button.ypo+7))
 
 
-	
+
 # define function for printing text in a specific place with a specific colour
 def make_label(text, xpo, ypo, fontsize, colour):
     font=pygame.font.Font(None,fontsize)
@@ -109,7 +109,7 @@ button7 = Button("          <<<", originX, originY + (buttonHeight * 2) + (spaci
 button8 = Button("      Bluetooth", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 button9 = Button("          >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
-	
+
 # define function that checks for touch location
 def on_touch():
     # get the position that was touched
@@ -367,7 +367,7 @@ def button(number):
     if number == 7:
         # Previous page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_kali-4.py"
+        page=os.environ["MENUDIR"] + "menu-4.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
@@ -386,9 +386,9 @@ def button(number):
 	return
 
     if number == 9:
-        # Previous page
+        # Next page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_kali-6.py"
+        page=os.environ["MENUDIR"] + "menu-6.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
@@ -404,7 +404,7 @@ if check_service("apache2"):
 else:
 	button1.color = tron_light
 	make_button(button1)
-	
+
 if check_service("pure-ftpd"):
 	button2.color = green
 	make_button(button2)

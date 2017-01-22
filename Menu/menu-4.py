@@ -178,7 +178,7 @@ def button(number):
     if number == 6:
         # Next page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-4.py"
+        page=os.environ["MENUDIR"] + "menu-5.py"
         os.execvp("python", ["python", page])
         sys.exit()
 

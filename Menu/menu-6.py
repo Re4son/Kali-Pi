@@ -109,7 +109,7 @@ button7 = Button("          <<<", originX, originY + (buttonHeight * 2) + (spaci
 button8 = Button("    DNS2Proxy", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 button9 = Button("          >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
-	
+
 # define function that checks for touch location
 def on_touch():
     # get the position that was touched
@@ -270,7 +270,7 @@ def toggle_FireLamb():
 	run_cmd(start)
         return True
 
-		
+
 # Define each button press action
 def button(number):
 
@@ -366,7 +366,7 @@ def button(number):
     if number == 7:
         # Previous page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_kali-5.py"
+        page=os.environ["MENUDIR"] + "menu-5.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
@@ -385,9 +385,9 @@ def button(number):
 	return
 
     if number == 9:
-        # Previous page
+        # Next page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_kali-5.py"
+        page=os.environ["MENUDIR"] + "menu-9.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
