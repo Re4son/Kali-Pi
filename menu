@@ -1,0 +1,17 @@
+#!/bin/bash
+##############################################
+##                                          ##
+##  Menu                                    ##
+##  Launches menu_kali-1.py                 ##
+##  Best autostarted through ~/.profile     ##
+##                                          ##
+##############################################
+
+
+export FRAMEBUFFER=/dev/fb1
+export MENUDIR="/home/pi/Kali-Pi/Menu/"
+export DISPLAY=3.5
+startpage="menu-1.py"
+/usr/bin/clear
+
+/usr/bin/env python $MENUDIR$startpage
