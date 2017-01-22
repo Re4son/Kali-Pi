@@ -80,10 +80,11 @@ def button(number):
 
 
     if number == 3:
-        # exit
-        pygame.quit()
+        # terminal
         process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
-        sys.exit()
+        pygame.quit()
+        run_cmd("/usr/bin/sudo -u pi screen -RR")
+        os.execv(__file__, sys.argv)
 
     if number == 4:
         # htop
@@ -94,8 +95,6 @@ def button(number):
     if number == 5:
         # next page
         pygame.quit()
-	##process = subprocess.call("setterm -term linux -back black -fore black -clear all", shell=True)
-        ##startx only works when we don't use subprocess here, don't know why
         page=os.environ["MENUDIR"] + "menu_screenoff.py"
         os.execvp("python", ["python", page])
         sys.exit()
