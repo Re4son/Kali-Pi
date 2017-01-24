@@ -8,14 +8,13 @@ from kalipi import *
 
 #++++++++++++++++++++++++++++#
 #+   Select color scheme    +#
-global tron_regular, tron_light, tron_inverse
+
 # Tron theme orange
 ##tron_regular = tron_ora
 ##tron_light = tron_yel
 ##tron_inverse = tron_whi
 
 # Tron theme blue
-##global tron_blu, tron_whi, tron_yel
 tron_regular = tron_blu
 tron_light = tron_whi
 tron_inverse = tron_yel
@@ -49,16 +48,16 @@ def check_vnc():
 ##        Buttons          ##
 
 # define all of the buttons
-titleButton = Button(" " + kalipi.get_hostname() + "    " + kalipi.get_ip(), originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, 34)
-button1 = Button("      X on TFT", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button2 = Button("    X on HDMI", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button3 = Button("     Shutdown", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, green, labelFont)
-button4 = Button("   VNC Server", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button5 = Button("      Terminal", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button6 = Button("        Restart", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button7 = Button("    Screen Off", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button8 = Button("          hTop", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button9 = Button("          >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+titleButton = Button(" " + kalipi.get_hostname() + "    " + kalipi.get_ip(), originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
+button1 = Button(labelPadding * " " + "  X on TFT", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button2 = Button(labelPadding * " " + " X on HDMI", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button3 = Button(labelPadding * " " + "  Shutdown", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, green, labelFont)
+button4 = Button(labelPadding * " " + "VNC Server", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button5 = Button(labelPadding * " " + "  Terminal", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button6 = Button(labelPadding * " " + "    Restart", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button7 = Button(labelPadding * " " + " Screen Off", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button8 = Button(labelPadding * " " + "      hTop", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button9 = Button(labelPadding * " " + "      >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
 
 def make_button(button):
@@ -73,7 +72,7 @@ def make_button(button):
 def button(number):
 
     if number == 1:
-	#X TFT
+	# X TFT
         pygame.quit()
         ## Requires "Anybody" in dpkg-reconfigure x11-common if we have scrolled pages previously
         ## run_cmd("/usr/bin/sudo -u pi FRAMEBUFFER=/dev/fb1 startx")
@@ -81,7 +80,7 @@ def button(number):
         os.execv(__file__, sys.argv)
 
     if number == 2:
-        #X HDMI
+        # X HDMI
         pygame.quit()
         ## Requires "Anybody" in dpkg-reconfigure x11-common if we have scrolled pages previously
         ## run_cmd("/usr/bin/sudo -u pi FRAMEBUFFER=/dev/fb0 startx")
@@ -89,13 +88,13 @@ def button(number):
         os.execv(__file__, sys.argv)
 
     if number == 3:
-        #Shutdown
+        # Shutdown
          pygame.quit()
          kalipi.shutdown()
          sys.exit()
 
     if number == 4:
-	#VNC
+	# VNC
 	if check_vnc():
 		kalipi.run_cmd("/usr/bin/vncserver -kill :1")
 		button4.color = tron_light
@@ -110,14 +109,14 @@ def button(number):
 	return
 
     if number == 5:
-	#Terminal
+	# Terminal
         process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
         pygame.quit()
         run_cmd("/usr/bin/sudo -u pi screen -RR")
         os.execv(__file__, sys.argv)
 
     if number == 6:
-        #Reboot
+        # Reboot
          screen.fill(black)
          font=pygame.font.Font(None,72)
          label=font.render("Rebooting. .", 1, (white))
@@ -130,12 +129,12 @@ def button(number):
     if number == 7:
         # Screen off
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_screenoff.py"
+        page=os.environ["MENUDIR"] + "menu_screenoff1.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
     if number == 8:
-	#hTop
+	# hTop
         pygame.quit()
         process = subprocess.call("/usr/bin/htop", shell=True)
         os.execv(__file__, sys.argv)
@@ -143,7 +142,7 @@ def button(number):
     if number == 9:
         # Next page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-5.py"
+        page=os.environ["MENUDIR"] + "menu-2.py"
         os.execvp("python", ["python", page])
         sys.exit()
 

@@ -32,33 +32,57 @@ pygame.font.init()
 pygame.display.init()
 pygame.mouse.set_visible(0)
 
-#set size of the screen
-size = width, height = 480, 320
-screen = pygame.display.set_mode(size)
+###########################
+##  Screen layouts       ##
+
+## 3.5" screens: ##
+if os.environ["KPSCREENSIZE"] == "3.5":
+#  9 Button Layout  #
+    if os.environ["KPLAYOUT"] == "9":
+        #set size of the screen
+        screen_x = 480
+        screen_y = 320
+
+        size = width, height = screen_x, screen_y
+        screen = pygame.display.set_mode(size)
+
+        #Define the aspect of the menu
+        originX = 40
+        originY = 115
+        spacing = 10
+        buttonWidth = 133
+        buttonHeight = 55
+        labelFont = 24
+        labelPadding = 3
+        titleFont = 24
+
+# 2.8" Screens:
+else:
+#  9 Button Layout  #
+    if os.environ["KPLAYOUT"] == "9":
+        #set size of the screen
+        screen_x = 320
+        screen_y = 240
+
+        size = width, height = screen_x, screen_y
+        screen = pygame.display.set_mode(size)
+
+        #Define the aspect of the menu
+        originX = 22
+        originY = 85
+        spacing = 5
+        buttonWidth = 96
+        buttonHeight = 48
+        labelFont = 19
+        labelPadding = 0
+        titleFont = 26
+
+##  Screen layouts       ##
+###########################
+
 
 # Background Color
 screen.fill(black)
-
-#set size of the screen
-screen_x = 480
-screen_y = 320
-
-size = width, height = screen_x, screen_y
-
-
-
-screen = pygame.display.set_mode(size)
-
-# Background Color
-##screen.fill(black)
-
-#Define the aspect of the menu
-originX = 40
-originY = 115
-spacing = 10
-buttonWidth = 133
-buttonHeight = 55
-labelFont = 24
 
 class Button(object):
         text = ""
@@ -250,3 +274,9 @@ def on_touch():
         # button 9 event
     if originX + (buttonWidth * 2) + (spacing * 2) <= touch_pos[0] <= originX + (buttonWidth * 3) + (spacing * 2) and originY + (buttonHeight * 2) + (spacing * 2) <= touch_pos[1] <= originY + (buttonHeight * 3) + (spacing * 2):
             return 9
+
+# define function for printing text in a specific place with a specific colour
+def make_label(text, xpo, ypo, fontsize, colour):
+    font=pygame.font.Font(None,fontsize)
+    label=font.render(str(text), 1, (colour))
+    screen.blit(label,(xpo,ypo))
