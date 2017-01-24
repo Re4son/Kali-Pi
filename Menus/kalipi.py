@@ -54,7 +54,7 @@ if os.environ["KPSCREENSIZE"] == "3.5":
         buttonHeight = 55
         labelFont = 24
         labelPadding = 3
-        titleFont = 24
+        titleFont = 34
 
 # 2.8" Screens:
 else:
