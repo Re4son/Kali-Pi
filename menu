@@ -12,7 +12,7 @@ export FRAMEBUFFER=/dev/fb1
 export MENUDIR="/home/pi/Kali-Pi/Menus/"
 export KPSCREENSIZE=2.8     ## Screensize in inch, Options= 3.5, 2.8
 export KPLAYOUT=9           ## Number of buttons - Currently only 9 is supported
-startpage="menu-6.py"
+startpage="menu-1.py"
 /usr/bin/clear
-#/bin/bash $MENUDIR/launch-bg.sh
+/bin/bash $MENUDIR/launch-bg.sh
 /usr/bin/env python $MENUDIR$startpage
