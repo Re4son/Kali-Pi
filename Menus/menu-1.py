@@ -129,7 +129,7 @@ def button(number):
     if number == 7:
         # Screen off
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_screenoff1.py"
+        page=os.environ["MENUDIR"] + "menu_screenoff.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
