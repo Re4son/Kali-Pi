@@ -103,14 +103,14 @@ def button(number):
 	# VNC
 	if check_vnc():
 		kalipi.run_cmd("/usr/bin/vncserver -kill :1")
-		button4.color = tron_light
-		make_button(button4)
+		button5.color = tron_light
+		make_button(button5)
 		pygame.display.update()
 
 	else:
 		kalipi.run_cmd("/usr/bin/vncserver :1")
-		button4.color = green
-		make_button(button4)
+		button5.color = green
+		make_button(button5)
 		pygame.display.update()
 	return
 
@@ -118,13 +118,13 @@ def button(number):
 	# Terminal
         process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
         pygame.quit()
-        run_cmd("/usr/bin/sudo -u pi screen -RR")
+        kalipi.run_cmd("/usr/bin/sudo -u pi screen -RR")
         os.execv(__file__, sys.argv)
 
     if number == 7:
         # Reboot
         pygame.quit()
-        run_cmd("/usr/bin/sudo /sbin/shutdown -r now")
+        kalipi.run_cmd("/usr/bin/sudo /sbin/shutdown -r now")
         sys.exit()
 
     if number == 8:

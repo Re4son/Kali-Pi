@@ -34,15 +34,14 @@ pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
 # Toggle ntopng
 def toggle_ntopng():
     try:
-        check = "/usr/sbin/service ntopng status"
-        status = run_cmd("/usr/sbin/service ntopng status")
+        status = kalipi.run_cmd("/usr/sbin/service ntopng status")
         if ("is running" in status) or ("active (running)") in status:
-            run_cmd("/usr/sbin/service ntopng stop")
-            run_cmd("/usr/sbin/service redis stop")
+            kalipi.run_cmd("/usr/sbin/service ntopng stop")
+            kalipi.run_cmd("/usr/sbin/service redis stop")
             return False
         else:
-            run_cmd("/usr/sbin/service redis start")
-            run_cmd("/usr/sbin/service ntopng start")
+            kalipi.run_cmd("/usr/sbin/service redis start")
+            kalipi.run_cmd("/usr/sbin/service ntopng start")
             return True
     except:
         return False
@@ -56,7 +55,7 @@ def toggle_ntopng():
 ##        Buttons          ##
 
 # define all of the buttons
-titleButton = Button("                Basic Services", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
+titleButton = Button("                   Basic Services", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
 button1 = Button(labelPadding * " " + "     WWW", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button2 = Button(labelPadding * " " + "      FTP", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button3 = Button(labelPadding * " " + "      SQL", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
@@ -181,7 +180,7 @@ make_button(titleButton)
 
 # First Row
 # Button 1
-if check_service("apache2"):
+if kalipi.check_service("apache2"):
     button1.color = green
     make_button(button1)
 else:
@@ -189,7 +188,7 @@ else:
     make_button(button1)
 
 # Button 2
-if check_service("pure-ftpd"):
+if kalipi.check_service("pure-ftpd"):
     button2.color = green
     make_button(button2)
 else:
@@ -197,7 +196,7 @@ else:
     make_button(button2)
 
 # Button 3
-if check_service("mysql"):
+if kalipi.check_service("mysql"):
     button3.color = green
     make_button(button3)
 else:
@@ -209,7 +208,7 @@ else:
 make_button(button4)
 
 # Button 5
-if check_service("darkstat"):
+if kalipi.check_service("darkstat"):
     button5.color = green
     make_button(button5)
 else:
@@ -217,7 +216,7 @@ else:
     make_button(button5)
 
 # Button 6
-if check_service("ntopng"):
+if kalipi.check_service("ntopng"):
     button6.color = green
     make_button(button6)
 else:
