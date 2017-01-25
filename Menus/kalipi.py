@@ -156,20 +156,6 @@ def get_volts():
     volts = 'Core:   ' + output[5:-1]
     return volts
 
-# Restart Raspberry Pi
-def restart():
-    command = "/usr/bin/sudo /sbin/shutdown -r now"
-    process = Popen(command.split(), stdout=PIPE)
-    output = process.communicate()[0]
-    return output
-
-# Shutdown Raspberry Pi
-def shutdown():
-    command = "/usr/bin/sudo /sbin/shutdown -h now"
-    process = Popen(command.split(), stdout=PIPE)
-    output = process.communicate()[0]
-    return output
-
 # Run command
 def run_cmd(cmd):
     process = Popen(cmd.split(), stdout=PIPE)
