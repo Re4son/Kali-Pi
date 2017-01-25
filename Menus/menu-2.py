@@ -31,6 +31,22 @@ pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
 #############################
 ##    Local Functions      ##
 
+# Toggle ntopng
+def toggle_ntopng():
+    try:
+        check = "/usr/sbin/service ntopng status"
+        status = run_cmd("/usr/sbin/service ntopng status")
+        if ("is running" in status) or ("active (running)") in status:
+            run_cmd("/usr/sbin/service ntopng stop")
+            run_cmd("/usr/sbin/service redis stop")
+            return False
+        else:
+            run_cmd("/usr/sbin/service redis start")
+            run_cmd("/usr/sbin/service ntopng start")
+            return True
+    except:
+        return False
+
 
 ##    Local Functions      ##
 #############################
@@ -40,15 +56,15 @@ pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
 ##        Buttons          ##
 
 # define all of the buttons
-titleButton = Button("           System Services", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
+titleButton = Button("                Basic Services", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
 button1 = Button(labelPadding * " " + "     WWW", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button2 = Button(labelPadding * " " + "      FTP", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button3 = Button(labelPadding * " " + "      SMB", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button4 = Button(labelPadding * " " + "    Kismet", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button5 = Button(labelPadding * " " + "SDR-Scanner", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button6 = Button(labelPadding * " " + "  Metasploit", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button3 = Button(labelPadding * " " + "      SQL", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button4 = Button(labelPadding * " " + "     hTop", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button5 = Button(labelPadding * " " + "  darkstat", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button6 = Button(labelPadding * " " + "    ntopng", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button7 = Button(labelPadding * " " + "      <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button8 = Button(labelPadding * " " + "  Bluetooth", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button8 = Button(labelPadding * " " + "  ", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 button9 = Button(labelPadding * " " + "      >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
 
@@ -91,8 +107,27 @@ def button(number):
                 pygame.display.update()
 
     if number == 3:
-        # SMB
-        if kalipi.toggle_service("smbd"):
+        # SQL
+        if kalipi.toggle_service("mysql"):
+                button3.color = green
+                make_button(button3)
+                pygame.display.update()
+
+        else:
+                button3.color = tron_light
+                make_button(button3)
+                pygame.display.update()
+        return
+
+    if number == 4:
+	# hTop
+        pygame.quit()
+        subprocess.call("/usr/bin/htop", shell=True)
+        os.execv(__file__, sys.argv)
+
+    if number == 5:
+        # darkstat
+        if kalipi.toggle_service("darkstat"):
                 button5.color = green
                 make_button(button5)
                 pygame.display.update()
@@ -103,26 +138,18 @@ def button(number):
                 pygame.display.update()
         return
 
-    if number == 4:
-	# Kismet
-        pygame.quit()
-        subprocess.call("/usr/bin/sudo -u pi /usr/bin/kismet", shell=True)
-        os.execv(__file__, sys.argv)
-
-    if number == 5:
-        # SDR-Scanner
-        pygame.quit()
-        prog="/bin/bash " + os.environ["MENUDIR"] + "sdr-scanner.sh"
-        run_cmd(prog)
-        os.execv(__file__, sys.argv)
-
     if number == 6:
-        # Metasploit
-        pygame.quit()
-        process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
-        call("/usr/bin/msfconsole", shell=True)
-        process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
-        os.execv(__file__, sys.argv)
+        # ntopng
+        if toggle_ntopng():
+                button6.color = green
+                make_button(button6)
+                pygame.display.update()
+
+        else:
+                button6.color = tron_light
+                make_button(button6)
+                pygame.display.update()
+        return
 
     if number == 7:
         # Previous page
@@ -132,19 +159,8 @@ def button(number):
         sys.exit()
 
     if number == 8:
-	# Bluetooth
-        if kalipi.toggle_service("hciuart"):
-        #Stop Service
-                button8.color = green
-                make_button(button8)
-                pygame.display.update()
-        else:
-        #Start Service
-                button8.color = tron_light
-                make_button(button8)
-                pygame.display.update()
+	# empty
         return
-
     if number == 9:
         # Next page
         pygame.quit()
@@ -161,24 +177,48 @@ make_button(titleButton)
 
 # First Row
 # Button 1
-make_button(button1)
+if check_service("apache2"):
+    button1.color = green
+    make_button(button1)
+else:
+    button1.color = tron_light
+    make_button(button1)
 
 # Button 2
-make_button(button2)
+if check_service("pure-ftpd"):
+    button2.color = green
+    make_button(button2)
+else:
+    button2.color = tron_light
+    make_button(button2)
 
 # Button 3
-make_button(button3)
-
+if check_service("mysql"):
+    button3.color = green
+    make_button(button3)
+else:
+    button3.color = tron_light
+    make_button(button3)
 
 # Second Row
 # Button 4
 make_button(button4)
 
 # Button 5
-make_button(button5)
+if check_service("darkstat"):
+    button5.color = green
+    make_button(button5)
+else:
+    button5.color = tron_light
+    make_button(button5)
 
 # Button 6
-make_button(button6)
+if check_service("ntopng"):
+    button6.color = green
+    make_button(button6)
+else:
+    button6.color = tron_light
+    make_button(button6)
 
 
 # Third Row
@@ -186,7 +226,7 @@ make_button(button6)
 make_button(button7)
 
 # Button 8
-make_button(button8)
+# make_button(button8)
 
 # Button 9
 make_button(button9)
