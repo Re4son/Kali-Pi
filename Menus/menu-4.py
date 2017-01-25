@@ -56,7 +56,7 @@ def toggle_ntopng():
 ##        Buttons          ##
 
 # define all of the buttons
-titleButton = Button("                Basic Services", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
+titleButton = Button("                   EvilAP", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
 button1 = Button(labelPadding * " " + "     WWW", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button2 = Button(labelPadding * " " + "      FTP", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button3 = Button(labelPadding * " " + "      SQL", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
@@ -154,7 +154,7 @@ def button(number):
     if number == 7:
         # Previous page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-1.py"
+        page=os.environ["MENUDIR"] + "menu-3.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
@@ -168,7 +168,7 @@ def button(number):
     if number == 9:
         # Next page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-3.py"
+        page=os.environ["MENUDIR"] + "menu-9.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
