@@ -55,19 +55,22 @@ def toggle_ntopng():
 ##        Buttons          ##
 
 # define all of the buttons
-titleButton = Button("                   Basic Services", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
+titleButton = Button(labelPadding * "  " + kalipi.get_date(), originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
 button1 = Button(labelPadding * " " + "     WWW", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button2 = Button(labelPadding * " " + "      FTP", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button3 = Button(labelPadding * " " + "      SQL", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button4 = Button(labelPadding * " " + "     hTop", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button4 = Button(labelPadding * " " + "      hTop", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button5 = Button(labelPadding * " " + "  darkstat", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button6 = Button(labelPadding * " " + "    ntopng", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button7 = Button(labelPadding * " " + "      <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button7 = Button(labelPadding * " " + "        <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 button8 = Button(labelPadding * " " + " Screen Off ", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button9 = Button(labelPadding * " " + "      >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
 
 def make_button(button):
+    if button.disable == 1:
+        button.color = grey
+
     pygame.draw.rect(screen, tron_regular, (button.xpo-10,button.ypo-10,button.width,button.height),3)
     pygame.draw.rect(screen, tron_light, (button.xpo-9,button.ypo-9,button.width-1,button.height-1),1)
     pygame.draw.rect(screen, tron_regular, (button.xpo-8,button.ypo-8,button.width-2,button.height-2),1)
@@ -79,6 +82,9 @@ def make_button(button):
 def button(number):
 
     if number == 1:
+        if button1.disable == 1:
+            return
+
 	# WWW
         if kalipi.toggle_service("apache2"):
         #Stop Service
@@ -93,6 +99,9 @@ def button(number):
         return
 
     if number == 2:
+        if button2.disable == 1:
+            return
+
         # FTP
         if kalipi.toggle_service("pure-ftpd"):
         #Stop Service
@@ -106,6 +115,9 @@ def button(number):
                 pygame.display.update()
 
     if number == 3:
+        if button3.disable == 1:
+            return
+
         # SQL
         if kalipi.toggle_service("mysql"):
                 button3.color = green
@@ -119,12 +131,18 @@ def button(number):
         return
 
     if number == 4:
+        if button4.disable == 1:
+            return
+
 	# hTop
         pygame.quit()
         subprocess.call("/usr/bin/htop", shell=True)
         os.execv(__file__, sys.argv)
 
     if number == 5:
+        if button5.disable == 1:
+            return
+
         # darkstat
         if kalipi.toggle_service("darkstat"):
                 button5.color = green
@@ -138,6 +156,9 @@ def button(number):
         return
 
     if number == 6:
+        if button6.disable == 1:
+            return
+
         # ntopng
         if toggle_ntopng():
                 button6.color = green
@@ -151,6 +172,9 @@ def button(number):
         return
 
     if number == 7:
+        if button7.disable == 1:
+            return
+
         # Previous page
         pygame.quit()
         page=os.environ["MENUDIR"] + "menu-1.py"
@@ -158,6 +182,9 @@ def button(number):
         sys.exit()
 
     if number == 8:
+        if button8.disable == 1:
+            return
+
         # Screen off
         pygame.quit()
         page=os.environ["MENUDIR"] + "menu_screenoff.py"
@@ -165,6 +192,9 @@ def button(number):
         sys.exit()
 
     if number == 9:
+        if button9.disable == 1:
+            return
+
         # Next page
         pygame.quit()
         page=os.environ["MENUDIR"] + "menu-3.py"
@@ -180,59 +210,113 @@ make_button(titleButton)
 
 # First Row
 # Button 1
-if kalipi.check_service("apache2"):
-    button1.color = green
+button1.disable = 0  # "1" disables button
+
+if button1.disable == 1:
     make_button(button1)
 else:
-    button1.color = tron_light
-    make_button(button1)
+    # Add button launch code here
+    if kalipi.check_service("apache2"):
+        button1.color = green
+        make_button(button1)
+    else:
+        button1.color = tron_light
+        make_button(button1)
 
 # Button 2
-if kalipi.check_service("pure-ftpd"):
-    button2.color = green
+button2.disable = 0  # "1" disables button
+
+if button2.disable == 1:
     make_button(button2)
 else:
-    button2.color = tron_light
-    make_button(button2)
+    # Add button launch code here
+    if kalipi.check_service("pure-ftpd"):
+        button2.color = green
+        make_button(button2)
+    else:
+        button2.color = tron_light
+        make_button(button2)
 
 # Button 3
-if kalipi.check_service("mysql"):
-    button3.color = green
+button3.disable = 0  # "1" disables button
+
+if button3.disable == 1:
     make_button(button3)
 else:
-    button3.color = tron_light
-    make_button(button3)
+    # Add button launch code here
+    if kalipi.check_service("mysql"):
+        button3.color = green
+        make_button(button3)
+    else:
+        button3.color = tron_light
+        make_button(button3)
 
 # Second Row
 # Button 4
-make_button(button4)
+button4.disable = 0  # "1" disables button
+
+if button4.disable == 1:
+    make_button(button4)
+else:
+    # Add button launch code here
+    make_button(button4)
 
 # Button 5
-if kalipi.check_service("darkstat"):
-    button5.color = green
+button5.disable = 0  # "1" disables button
+
+if button5.disable == 1:
     make_button(button5)
 else:
-    button5.color = tron_light
-    make_button(button5)
+    # Add button launch code here
+    if kalipi.check_service("darkstat"):
+        button5.color = green
+        make_button(button5)
+    else:
+        button5.color = tron_light
+        make_button(button5)
 
 # Button 6
-if kalipi.check_service("ntopng"):
-    button6.color = green
+button6.disable = 0  # "1" disables button
+
+if button6.disable == 1:
     make_button(button6)
 else:
-    button6.color = tron_light
-    make_button(button6)
+    # Add button launch code here
+    if kalipi.check_service("ntopng"):
+        button6.color = green
+        make_button(button6)
+    else:
+        button6.color = tron_light
+        make_button(button6)
 
 
 # Third Row
 # Button 7
-make_button(button7)
+button7.disable = 0  # "1" disables button
+
+if button7.disable == 1:
+    make_button(button7)
+else:
+    # Add button launch code here
+    make_button(button7)
 
 # Button 8
-make_button(button8)
+button8.disable = 0  # "1" disables button
+
+if button8.disable == 1:
+    make_button(button8)
+else:
+    # Add button launch code here
+    make_button(button8)
 
 # Button 9
-make_button(button9)
+button9.disable = 0  # "1" disables button
+
+if button9.disable == 1:
+    make_button(button9)
+else:
+    # Add button launch code here
+    make_button(button9)
 
 ##        Buttons          ##
 #############################

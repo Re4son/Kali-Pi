@@ -13,6 +13,7 @@ os.environ["SDL_MOUSEDRV"] = "TSLIB"
 # colors    R    G    B
 white    = (255, 255, 255)
 tron_whi = (189, 254, 255)
+grey     = ( 50,  50,  50)
 red      = (255,   0,   0)
 green    = (  0, 255,   0)
 blue     = (  0,   0, 255)
@@ -92,7 +93,8 @@ class Button(object):
         width = ""
         color = ""
         fntSize = ""
-        def __init__(self, text, xpo, ypo, height, width, color, fntSize):
+        disable = ""
+        def __init__(self, text, xpo, ypo, height, width, color, fntSize, disable=0):
                 self.text = text
                 self.xpo = xpo
                 self.ypo = ypo
@@ -100,6 +102,7 @@ class Button(object):
                 self.width = width
                 self.color = color
                 self.fntSize = fntSize
+                self.disable = disable
 
 
 ## Global display settings ##
