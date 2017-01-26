@@ -72,8 +72,8 @@ def button(number):
         os.execvp("python", ["python", page])
         sys.exit()
 
-    if number == 8:
-        if button8.disable == 1:
+    if number == 9:
+        if button9.disable == 1:
             return
 
         # Refresh

@@ -182,7 +182,9 @@ def button(number):
         # Screen off
         pygame.quit()
         page=os.environ["MENUDIR"] + "menu_screenoff.py"
-        os.execvp("python", ["python", page])
+        retPage="menu-3.py"
+        args = [page, retPage]
+        os.execvp("python", ["python"] + args)
         sys.exit()
 
     if number == 9:

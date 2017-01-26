@@ -26,6 +26,11 @@ else:
     GPIO.setup(18, GPIO.OUT)
     backlightControl="GPIO18"
 
+def get_retPage():
+    retPage = "menu-1.py"
+    if len(sys.argv) > 1:
+        retPage = str(sys.argv[1])
+    return retPage
 
 def run_cmd(cmd):
     process = Popen(cmd.split(), stdout=PIPE)
@@ -41,10 +46,9 @@ def screen_on():
             backlight = GPIO.PWM(18, 1023)
             backlight.start(100)
             GPIO.cleanup()
-
-        page=os.environ["MENUDIR"] + "menu-1.py"
+        retPage=get_retPage()
+        page=os.environ["MENUDIR"] + retPage
         os.execvp("python", ["python", page])
-
 
 # Turn screen off
 def screen_off():
