@@ -1,0 +1,3 @@
+#!/bin/bash
+export MENUDIR="/home/pi/Kali-Pi/Menus/"
+/usr/bin/env python $MENUDIR/pin.py
