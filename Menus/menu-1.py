@@ -78,7 +78,7 @@ def button(number):
         # Exit
         process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
         pygame.quit()
-        sys.exit()
+        sys.exit(37)
 
     if number == 2:
         if button2.disable == 1:
