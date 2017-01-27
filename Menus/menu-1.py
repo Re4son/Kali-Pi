@@ -22,9 +22,6 @@ tron_inverse = tron_yel
 #+           End            +#
 #++++++++++++++++++++++++++++#
 
-# Outer Border
-pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
-
 ## Global display settings ##
 #############################
 
@@ -173,131 +170,137 @@ def button(number):
         os.execvp("python", ["python", page])
         sys.exit()
 
+def main (argv):
 
-# Buttons and labels
-# See variables at the top of the document to adjust the menu
+    # Outer Border
+    pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
 
-# Title
-make_button(titleButton)
+    #############################
+    ##        Buttons          ##
 
-# First Row
-# Button 1
-button1.disable = 0  # "1" disables button
+    # Buttons and labels
+    # See variables at the top of the document to adjust the menu
 
-if button1.disable == 1:
-    make_button(button1)
-else:
-    # Add button launch code here
-    button1.color = yellow
-    make_button(button1)
+    # Title
+    make_button(titleButton)
 
-# Button 2
-# Button 2
-button2.disable = 0  # "1" disables button
+    # First Row
+    # Button 1
+    button1.disable = 0  # "1" disables button
 
-if button2.disable == 1:
-    make_button(button2)
-else:
-    # Add button launch code here
-    make_button(button2)
-
-# Button 3
-button3.disable = 0  # "1" disables button
-
-if button3.disable == 1:
-    make_button(button3)
-else:
-    # Add button launch code here
-    make_button(button3)
-
-
-# Second Row
-# Button 4
-button4.disable = 0  # "1" disables button
-
-if button4.disable == 1:
-    make_button(button4)
-else:
-    # Add button launch code here
-    button4.color = yellow
-    make_button(button4)
-
-# Button 5
-button5.disable = 0  # "1" disables button
-
-if button5.disable == 1:
-    make_button(button5)
-else:
-    # Add button launch code here
-    if check_vnc():
-	button5.color = green
-	make_button(button5)
+    if button1.disable == 1:
+        make_button(button1)
     else:
-	button5.color = tron_light
-	make_button(button5)
+        # Add button launch code here
+        button1.color = yellow
+        make_button(button1)
+
+    # Button 2
+    button2.disable = 0  # "1" disables button
+
+    if button2.disable == 1:
+        make_button(button2)
+    else:
+        # Add button launch code here
+        make_button(button2)
+
+    # Button 3
+    button3.disable = 0  # "1" disables button
+
+    if button3.disable == 1:
+        make_button(button3)
+    else:
+        # Add button launch code here
+        make_button(button3)
 
 
-# Button 6
-button6.disable = 0  # "1" disables button
+    # Second Row
+    # Button 4
+    button4.disable = 0  # "1" disables button
 
-if button6.disable == 1:
-    make_button(button6)
-else:
-    # Add button launch code here
-    make_button(button6)
+    if button4.disable == 1:
+        make_button(button4)
+    else:
+        # Add button launch code here
+        button4.color = yellow
+        make_button(button4)
 
+    # Button 5
+    button5.disable = 0  # "1" disables button
 
-# Third Row
-# Button 7
-button7.disable = 0  # "1" disables button
+    if button5.disable == 1:
+        make_button(button5)
+    else:
+        # Add button launch code here
+        if check_vnc():
+	    button5.color = green
+	    make_button(button5)
+        else:
+	    button5.color = tron_light
+	    make_button(button5)
 
-if button7.disable == 1:
-    make_button(button7)
-else:
-    # Add button launch code here
-    button7.color = yellow
-    make_button(button7)
+    # Button 6
+    button6.disable = 0  # "1" disables button
 
-# Button 8
-button8.disable = 0  # "1" disables button
+    if button6.disable == 1:
+        make_button(button6)
+    else:
+        # Add button launch code here
+        make_button(button6)
 
-if button8.disable == 1:
-    make_button(button8)
-else:
-    # Add button launch code here
-    make_button(button8)
+    # Third Row
+    # Button 7
+    button7.disable = 0  # "1" disables button
 
-# Button 9
-button9.disable = 0  # "1" disables button
+    if button7.disable == 1:
+        make_button(button7)
+    else:
+        # Add button launch code here
+        button7.color = yellow
+        make_button(button7)
 
-if button9.disable == 1:
-    make_button(button9)
-else:
-    # Add button launch code here
-    make_button(button9)
+    # Button 8
+    button8.disable = 0  # "1" disables button
 
-##        Buttons          ##
-#############################
+    if button8.disable == 1:
+        make_button(button8)
+    else:
+        # Add button launch code here
+        make_button(button8)
 
+    # Button 9
+    button9.disable = 0  # "1" disables button
 
-#############################
-##        Input loop       ##
+    if button9.disable == 1:
+        make_button(button9)
+    else:
+        # Add button launch code here
+        make_button(button9)
 
-#While loop to manage touch screen inputs
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-            num = kalipi.on_touch()
-            button(num)
+    ##        Buttons          ##
+    #############################
 
-        #ensure there is always a safe way to end the program if the touch screen fails
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                sys.exit()
-    pygame.display.update()
-    ## Reduce CPU utilisation
-    time.sleep(0.1)
+    #############################
+    ##        Input loop       ##
 
-##        Input loop       ##
-#############################
+    #While loop to manage touch screen inputs
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                num = kalipi.on_touch()
+                button(num)
+
+            #ensure there is always a safe way to end the program if the touch screen fails
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    sys.exit()
+        pygame.display.update()
+        ## Reduce CPU utilisation
+        time.sleep(0.1)
+
+    ##        Input loop       ##
+    #############################
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
