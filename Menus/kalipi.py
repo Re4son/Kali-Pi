@@ -269,3 +269,10 @@ def make_label(text, xpo, ypo, fontsize, colour):
     font=pygame.font.Font(None,fontsize)
     label=font.render(str(text), 1, (colour))
     screen.blit(label,(xpo,ypo))
+
+# Get return page
+def get_retPage():
+    retPage = "menu-1.py"
+    if len(sys.argv) > 1:
+        retPage = str(sys.argv[1])
+    return retPage

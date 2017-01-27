@@ -2,12 +2,12 @@
 import sys, os, hashlib, getpass
 
 def main(argv):
-
-    pinFile = os.environ["MENUDIR"] + ".kalipi"
+    file = ".kalipi"
+    pinFile = os.environ["MENUDIR"] + file
     if raw_input('The existing PIN will be overwritten.\nDo you wish to continue (Y/n): ') != 'Y' :
         sys.exit('\nChanges were not recorded\n')
 
-    password = hashlib.sha224(getpass.getpass('Please enter a new PIN: ')).hexdigest()
+    password = hashlib.sha512(file + getpass.getpass('Please enter a new PIN: ')).hexdigest()
     try:
         file_conn = open(pinFile,'w')
         file_conn.write(password + '\n')

@@ -6,8 +6,10 @@ from subprocess import *
 os.environ["SDL_FBDEV"] = "/dev/fb1"
 os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
 os.environ["SDL_MOUSEDRV"] = "TSLIB"
-launch_bg=os.environ["MENUDIR"] + "launch-bg.sh"
-process = subprocess.call(launch_bg, shell=True)
+
+if os.environ["KPPIN"] != "1":
+    launch_bg=os.environ["MENUDIR"] + "launch-bg.sh"
+    process = subprocess.call(launch_bg, shell=True)
 
 # Initialize pygame modules individually (to avoid ALSA errors) and hide mouse
 pygame.font.init()
@@ -47,8 +49,14 @@ def screen_on():
             backlight.start(100)
             GPIO.cleanup()
         retPage=get_retPage()
-        page=os.environ["MENUDIR"] + retPage
-        os.execvp("python", ["python", page])
+        if os.environ["KPPIN"] == "1":
+            page=os.environ["MENUDIR"] + "menu-pin.py"
+            args = [page, retPage]
+        else:
+            page=os.environ["MENUDIR"] + retPage
+            args = [page]
+
+        os.execvp("python", ["python"] + args)
 
 # Turn screen off
 def screen_off():

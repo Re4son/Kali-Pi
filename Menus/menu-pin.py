@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import kalipi
+import kalipi, hashlib
 from kalipi import *
 
 
@@ -72,7 +72,51 @@ def local_on_touch():
     if newOriginX + (newButtonWidth * 2) + (newSpacing * 2) <= touch_pos[0] <= newOriginX + (newButtonWidth * 3) + (newSpacing * 2) and newOriginY + (newButtonHeight * 2) + (newSpacing * 2) <= touch_pos[1] <= newOriginY + (newButtonHeight * 4) + (newSpacing * 3):
             return "e"
 
-pin = ""
+
+def verifyPin():
+    global pin
+
+    if pin == "":
+        pygame.quit()
+        page=os.environ["MENUDIR"] + "menu_screenoff.py"
+        retPage=kalipi.get_retPage()
+        args = [page, retPage]
+        os.execvp("python", ["python"] + args)
+        sys.exit()
+    elif pin == "111":
+        pygame.quit()
+        page=os.environ["MENUDIR"] + "menu-9p.py"
+        retPage=kalipi.get_retPage()
+        args = [page, retPage]
+        os.execvp("python", ["python"] + args)
+        sys.exit()
+    elif pin == "110":
+        pygame.quit()
+        sys.exit()
+    else:
+        file = ".kalipi"
+        pinFile=os.environ["MENUDIR"] + ".kalipi"
+        file_conn = open(pinFile)
+        file_pin = file_conn.readline()[:-1]
+        file_conn.close()
+        hashed_pin=hashlib.sha512(file + pin).hexdigest()
+        if file_pin == hashed_pin:
+            pygame.quit()
+            launch_bg=os.environ["MENUDIR"] + "launch-bg.sh"
+            process = subprocess.call(launch_bg, shell=True)
+            retPage=kalipi.get_retPage()
+            page=os.environ["MENUDIR"] + retPage
+            args = [page]
+            os.execvp("python", ["python"] + args)
+            sys.exit()
+        else:
+           pin=""
+           return
+            ## Debug
+##            process = subprocess.call("setterm -term linux -back black -fore white -clear all", shell=True)
+##            pygame.quit()
+##            print pin
+##            sys.exit()
 
 
 ##    Local Functions      ##
@@ -102,7 +146,7 @@ newTitleFont = titleFont / 3 * 2
 
 
 # define all of the buttons
-titleButton = Button("       Environmental Survey - Humidity Sensor    ", newOriginX, newOriginX, newButtonHeight, buttonWidth * 3  + spacing * 2, tron_inverse, newTitleFont)
+titleButton = Button("       Environmental Survey    -    Humidity Sensor    ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_inverse, newTitleFont)
 button1 = Button(newLabelPadding * " " + " " * 15 + "1", newOriginX, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 button2 = Button(newLabelPadding * " " + " " * 15 + "2", newOriginX + newButtonWidth + newSpacing, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 button3 = Button(newLabelPadding * " " + " " * 15 + "3", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
@@ -112,9 +156,9 @@ button6 = Button(newLabelPadding * " " + " " * 15 + "6", newOriginX + (newButton
 button7 = Button(newLabelPadding * " " + " " * 15 + "7", newOriginX, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 button8 = Button(newLabelPadding * " " + " " * 15 + "8", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 button9 = Button(newLabelPadding * " " + " " * 15 + "9", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-buttonc = Button(newLabelPadding * " " + " " * 15 + "c", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+buttonc = Button(newLabelPadding * " " + " " * 15 + "*", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 button0 = Button(newLabelPadding * " " + " " * 15 + "0", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-buttone = Button(newLabelPadding * " " + " " * 15 + "e", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+buttone = Button(newLabelPadding * " " + " " * 15 + "#", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 
 
 def make_button(button):
@@ -208,11 +252,12 @@ def button(number):
             return
 
         # Clear
-#        pin = ""
-#        return
-        process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
-        pygame.quit()
-        sys.exit()
+        pin = ""
+        return
+        ## Debug
+##        process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
+##        pygame.quit()
+##        sys.exit()
 
     if number == 0:
         if button9.disable == 1:
@@ -226,18 +271,18 @@ def button(number):
             return
 
         # Enter
-        if pin != "1337":
-            pin=""
-            return
-        else:
-            pygame.quit()
-            page=os.environ["MENUDIR"] + "menu-1.py"
-            os.execvp("python", ["python", page])
-            sys.exit()
-
+        verifyPin()
+        return
+        ## Debug
+##        process = subprocess.call("setterm -term linux -back black -fore white -clear all", shell=True)
+##        pygame.quit()
+##        print pin
+##        sys.exit()
 
 # Buttons and labels
 # See variables at the top of the document to adjust the menu
+
+pin = ""
 
 # Title
 make_button(titleButton)
@@ -252,7 +297,6 @@ else:
     # Add button launch code here
     make_button(button1)
 
-# Button 2
 # Button 2
 button2.disable = 0  # "1" disables button
 
