@@ -108,7 +108,7 @@ def button(number):
 
         # Shutdown
         pygame.quit()
-        run_cmd("/usr/bin/sudo /sbin/shutdown -h now")
+        kalipi.run_cmd("/usr/bin/sudo /sbin/shutdown -h now")
         sys.exit()
 
     if number == 5:

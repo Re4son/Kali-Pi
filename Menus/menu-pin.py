@@ -127,6 +127,7 @@ def verifyPin():
         sys.exit()
     elif pin == "110":
         pygame.quit()
+        kalipi.run_cmd("/usr/bin/sudo /sbin/shutdown -h now")
         sys.exit()
     else:
         file = ".kalipi"
