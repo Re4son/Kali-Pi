@@ -2,6 +2,10 @@
 import kalipi, hashlib
 from kalipi import *
 
+#############################
+##        Variables        ##
+pin = ""
+
 
 #############################
 ## Global display settings ##
@@ -22,11 +26,43 @@ tron_inverse = tron_yel
 #+           End            +#
 #++++++++++++++++++++++++++++#
 
-# Outer Border
-pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
-
 ## Global display settings ##
 #############################
+
+
+# Overwrite dimensions
+
+###########################
+##  Screen layouts       ##
+
+newOriginX = originX
+newOriginY = originY
+newSpacing = spacing
+newButtonWidth = buttonWidth
+newButtonHeight = buttonHeight / 4 * 3
+newLabelFont = labelFont / 3 * 2
+newLabelPadding = labelPadding
+newTitleFont = titleFont / 3 * 2
+
+
+##  Screen layouts       ##
+###########################
+
+# define all of the buttons
+titleButton = Button("       Environmental Survey    -    Humidity Sensor    ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_inverse, newTitleFont)
+button1 = Button(newLabelPadding * " " + " " * 15 + "1", newOriginX, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button2 = Button(newLabelPadding * " " + " " * 15 + "2", newOriginX + newButtonWidth + newSpacing, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button3 = Button(newLabelPadding * " " + " " * 15 + "3", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button4 = Button(newLabelPadding * " " + " " * 15 + "4", newOriginX, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button5 = Button(newLabelPadding * " " + " " * 15 + "5", newOriginX + newButtonWidth + newSpacing, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button6 = Button(newLabelPadding * " " + " " * 15 + "6", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button7 = Button(newLabelPadding * " " + " " * 15 + "7", newOriginX, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button8 = Button(newLabelPadding * " " + " " * 15 + "8", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button9 = Button(newLabelPadding * " " + " " * 15 + "9", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+buttonc = Button(newLabelPadding * " " + " " * 15 + "*", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button0 = Button(newLabelPadding * " " + " " * 15 + "0", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+buttone = Button(newLabelPadding * " " + " " * 15 + "#", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+
 
 #############################
 ##    Local Functions      ##
@@ -71,7 +107,6 @@ def local_on_touch():
     # button e event
     if newOriginX + (newButtonWidth * 2) + (newSpacing * 2) <= touch_pos[0] <= newOriginX + (newButtonWidth * 3) + (newSpacing * 2) and newOriginY + (newButtonHeight * 2) + (newSpacing * 2) <= touch_pos[1] <= newOriginY + (newButtonHeight * 4) + (newSpacing * 3):
             return "e"
-
 
 def verifyPin():
     global pin
@@ -121,45 +156,6 @@ def verifyPin():
 
 ##    Local Functions      ##
 #############################
-
-
-#############################
-##        Buttons          ##
-
-# Overwrite dimensions
-
-###########################
-##  Screen layouts       ##
-
-newOriginX = originX
-newOriginY = originY
-newSpacing = spacing
-newButtonWidth = buttonWidth
-newButtonHeight = buttonHeight / 4 * 3
-newLabelFont = labelFont / 3 * 2
-newLabelPadding = labelPadding
-newTitleFont = titleFont / 3 * 2
-
-
-##  Screen layouts       ##
-###########################
-
-
-# define all of the buttons
-titleButton = Button("       Environmental Survey    -    Humidity Sensor    ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_inverse, newTitleFont)
-button1 = Button(newLabelPadding * " " + " " * 15 + "1", newOriginX, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button2 = Button(newLabelPadding * " " + " " * 15 + "2", newOriginX + newButtonWidth + newSpacing, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button3 = Button(newLabelPadding * " " + " " * 15 + "3", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button4 = Button(newLabelPadding * " " + " " * 15 + "4", newOriginX, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button5 = Button(newLabelPadding * " " + " " * 15 + "5", newOriginX + newButtonWidth + newSpacing, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button6 = Button(newLabelPadding * " " + " " * 15 + "6", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button7 = Button(newLabelPadding * " " + " " * 15 + "7", newOriginX, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button8 = Button(newLabelPadding * " " + " " * 15 + "8", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button9 = Button(newLabelPadding * " " + " " * 15 + "9", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-buttonc = Button(newLabelPadding * " " + " " * 15 + "*", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button0 = Button(newLabelPadding * " " + " " * 15 + "0", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-buttone = Button(newLabelPadding * " " + " " * 15 + "#", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-
 
 def make_button(button):
     if button.disable == 1:
@@ -279,150 +275,162 @@ def button(number):
 ##        print pin
 ##        sys.exit()
 
-# Buttons and labels
-# See variables at the top of the document to adjust the menu
 
-pin = ""
+def main (argv):
 
-# Title
-make_button(titleButton)
+    # Outer Border
+    pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
 
-# First Row
-# Button 1
-button1.disable = 0  # "1" disables button
+    #############################
+    ##        Buttons          ##
 
-if button1.disable == 1:
-    make_button(button1)
-else:
-    # Add button launch code here
-    make_button(button1)
-
-# Button 2
-button2.disable = 0  # "1" disables button
-
-if button2.disable == 1:
-    make_button(button2)
-else:
-    # Add button launch code here
-    make_button(button2)
-
-# Button 3
-button3.disable = 0  # "1" disables button
-
-if button3.disable == 1:
-    make_button(button3)
-else:
-    # Add button launch code here
-    make_button(button3)
+    # Buttons and labels
+    # See variables at the top of the document to adjust the menu
 
 
-# Second Row
-# Button 4
-button4.disable = 0  # "1" disables button
+    # Title
+    make_button(titleButton)
 
-if button4.disable == 1:
-    make_button(button4)
-else:
-    # Add button launch code here
-    make_button(button4)
+    # First Row
+    # Button 1
+    button1.disable = 0  # "1" disables button
 
-# Button 5
-button5.disable = 0  # "1" disables button
+    if button1.disable == 1:
+        make_button(button1)
+    else:
+        # Add button launch code here
+        make_button(button1)
 
-if button5.disable == 1:
-    make_button(button5)
-else:
-    # Add button launch code here
-    make_button(button5)
+    # Button 2
+    button2.disable = 0  # "1" disables button
 
+    if button2.disable == 1:
+        make_button(button2)
+    else:
+        # Add button launch code here
+        make_button(button2)
 
-# Button 6
-button6.disable = 0  # "1" disables button
+    # Button 3
+    button3.disable = 0  # "1" disables button
 
-if button6.disable == 1:
-    make_button(button6)
-else:
-    # Add button launch code here
-    make_button(button6)
-
-
-# Third Row
-# Button 7
-button7.disable = 0  # "1" disables button
-
-if button7.disable == 1:
-    make_button(button7)
-else:
-    # Add button launch code here
-    make_button(button7)
-
-# Button 8
-button8.disable = 0  # "1" disables button
-
-if button8.disable == 1:
-    make_button(button8)
-else:
-    # Add button launch code here
-    make_button(button8)
-
-# Button 9
-button9.disable = 0  # "1" disables button
-
-if button9.disable == 1:
-    make_button(button9)
-else:
-    # Add button launch code here
-    make_button(button9)
-
-# Button c
-buttonc.disable = 0  # "1" disables button
-
-if buttonc.disable == 1:
-    make_button(buttonc)
-else:
-    # Add button launch code here
-    make_button(buttonc)
-
-# Button 0
-button0.disable = 0  # "1" disables button
-
-if button0.disable == 1:
-    make_button(button0)
-else:
-    # Add button launch code here
-    make_button(button0)
-
-# Button e
-buttone.disable = 0  # "1" disables button
-
-if buttone.disable == 1:
-    make_button(buttone)
-else:
-    # Add button launch code here
-    make_button(buttone)
-
-##        Buttons          ##
-#############################
+    if button3.disable == 1:
+        make_button(button3)
+    else:
+        # Add button launch code here
+        make_button(button3)
 
 
-#############################
-##        Input loop       ##
+    # Second Row
+    # Button 4
+    button4.disable = 0  # "1" disables button
 
-#While loop to manage touch screen inputs
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-            num = local_on_touch()
-            button(num)
+    if button4.disable == 1:
+        make_button(button4)
+    else:
+        # Add button launch code here
+        make_button(button4)
 
-        #ensure there is always a safe way to end the program if the touch screen fails
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                sys.exit()
-    pygame.display.update()
-    ## Reduce CPU utilisation
-    time.sleep(0.1)
+    # Button 5
+    button5.disable = 0  # "1" disables button
 
-##        Input loop       ##
-#############################
+    if button5.disable == 1:
+        make_button(button5)
+    else:
+        # Add button launch code here
+        make_button(button5)
+
+
+    # Button 6
+    button6.disable = 0  # "1" disables button
+
+    if button6.disable == 1:
+        make_button(button6)
+    else:
+        # Add button launch code here
+        make_button(button6)
+
+
+    # Third Row
+    # Button 7
+    button7.disable = 0  # "1" disables button
+
+    if button7.disable == 1:
+        make_button(button7)
+    else:
+        # Add button launch code here
+        make_button(button7)
+
+    # Button 8
+    button8.disable = 0  # "1" disables button
+
+    if button8.disable == 1:
+        make_button(button8)
+    else:
+        # Add button launch code here
+        make_button(button8)
+
+    # Button 9
+    button9.disable = 0  # "1" disables button
+
+    if button9.disable == 1:
+        make_button(button9)
+    else:
+        # Add button launch code here
+        make_button(button9)
+
+    # Button c
+    buttonc.disable = 0  # "1" disables button
+
+    if buttonc.disable == 1:
+        make_button(buttonc)
+    else:
+        # Add button launch code here
+        make_button(buttonc)
+
+    # Button 0
+    button0.disable = 0  # "1" disables button
+
+    if button0.disable == 1:
+        make_button(button0)
+    else:
+        # Add button launch code here
+        make_button(button0)
+
+    # Button e
+    buttone.disable = 0  # "1" disables button
+
+    if buttone.disable == 1:
+        make_button(buttone)
+    else:
+        # Add button launch code here
+        make_button(buttone)
+
+    ##        Buttons          ##
+    #############################
+
+
+    #############################
+    ##        Input loop       ##
+
+    #While loop to manage touch screen inputs
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                num = local_on_touch()
+                button(num)
+
+            #ensure there is always a safe way to end the program if the touch screen fails
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    sys.exit()
+        pygame.display.update()
+        ## Reduce CPU utilisation
+        time.sleep(0.1)
+
+    ##        Input loop       ##
+    #############################
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
