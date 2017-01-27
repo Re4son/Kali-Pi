@@ -16,17 +16,6 @@ pygame.font.init()
 pygame.display.init()
 pygame.mouse.set_visible(0)
 
-## Initialise backlight control
-
-if os.path.isfile("/sys/class/backlight/soc:backlight/brightness"):
-    # kernel 4.4 STMP GPIO on/off for ada 3.5r
-    backlightControl="3.5r"
-else:
-    # GPIO 18 backlight control
-    # Initialise GPIO
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(18, GPIO.OUT)
-    backlightControl="GPIO18"
 
 def get_retPage():
     retPage = "menu-1.py"
@@ -41,43 +30,67 @@ def run_cmd(cmd):
 
 # Turn screen on
 def screen_on():
-        pygame.quit()
-        if backlightControl == "3.5r":
-            process = subprocess.call("echo '1' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
-        else:
-            backlight = GPIO.PWM(18, 1023)
-            backlight.start(100)
-            GPIO.cleanup()
-        retPage=get_retPage()
-        if os.environ["KPPIN"] == "1":
-            page=os.environ["MENUDIR"] + "menu-pin.py"
-            args = [page, retPage]
-        else:
-            page=os.environ["MENUDIR"] + retPage
-            args = [page]
 
-        os.execvp("python", ["python"] + args)
+    global backlightControl
+    pygame.quit()
+
+    if backlightControl == "3.5r":
+        process = subprocess.call("echo '1' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
+    else:
+        backlight = GPIO.PWM(18, 1023)
+        backlight.start(100)
+        GPIO.cleanup()
+    retPage=get_retPage()
+    if os.environ["KPPIN"] == "1":
+        page=os.environ["MENUDIR"] + "menu-pin.py"
+        args = [page, retPage]
+    else:
+        page=os.environ["MENUDIR"] + retPage
+        args = [page]
+
+    os.execvp("python", ["python"] + args)
 
 # Turn screen off
 def screen_off():
-        if backlightControl == "3.5r":
-            process = subprocess.call("echo '0' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
-        else:
-            backlight = GPIO.PWM(18, 0.1)
-            backlight.start(0)
 
-        process = subprocess.call("setterm -term linux -back black -fore black -clear all", shell=True)
+    global backlightControl
+
+    if backlightControl == "3.5r":
+        process = subprocess.call("echo '0' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
+    else:
+        backlight = GPIO.PWM(18, 0.1)
+        backlight.start(0)
+
+    process = subprocess.call("setterm -term linux -back black -fore black -clear all", shell=True)
 
 
-#While loop to manage touch screen inputs
-screen_off()
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            screen_on()
+def main (argv):
 
-        #ensure there is always a safe way to end the program if the touch screen fails
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                sys.exit()
-    time.sleep(0.4)
+    ## Initialise backlight control
+    global backlightControl
+
+    if os.path.isfile("/sys/class/backlight/soc:backlight/brightness"):
+        # kernel 4.4 STMP GPIO on/off for ada 3.5r
+        backlightControl="3.5r"
+    else:
+        # GPIO 18 backlight control
+        # Initialise GPIO
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(18, GPIO.OUT)
+        backlightControl="GPIO18"
+
+    #While loop to manage touch screen inputs
+    screen_off()
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                screen_on()
+
+                #ensure there is always a safe way to end the program if the touch screen fails
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        sys.exit()
+        time.sleep(0.4)
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

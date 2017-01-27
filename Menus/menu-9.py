@@ -22,9 +22,6 @@ tron_inverse = tron_whi
 #+           End            +#
 #++++++++++++++++++++++++++++#
 
-# Outer Border
-pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
-
 ## Global display settings ##
 #############################
 
@@ -79,65 +76,76 @@ def button(number):
         # Refresh
         pygame.quit()
         os.execv(__file__, sys.argv)
-
-
-# Buttons and labels
-# See variables at the top of the document to adjust the menu
-
-# First Row
-# label 1
-make_button(label1)
-
-# Second Row
-# Button 2
-make_button(label2)
-
-# Third Row
-# Label 3
-make_button(label3)
-
-
-# Fourth Row
-# Button 7
-button7.disable = 0  # "1" disables button
-
-if button7.disable == 1:
-    make_button(button7)
-else:
-    # Add button launch code here
-    make_button(button7)
-
-# Button 9
-button9.disable = 0  # "1" disables button
-
-if button9.disable == 1:
-    make_button(button9)
-else:
-    # Add button launch code here
-    make_button(button9)
-
 ##        Buttons          ##
 #############################
 
+def main (argv):
 
-#############################
-##        Input loop       ##
+    # Outer Border
+    pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
 
-#While loop to manage touch screen inputs
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-            num = kalipi.on_touch()
-            button(num)
+    #############################
+    ##        Buttons          ##
 
-        #ensure there is always a safe way to end the program if the touch screen fails
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                sys.exit()
-    pygame.display.update()
-    ## Reduce CPU utilisation
-    time.sleep(0.1)
+    # Buttons and labels
+    # See variables at the top of the document to adjust the menu
 
-##        Input loop       ##
-#############################
+    # First Row
+    # label 1
+    make_button(label1)
+
+    # Second Row
+    # Button 2
+    make_button(label2)
+
+    # Third Row
+    # Label 3
+    make_button(label3)
+
+    # Fourth Row
+    # Button 7
+    button7.disable = 0  # "1" disables button
+
+    if button7.disable == 1:
+        make_button(button7)
+    else:
+        # Add button launch code here
+        make_button(button7)
+
+    # Button 9
+    button9.disable = 0  # "1" disables button
+
+    if button9.disable == 1:
+        make_button(button9)
+    else:
+        # Add button launch code here
+        make_button(button9)
+
+    ##        Buttons          ##
+    #############################
+
+
+    #############################
+    ##        Input loop       ##
+
+    #While loop to manage touch screen inputs
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                num = kalipi.on_touch()
+                button(num)
+
+            #ensure there is always a safe way to end the program if the touch screen fails
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    sys.exit()
+        pygame.display.update()
+        ## Reduce CPU utilisation
+        time.sleep(0.1)
+
+    ##        Input loop       ##
+    #############################
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

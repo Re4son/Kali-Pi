@@ -16,10 +16,9 @@ export KPSCREENSIZE=2.8     ## Screensize in inch, Options= 3.5, 2.8
 export KPLAYOUT=9           ## Number of buttons - Currently only 9 is supported
 export KPPIN=0              ## Set to "1" to enforce PIN authentication, run ./set-pin to change PIN
 
+##setterm -term linux -back default -fore black -clear all
 
-
-if [ $KPPIN == "1" ]
-then
+if [ $KPPIN == "1" ]; then
     startpage="menu-pin.py menu-1.py"
     /usr/bin/clear
     /usr/bin/env python $MENUDIR$startpage
