@@ -152,7 +152,7 @@ def button(number):
         if button8.disable == 1:
             return
 
-        # Screen off
+        # Lock
         pygame.quit()
         page=os.environ["MENUDIR"] + "menu_screenoff.py"
         retPage="menu-1.py"
@@ -287,24 +287,63 @@ def main (argv):
     #############################
     ##        Input loop       ##
 
-    #While loop to manage touch screen inputs
-    while 1:
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-                num = kalipi.on_touch()
-                button(num)
+    if "KPTIMEOUT" in os.environ:
+        timeout = float(os.environ["KPTIMEOUT"]) * 60 / 3 # Convert timeout to seconds
 
-            #ensure there is always a safe way to end the program if the touch screen fails
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    sys.exit()
-        pygame.display.update()
-        ## Reduce CPU utilisation
-        time.sleep(0.1)
+        #While loop to manage touch screen inputs
+        t = timeout
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    t = timeout
+                    pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                    num = kalipi.on_touch()
+                    button(num)
 
-    ##        Input loop       ##
-    #############################
+                #ensure there is always a safe way to end the program if the touch screen fails
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        sys.exit()
+            pygame.display.update()
+
+            ## Reduce CPU utilisation
+            time.sleep(0.1)
+            t = t - 0.1
+
+            if t <= 0:
+                break
+
+        ## Screensaver
+        pygame.quit()
+        page=os.environ["MENUDIR"] + "menu_screenoff.py"
+        retPage="menu-1.py"
+        args = [page, retPage]
+        os.execvp("python", ["python"] + args)
+        sys.exit()
+
+
+    else:
+        #While loop to manage touch screen inputs
+        while 1:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                    num = kalipi.on_touch()
+                    button(num)
+
+                #ensure there is always a safe way to end the program if the touch screen fails
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        sys.exit()
+            pygame.display.update()
+
+            ## Reduce CPU utilisation
+            time.sleep(0.1)
+
+
+        ##        Input loop       ##
+        #############################
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

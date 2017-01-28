@@ -54,14 +54,14 @@ def toggle_ntopng():
 
 # define all of the buttons
 titleButton = Button(labelPadding * "  " + kalipi.get_date(), originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
-button1 = Button(labelPadding * " " + "     WWW", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button2 = Button(labelPadding * " " + "      FTP", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button3 = Button(labelPadding * " " + "      SQL", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button1 = Button(labelPadding * " " + "      WWW", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button2 = Button(labelPadding * " " + "       FTP", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button3 = Button(labelPadding * " " + "       SQL", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button4 = Button(labelPadding * " " + "      hTop", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button5 = Button(labelPadding * " " + "  darkstat", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button5 = Button(labelPadding * " " + "   darkstat", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button6 = Button(labelPadding * " " + "    ntopng", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button7 = Button(labelPadding * " " + "        <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button8 = Button(labelPadding * " " + " Screen Off ", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button8 = Button(labelPadding * " " + " Screen Off", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
 
@@ -335,24 +335,61 @@ def main (argv):
     #############################
     ##        Input loop       ##
 
-    #While loop to manage touch screen inputs
-    while 1:
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-                num = kalipi.on_touch()
-                button(num)
+    if "KPTIMEOUT" in os.environ:
+        timeout = float(os.environ["KPTIMEOUT"]) * 60 / 3 # Convert timeout to seconds
 
-            #ensure there is always a safe way to end the program if the touch screen fails
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    sys.exit()
-        pygame.display.update()
-        ## Reduce CPU utilisation
-        time.sleep(0.1)
+        #While loop to manage touch screen inputs
+        t = timeout
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    t = timeout
+                    pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                    num = kalipi.on_touch()
+                    button(num)
 
-    ##        Input loop       ##
-    #############################
+                #ensure there is always a safe way to end the program if the touch screen fails
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        sys.exit()
+            pygame.display.update()
+
+            ## Reduce CPU utilisation
+            time.sleep(0.1)
+            t = t - 0.1
+
+            if t <= 0:
+                break
+
+        ## Screensaver
+        pygame.quit()
+        page=os.environ["MENUDIR"] + "menu_screenoff.py"
+        retPage="menu-2.py"
+        args = [page, retPage]
+        os.execvp("python", ["python"] + args)
+        sys.exit()
+
+    else:
+        #While loop to manage touch screen inputs
+        while 1:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                    num = kalipi.on_touch()
+                    button(num)
+
+                #ensure there is always a safe way to end the program if the touch screen fails
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        sys.exit()
+            pygame.display.update()
+
+            ## Reduce CPU utilisation
+            time.sleep(0.1)
+
+
+        ##        Input loop       ##
+        #############################
 
 
 if __name__ == "__main__":
