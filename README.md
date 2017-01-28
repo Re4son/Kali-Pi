@@ -73,7 +73,7 @@ Some more applications:
 ### menu-9.py
 The last script displays some health information:
 
-![menu-9](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-4.png)
+![menu-9](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-9.png)
 
 
 ### menu-pin.py
