@@ -2,7 +2,7 @@
 
 Simple touch menu for Raspberry Pi projects using a 3.5" (480x320) or 2.8" (320x240) touch screen based on garthvh's original project.
 
-Thanks to JPearn for porting it to 2.8" and to ArmyGuy255a for cleaning up the code and comming up with the improved layout.
+Thanks to JPearn for porting it to 2.8" and to ArmyGuy255a for cleaning up the code and improving the layout.
 
 
 It runs as a python script in the framebuffer without needing a desktop environment.
