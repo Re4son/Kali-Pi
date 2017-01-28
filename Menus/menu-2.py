@@ -10,14 +10,14 @@ from kalipi import *
 #+   Select color scheme    +#
 
 # Tron theme orange
-tron_regular = tron_ora
-tron_light = tron_yel
-tron_inverse = tron_whi
+##tron_regular = tron_ora
+##tron_light = tron_yel
+##tron_inverse = tron_whi
 
 # Tron theme blue
-##tron_regular = tron_blu
-##tron_light = tron_whi
-##tron_inverse = tron_yel
+tron_regular = tron_blu
+tron_light = tron_whi
+tron_inverse = tron_yel
 
 #+           End            +#
 #++++++++++++++++++++++++++++#
