@@ -18,8 +18,8 @@ I came accross [garthvh's project featured on Adafruit](https://blog.adafruit.co
 
     git clone https://github.com/re4son/Kali-Pi
     cd Kali-Pi
-    For 2.8" screens: git checkout 2.8
-    customise the file "menu" to match the path
+    
+    customise the file "menu" to match the path, define the screen size, etc.
     cusomise the scripts to suit your needs
     
 **Important: Pygame is broken on on Debian Jessie. I'll explain below how to fix it.**
@@ -34,7 +34,7 @@ I came accross [garthvh's project featured on Adafruit](https://blog.adafruit.co
 
 The first menu is menu_kali-1.py, which provides the following options:
 
-![menu_kali-1](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-1.png)
+![menu-1](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-1-1.png)
 
 All functions are self explainatory.
 After exiting and application, the screen returns back to the last menu.
@@ -44,7 +44,7 @@ You can turn it back on by pressing anywhere on the screen.
 
 Using the ">>>" button, we can scroll to the next screen, namely "menu_kali-2.py"
 
-### menu_kali-2.py
+### menu-2.py
 
 This script allows us to stop and start services:
 
@@ -59,24 +59,24 @@ The button changes to green when the service is running:
 Press the button again to stop the service.
 
 
-### menu_kali-3.py
+### menu-3.py
 
 Some more applications:
 
-![menu-3.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-3.png)
+![menu-3.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-3-1.png)
 
 
 ### menu_kali-4.py
 
 ![menu-4.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-4.png)
 
-### menu_kali-9.py
+### menu-9.py
 The last script displays some health information:
 
 ![menu-9](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-4.png)
 
 
-### menu_kali-pin.py
+### menu-pin.py
 The variable "KPPIN" in the file ~/menu can be set to "1" to enable PIN authentication to hide the menus from spying eyes:
 
 ![menu-pin](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-pin.png)
