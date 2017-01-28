@@ -1,0 +1,29 @@
+#!/bin/bash
+##############################################
+##                                          ##
+##  Menu                                    ##
+##  debugs menu                             ##
+##                                          ##
+##############################################
+
+
+## Adjust these:
+export KPSCREENSIZE=3.5     ## Screensize in inch, Options= 3.5, 2.8
+export KPLAYOUT=9           ## Number of buttons - Currently only 9 is supported
+export KPPIN=1              ## Set to "1" to enforce PIN authentication, run ./set-pin to change PIN
+export KPTIMEOUT=2          ## Minutes before screensaver kicks in, comment out for screensaver off
+## End adjustments
+
+
+export FRAMEBUFFER=/dev/fb1
+export MENUDIR="/home/pi/Kali-Pi/Menus/"
+
+if [ $KPPIN == "1" ]; then
+    startpage="menu-pin.py menu-1.py"
+    /usr/bin/env python -m trace -t $MENUDIR$startpage > debug_trace.txt
+else
+    startpage="menu-1.py"
+    /usr/bin/env python -m trace -t $MENUDIR$startpage > debug_trace.txt
+fi
+
+echo $?
