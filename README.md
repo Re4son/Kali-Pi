@@ -2,7 +2,7 @@
 
 Simple touch menu for Raspberry Pi projects using a 3.5" (480x320) or 2.8" (320x240) touch screen based on garthvh's original project.
 
-Thanks to JPearn for porting it to 2.8" and to ArmyGuy255a for cleaning up the code and comming up with the improved layout.
+Thanks to JPearn for porting it to 2.8" and to ArmyGuy255a for cleaning up the code and improving the layout.
 
 
 It runs as a python script in the framebuffer without needing a desktop environment.
@@ -48,13 +48,13 @@ Using the ">>>" button, we can scroll to the next screen, namely "menu_kali-2.py
 
 This script allows us to stop and start services:
 
-![menu-2.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2.png)
+![menu-2.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2b.png)
 
 Press a button to start a service.
 
 The button changes to green when the service is running:
 
-![running service](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2-on.png)
+![running service](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2b-on.png)
 
 Press the button again to stop the service.
 
@@ -80,6 +80,13 @@ The last script displays some health information:
 The variable "KPPIN" in the file ~/menu can be set to "1" to enable PIN authentication to hide the menus from spying eyes:
 
 ![menu-pin](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-pin.png)
+
+
+### Screensaver
+The screensaver can be enabled by setting the variable KPTIMEOUT in the file "./menu". Set it to the number of minutes after which the screensaver should kick in (very approximate value). Use 1 for 1 min, 0.5 for 30sec, etc.
+Touch anywhere on the screen to wake the system up.
+When KPPIN is set, the screen will return to the PIN menu after waking up.
+
 
 ### Run menu at startup
 
