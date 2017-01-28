@@ -81,6 +81,13 @@ The variable "KPPIN" in the file ~/menu can be set to "1" to enable PIN authenti
 
 ![menu-pin](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-pin.png)
 
+
+### Screensaver
+The screensaver can be enabled by setting the variable KPTIMEOUT in the file "./menu". Set it to the number of minutes after which the screensaver should kick in (very approximate value). Use 1 for 1 min, 0.5 for 30sec, etc.
+Touch anywhere on the screen to wake the system up.
+When KPPIN is set, the screen will return to the PIN menu after waking up.
+
+
 ### Run menu at startup
 
 The preferred method to run this script on startup is to add it to the end of ".profile"
