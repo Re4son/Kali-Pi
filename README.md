@@ -48,13 +48,13 @@ Using the ">>>" button, we can scroll to the next screen, namely "menu_kali-2.py
 
 This script allows us to stop and start services:
 
-![menu-2.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2.png)
+![menu-2.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2b.png)
 
 Press a button to start a service.
 
 The button changes to green when the service is running:
 
-![running service](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2-on.png)
+![running service](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2b-on.png)
 
 Press the button again to stop the service.
 
