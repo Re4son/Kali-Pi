@@ -101,7 +101,7 @@ def button(number):
             return
 
         # Hostapd Open
-        script=os.environ["MENUDIR"] + "/mana/manaSimple.sh"
+        script=os.environ["MENUDIR"] + "mana/manaSimple.sh"
         if kalipi.toggle_script(script):
                 button1.color = green
                 make_button(button1)
@@ -117,7 +117,7 @@ def button(number):
             return
 
         # Hostapd Secure
-        script=os.environ["MENUDIR"] + "/mana/manaSecure.sh"
+        script=os.environ["MENUDIR"] + "mana/manaSecure.sh"
 
         if kalipi.toggle_script(script):
         # Stop Service
@@ -213,7 +213,8 @@ def button(number):
             return
 
                 #DNS2Proxy
-        if kalipi.toggle_script("/root/Desktop/Scripts/dns2proxy.sh"):
+        script=os.environ["MENUDIR"] + "dns2proxy/dns2proxy.sh"
+        if kalipi.toggle_script(script):
         #Stop Service
                 button8.color = green
                 make_button(button8)
@@ -282,7 +283,7 @@ def main (argv):
             make_button(button2)
 
     # Button 3
-    button3.disable = 1  # "1" disables button
+    button3.disable = 0  # "1" disables button
 
     if button3.disable == 1:
         make_button(button3)
@@ -297,7 +298,7 @@ def main (argv):
 
     # Second Row
     # Button 4
-    button4.disable = 1  # "1" disables button
+    button4.disable = 0  # "1" disables button
 
     if button4.disable == 1:
         make_button(button4)
@@ -325,7 +326,7 @@ def main (argv):
             make_button(button5)
 
     # Button 6
-    button6.disable = 1  # "1" disables button
+    button6.disable = 0  # "1" disables button
 
     if button6.disable == 1:
         make_button(button6)
