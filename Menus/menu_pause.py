@@ -22,8 +22,10 @@ while 1:
         if event.type == pygame.MOUSEBUTTONDOWN:
             sys.exit()
 
+        #Debug:
         #ensure there is always a safe way to end the program if the touch screen fails
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                sys.exit()
+        ##if event.type == KEYDOWN:
+        ##    if event.key == K_ESCAPE:
+        ##        sys.exit()
+
     time.sleep(0.4)
