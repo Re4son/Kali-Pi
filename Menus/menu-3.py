@@ -327,10 +327,12 @@ def main (argv):
                     num = kalipi.on_touch()
                     button(num)
 
+                #Debug:
                 #ensure there is always a safe way to end the program if the touch screen fails
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        sys.exit()
+                ##if event.type == KEYDOWN:
+                ##    if event.key == K_ESCAPE:
+                ##        sys.exit()
+
             pygame.display.update()
 
             ## Reduce CPU utilisation
@@ -357,10 +359,12 @@ def main (argv):
                     num = kalipi.on_touch()
                     button(num)
 
+                #Debug:
                 #ensure there is always a safe way to end the program if the touch screen fails
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        sys.exit()
+                ##if event.type == KEYDOWN:
+                ##    if event.key == K_ESCAPE:
+                ##        sys.exit()
+
             pygame.display.update()
 
             ## Reduce CPU utilisation
