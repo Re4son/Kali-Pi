@@ -255,7 +255,7 @@ def main (argv):
 
     # First Row
     # Button 1
-    button1.disable = 1  # "1" disables button
+    button1.disable = 0  # "1" disables button
 
     if button1.disable == 1:
         make_button(button1)
@@ -269,7 +269,7 @@ def main (argv):
             make_button(button1)
 
     # Button 2
-    button2.disable = 1  # "1" disables button
+    button2.disable = 0  # "1" disables button
 
     if button2.disable == 1:
         make_button(button2)
@@ -350,7 +350,7 @@ def main (argv):
         make_button(button7)
 
     # Button 8
-    button8.disable = 1  # "1" disables button
+    button8.disable = 0  # "1" disables button
 
     if button8.disable == 1:
         make_button(button8)
