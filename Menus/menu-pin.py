@@ -5,6 +5,7 @@ from kalipi import *
 #############################
 ##        Variables        ##
 pin = ""
+c = 0  # Character counter for PIN
 
 
 #############################
@@ -59,9 +60,9 @@ button6 = Button(newLabelPadding * " " + " " * 15 + "6", newOriginX + (newButton
 button7 = Button(newLabelPadding * " " + " " * 15 + "7", newOriginX, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 button8 = Button(newLabelPadding * " " + " " * 15 + "8", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 button9 = Button(newLabelPadding * " " + " " * 15 + "9", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-buttonc = Button(newLabelPadding * " " + " " * 15 + "*", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+buttonc = Button(newLabelPadding * " " + "          CLEAR", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 button0 = Button(newLabelPadding * " " + " " * 15 + "0", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-buttone = Button(newLabelPadding * " " + " " * 15 + "#", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+buttone = Button(newLabelPadding * " " + "          ENTER", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 
 
 #############################
@@ -109,7 +110,7 @@ def local_on_touch():
             return "e"
 
 def verifyPin():
-    global pin
+    global pin, c
 
     if pin == "":
         pygame.quit()
@@ -147,6 +148,7 @@ def verifyPin():
             sys.exit()
         else:
            pin=""
+           c = 0
            return
             ## Debug
 ##            process = subprocess.call("setterm -term linux -back black -fore white -clear all", shell=True)
@@ -171,7 +173,7 @@ def make_button(button):
 
 # Define each button press action
 def button(number):
-    global pin
+    global pin, c
 
     if number == 1:
         if button1.disable == 1:
@@ -179,6 +181,7 @@ def button(number):
 
         # 1
         pin=pin+"1"
+        c = c + 1
         return
 
     if number == 2:
@@ -187,6 +190,7 @@ def button(number):
 
 	# 2
         pin=pin+"2"
+        c = c + 1
         return
 
     if number == 3:
@@ -195,6 +199,8 @@ def button(number):
 
         # 3
         pin=pin+"3"
+        c = c + 1
+        return
 
     if number == 4:
         if button4.disable == 1:
@@ -202,6 +208,7 @@ def button(number):
 
         # 4
         pin=pin+"4"
+        c = c + 1
         return
 
     if number == 5:
@@ -210,6 +217,7 @@ def button(number):
 
 	# 5
         pin=pin+"5"
+        c = c + 1
 	return
 
     if number == 6:
@@ -218,6 +226,7 @@ def button(number):
 
 	# 6
         pin=pin+"6"
+        c = c + 1
         return
 
     if number == 7:
@@ -226,6 +235,7 @@ def button(number):
 
         # 7
         pin=pin+"7"
+        c  = c + 1
         return
 
     if number == 8:
@@ -234,6 +244,7 @@ def button(number):
 
         # 8
         pin=pin+"8"
+        c = c + 1
         return
 
     if number == 9:
@@ -242,6 +253,7 @@ def button(number):
 
         # 9
         pin=pin+"9"
+        c = c + 1
         return
 
     if number == "c":
@@ -250,6 +262,7 @@ def button(number):
 
         # Clear
         pin = ""
+        c = 0
         return
         ## Debug
 ##        process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
@@ -262,6 +275,8 @@ def button(number):
 
         # 0
         pin=pin+"0"
+        c = c + 1
+        return
 
     if number == "e":
         if buttone.disable == 1:
@@ -278,6 +293,8 @@ def button(number):
 
 
 def main (argv):
+
+    global c
 
     # Outer Border
     pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
@@ -419,6 +436,7 @@ def main (argv):
 
         #While loop to manage touch screen inputs
         t = timeout
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -426,6 +444,16 @@ def main (argv):
                     pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
                     num = local_on_touch()
                     button(num)
+                    if c > 0:
+                        pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                        new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, green, newTitleFont * 2)
+                        make_button(new_titleButton)
+                        if c > 15:
+                            c = 0
+                    else:
+                        pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                        make_button(titleButton)
+
                 #Debug:
                 #ensure there is always a safe way to end the program if the touch screen fails
                 ##if event.type == KEYDOWN:
@@ -452,12 +480,21 @@ def main (argv):
     else:
 
         #While loop to manage touch screen inputs
-        while 1:
+        while True:
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
                     num = local_on_touch()
                     button(num)
+                    if c > 0:
+                        pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                        new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, green, newTitleFont * 2)
+                        make_button(new_titleButton)
+                        if c > 15:
+                            c = 0
+                    else:
+                        pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                        make_button(titleButton)
 
                #Debug:
                #ensure there is always a safe way to end the program if the touch screen fails
