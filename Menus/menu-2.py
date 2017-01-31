@@ -35,10 +35,10 @@ def toggle_ntopng():
         status = kalipi.run_cmd("/usr/sbin/service ntopng status")
         if ("is running" in status) or ("active (running)") in status:
             kalipi.run_cmd("/usr/sbin/service ntopng stop")
-            kalipi.run_cmd("/usr/sbin/service redis stop")
+            kalipi.run_cmd("/bin/systemctl stop redis-server")
             return False
         else:
-            kalipi.run_cmd("/usr/sbin/service redis start")
+            kalipi.run_cmd("/bin/systemctl start redis-server")
             kalipi.run_cmd("/usr/sbin/service ntopng start")
             return True
     except:
