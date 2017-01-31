@@ -57,11 +57,11 @@ titleButton = Button(labelPadding * "  " + kalipi.get_date(), originX, originX, 
 button1 = Button(labelPadding * " " + "      WWW", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button2 = Button(labelPadding * " " + "       FTP", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
 button3 = Button(labelPadding * " " + "       SQL", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button4 = Button(labelPadding * " " + "      hTop", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button4 = Button(labelPadding * " " + "     RAS-AP", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button5 = Button(labelPadding * " " + "   darkstat", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button6 = Button(labelPadding * " " + "    ntopng", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button7 = Button(labelPadding * " " + "        <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button8 = Button(labelPadding * " " + "     RAS-AP", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button8 = Button(labelPadding * " " + " Screen Off", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
 
@@ -132,10 +132,19 @@ def button(number):
         if button4.disable == 1:
             return
 
-	# hTop
-        pygame.quit()
-        subprocess.call("/usr/bin/htop", shell=True)
-        os.execv(__file__, sys.argv)
+        # Hostapd RAS-AP
+        script=os.environ["MENUDIR"] + "RAS-AP/ras-ap.sh"
+
+        if kalipi.toggle_script(script):
+        # Stop Service
+                button4.color = green
+                make_button(button4)
+                pygame.display.update()
+        else:
+        #Start Service
+                button4.color = tron_light
+                make_button(button4)
+                pygame.display.update()
 
     if number == 5:
         if button5.disable == 1:
@@ -182,20 +191,13 @@ def button(number):
     if number == 8:
         if button8.disable == 1:
             return
-
-        # Hostapd RAS-AP
-        script=os.environ["MENUDIR"] + "RAS-AP/ras-ap.sh"
-
-        if kalipi.toggle_script(script):
-        # Stop Service
-                button8.color = green
-                make_button(button8)
-                pygame.display.update()
-        else:
-        #Start Service
-                button8.color = tron_light
-                make_button(button8)
-                pygame.display.update()
+        # Screen off
+        pygame.quit()
+        page=os.environ["MENUDIR"] + "menu_screenoff.py"
+        retPage="menu-2.py"
+        args = [page, retPage]
+        os.execvp("python", ["python"] + args)
+        sys.exit()
 
     if number == 9:
         if button9.disable == 1:
@@ -267,7 +269,6 @@ def main (argv):
             button3.color = tron_light
             make_button(button3)
 
-    # Second Row
     # Button 4
     button4.disable = 0  # "1" disables button
 
@@ -275,8 +276,14 @@ def main (argv):
         make_button(button4)
     else:
         # Add button launch code here
-        make_button(button4)
+        if kalipi.check_process("hostapd", "ras-ap.conf"):
+            button4.color = green
+            make_button(button4)
+        else:
+            button4.color = tron_light
+            make_button(button4)
 
+    # Second Row
     # Button 5
     button5.disable = 0  # "1" disables button
 
@@ -323,12 +330,7 @@ def main (argv):
         make_button(button8)
     else:
         # Add button launch code here
-        if kalipi.check_process("hostapd", "ras-ap.conf"):
-            button8.color = green
-            make_button(button8)
-        else:
-            button8.color = tron_light
-            make_button(button8)
+        make_button(button8)
 
     # Button 9
     button9.disable = 0  # "1" disables button
