@@ -51,17 +51,17 @@ newTitleFont = titleFont / 3 * 2
 
 # define all of the buttons
 titleButton = Button("       Environmental Survey    -    Humidity Sensor    ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_inverse, newTitleFont)
-button1 = Button(newLabelPadding * " " + " " * 15 + "1", newOriginX, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button2 = Button(newLabelPadding * " " + " " * 15 + "2", newOriginX + newButtonWidth + newSpacing, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button3 = Button(newLabelPadding * " " + " " * 15 + "3", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button4 = Button(newLabelPadding * " " + " " * 15 + "4", newOriginX, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button5 = Button(newLabelPadding * " " + " " * 15 + "5", newOriginX + newButtonWidth + newSpacing, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button6 = Button(newLabelPadding * " " + " " * 15 + "6", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button7 = Button(newLabelPadding * " " + " " * 15 + "7", newOriginX, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button8 = Button(newLabelPadding * " " + " " * 15 + "8", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button9 = Button(newLabelPadding * " " + " " * 15 + "9", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button1 = Button(" " * 18 + "1", newOriginX, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button2 = Button(" " * 18 + "2", newOriginX + newButtonWidth + newSpacing, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button3 = Button(" " + " " * 18 + "3", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button4 = Button(" " + " " * 18 + "4", newOriginX, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button5 = Button(" " + " " * 18 + "5", newOriginX + newButtonWidth + newSpacing, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button6 = Button(" " + " " * 18 + "6", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button7 = Button(" " + " " * 18 + "7", newOriginX, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button8 = Button(" " + " " * 18 + "8", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button9 = Button(" " + " " * 18 + "9", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 buttonc = Button(newLabelPadding * " " + "          CLEAR", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button0 = Button(newLabelPadding * " " + " " * 15 + "0", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+button0 = Button(" " * 18 + "0", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 buttone = Button(newLabelPadding * " " + "          ENTER", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
 
 
