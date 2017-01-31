@@ -14,7 +14,7 @@ start() {
 	echo "--------------------------------"
         upstream=eth0
         phy=wlan0
-        conf=$MENUDIR/RAS-AP/hostapd.conf
+        conf=$MENUDIR/RAS-AP/ras-ap.conf
         hostapd=/usr/sbin/hostapd
 
         service network-manager stop
@@ -50,8 +50,6 @@ stop() {
         pkill dnsmasq
         pkill hostapd
         pkill python
-        #Flush the NAT table
-##        iptables -t nat -F
 
 }
 
@@ -67,15 +65,15 @@ case "$1" in
        	start
 	;;
     force-reload)
-	;; 
+	;;
     status)
-        PID=$(ps auxww | grep "[h]ostapd-mana.conf" | awk '{print $2}')
+        PID=$(ps auxww | grep "[r]as-ap.conf" | awk '{print $2}')
         if test ${PID:-0} -gt 0
         then
-            echo "Simple Mana is running."
+            echo "RAS-AP is running."
             return 1
         else
-            echo "Simple Mana is not running."
+            echo "RAS-AP is not running."
             return 0
         fi
        ;;

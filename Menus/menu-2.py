@@ -323,12 +323,12 @@ def main (argv):
         make_button(button8)
     else:
         # Add button launch code here
-        if kalipi.check_process("hostapd", "hostapd.conf"):
+        if kalipi.check_process("hostapd", "ras-ap.conf"):
             button8.color = green
             make_button(button8)
         else:
             button8.color = tron_light
-            make_button(button2)
+            make_button(button8)
 
     # Button 9
     button9.disable = 0  # "1" disables button
