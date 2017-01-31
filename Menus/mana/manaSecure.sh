@@ -4,7 +4,7 @@
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Control Basic Mana-Toolkitwith WPA2
+# Short-Description: Control Basic Mana-Toolkit with WPA2
 # Description:       Control Basic Mana-Toolkit Services with WPA2
 ### END INIT INFO
 
@@ -28,7 +28,7 @@ start() {
         ifconfig $phy 10.0.0.1 netmask 255.255.255.0
         route add -net 10.0.0.0 netmask 255.255.255.0 gw 10.0.0.1
 
-        dnsmasq -z -C /etc/mana-toolkit/dnsmasq-dhcpd.conf -i $phy -I lo
+        dnsmasq -z -C $MENUDIR//dnsmasq-dhcpd.conf -i $phy -I lo
 
         #Enable NAT
         echo '1' > /proc/sys/net/ipv4/ip_forward
@@ -43,7 +43,7 @@ start() {
 }
 
 stop() {
-	
+
         echo "--------------------------------"
         echo "   STOP Secure Mana SERVICES"
         echo "--------------------------------"
@@ -69,7 +69,7 @@ case "$1" in
        	start
 	;;
     force-reload)
-	;; 
+	;;
     status)
         PID=$(ps auxww | grep "[h]ostapd-mana-wpa2.conf" | awk '{print $2}')
         if test ${PID:-0} -gt 0
