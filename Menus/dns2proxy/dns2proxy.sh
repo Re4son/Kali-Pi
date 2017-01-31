@@ -23,7 +23,7 @@ start() {
 		DNSMASQ=$(ps auxww | grep "[d]nsmasq" | awk '{print $2}')
 		kill $DNSMASQ
 		#Restart dnsmasq for the DHCP server (-p 0 disables the DNS feature)
-		dnsmasq -z -C $MENUDIR/dns2proxy/dnsmasq-dhcpd.conf -i $phy -I lo -p 0
+		dnsmasq -z -C $MENUDIR/mana/dnsmasq-dhcpd.conf -i $phy -I lo -p 0
         #Enable DNS2Proxy
         cd $share/sslstrip-hsts/dns2proxy/
 		phyIP=$(ifconfig $phy | grep netmask | awk '{print $2}')
@@ -34,7 +34,7 @@ start() {
 }
 
 stop() {
-	
+
         echo "--------------------------------"
         echo "   STOP DNS2Proxy SERVICES"
         echo "--------------------------------"
@@ -44,7 +44,7 @@ stop() {
 		DNSMASQ=$(ps auxww | grep "[d]nsmasq" | awk '{print $2}')
 		kill $DNSMASQ
 		#Restart the normal DNS server
-		dnsmasq -z -C /etc/mana-toolkit/dnsmasq-dhcpd.conf -i $phy -I lo
+		dnsmasq -z -C $MENUDIR/mana/dnsmasq-dhcpd.conf -i $phy -I lo
         #iptables -t nat -D PREROUTING -i $phy -p tcp --destination-port 80 -j REDIRECT --to-port 10000
         #Flush the NAT table
 
