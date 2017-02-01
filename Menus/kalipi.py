@@ -323,8 +323,8 @@ def inputLoop(retPage="menu-1.py"):
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-                    num = kalipi.on_touch()
-                    button(num)
+                    num = on_touch()
+                    return(num)
 
                 #Debug:
                 #ensure there is always a safe way to end the program if the touch screen fails
