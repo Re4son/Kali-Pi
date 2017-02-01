@@ -43,7 +43,7 @@ stop() {
             kill $1 ${PID}
         else
             echo "${PROGSHORT} is not running (tested PID: ${PID})."
-fi
+        fi
 
 }
 
