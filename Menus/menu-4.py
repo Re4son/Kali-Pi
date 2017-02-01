@@ -50,18 +50,6 @@ def check_mana_loud():
     except:
         return False
 
-def toggle_FireLamb():
-    check = "/usr/sbin/service FireLamb-manager status"
-    start = "/usr/bin/FireLamb-start"
-    stop = "/usr/bin/FireLamb-stop"
-    status = kalipi.run_cmd(check)
-    if ("is running" in status) or ("active (running)") in status:
-        kalipi.run_cmd(stop)
-        return False
-    else:
-        kalipi.run_cmd(start)
-        return True
-
 ##    Local Functions      ##
 #############################
 
@@ -169,13 +157,13 @@ def button(number):
             return
 
         # FireLamb
-        if toggle_FireLamb():
+        firelamb="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/firelamb.sh"
+        if kalipi.toggle_script(firelamb):
                 button5.color = green
                 make_button(button5)
                 pygame.display.update()
-
         else:
-                button5.color = tron_light
+                button5.color = red
                 make_button(button5)
                 pygame.display.update()
         return
@@ -312,13 +300,14 @@ def main (argv):
             make_button(button4)
 
     # Button 5
-    button5.disable = 1  # "1" disables button
+    button5.disable = 0  # "1" disables button
 
     if button5.disable == 1:
         make_button(button5)
     else:
         # Add button launch code here
-        if kalipi.check_service("FireLamb-manager"):
+        firelamb="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/firelamb.sh"
+        if kalipi.check_script(firelamb):
             button5.color = green
             make_button(button5)
         else:
@@ -326,7 +315,7 @@ def main (argv):
             make_button(button5)
 
     # Button 6
-    button6.disable = 0  # "1" disables button
+    button6.disable = 1  # "1" disables button
 
     if button6.disable == 1:
         make_button(button6)
@@ -388,3 +377,4 @@ def main (argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+

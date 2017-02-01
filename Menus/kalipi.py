@@ -190,6 +190,15 @@ def toggle_service(srvc):
         run_cmd(start)
         return True
 
+# Check script
+def check_script(script):
+    check = script + " status"
+    status = call(check, shell=True)
+    if (status == 1) :
+        return True
+    else:
+        return False
+
 # Toggle script
 def toggle_script(script):
     check = script + " status"
