@@ -11,10 +11,12 @@
 
 ## Adjust these
 phy=wlan1
-conf=/etc/mana-toolkit/hostapd-mana.conf
+conf=/home/pi/Kali-Pi/Menus/mana/hostapd-mana.conf
 hostapd=/usr/lib/mana-toolkit/hostapd
 cmdline="${hostapd} ${conf}"
 HOSTNAME=WRT54G
+echo $MENUDIR
+exit
 ## End adjustment
 
 PROGLONG=$(realpath $0)
@@ -41,12 +43,8 @@ start() {
         echo "--------------------------------"
         echo "   STARTING $PROGSHORT"
         echo "--------------------------------"
-        echo ${PIDFILE}
-        cat ${PIDFILE}
 
         hostname $HOSTNAME
-        echo hostname WRT54G
-        sleep 2
 
         service network-manager stop
         rfkill unblock wlan
@@ -85,7 +83,6 @@ stop() {
         if [[ -z "${PID}" ]]; then
             echo "${PROGSHORT} is not running (missing PID)."
         elif [[ -e "/proc/${PID}/cmdline" && "`tr -d '\0' < /proc/${PID}/cmdline`" == *"$( echo -e "${cmdline}" | tr -d '[:space:]')"* ]]; then
-            kill $1 ${PID}
             pkill hostapd
             pkill dnsmasq
             pkill dnsspoof

@@ -12,3 +12,4 @@ iptables --policy INPUT ACCEPT
 iptables --policy FORWARD ACCEPT
 iptables --policy OUTPUT ACCEPT
 iptables -t nat -F
+hostname kali-pi
