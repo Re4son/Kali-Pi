@@ -150,12 +150,12 @@ def button(number):
         # No Upstream All
         script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-all.sh"
         if kalipi.toggle_script(script):
-                button1.color = green
-                make_button(button1)
+                button6.color = green
+                make_button(button6)
                 pygame.display.update()
         else:
                 button6.color = tron_light
-                make_button(button1)
+                make_button(button6)
                 pygame.display.update()
         return
 
