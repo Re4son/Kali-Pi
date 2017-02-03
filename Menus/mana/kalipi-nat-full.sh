@@ -16,6 +16,7 @@ conf=/home/pi/Kali-Pi/Menus/mana/hostapd-mana.conf
 hostapd=/usr/lib/mana-toolkit/hostapd
 cmdline="${hostapd} ${conf}"
 HOSTNAME=WRT54G
+REALHOSTNAME=kali-pi
 ## End adjustment
 
 PROGLONG=$(realpath $0)
@@ -141,6 +142,7 @@ stop() {
             iptables --policy FORWARD ACCEPT
             iptables --policy OUTPUT ACCEPT
             iptables -t nat -F
+            hostname $REALHOSTNAME
         else
             echo "${PROGSHORT} is not running (tested PID: ${PID})."
         fi

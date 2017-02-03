@@ -45,7 +45,7 @@ button4 = Button(labelPadding * " " + "   NU-EAP", originX, originY + buttonHeig
 button5 = Button(labelPadding * " " + "NU-EAP only", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button6 = Button(labelPadding * " " + "    NU-All", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button7 = Button(labelPadding * " " + "       <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button8 = Button(labelPadding * " " + "Clean  Mana", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button8 = Button(labelPadding * " " + "Cleanup", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 button9 = Button(labelPadding * " " + "       >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
 
@@ -173,7 +173,7 @@ def button(number):
         if button8.disable == 1:
             return
 
-        #Clean mana
+        #Cleanup
         script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/cleanmana.sh"
         kalipi.run_cmd(script)
         button1.color = tron_light
@@ -198,7 +198,7 @@ def button(number):
 
         # Next page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-5.py"
+        page=os.environ["MENUDIR"] + "menu-9.py"
         os.execvp("python", ["python", page])
         sys.exit()
 ##        Buttons          ##

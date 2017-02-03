@@ -17,6 +17,7 @@ hostapd=/usr/lib/mana-toolkit/hostapd
 crackapd=/usr/share/mana-toolkit/crackapd/crackapd.py
 cmdline="${hostapd} ${conf}"
 HOSTNAME=WRT54G
+REALHOSTNAME=kali-pi
 ## End adjustment
 
 PROGLONG=$(realpath $0)
@@ -101,6 +102,7 @@ stop() {
             pkill stunnel4
             pkill msfconsole
             iptables -t nat -F
+            hostname $REALHOSTNAME
         else
             echo "${PROGSHORT} is not running (tested PID: ${PID})."
         fi
