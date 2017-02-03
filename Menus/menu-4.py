@@ -74,6 +74,7 @@ def button(number):
                 make_button(button1)
                 pygame.display.update()
         else:
+                button1.color = tron_light
                 make_button(button1)
                 pygame.display.update()
         return
@@ -89,6 +90,7 @@ def button(number):
                 make_button(button2)
                 pygame.display.update()
         else:
+                button2.color = tron_light
                 make_button(button2)
                 pygame.display.update()
         return
@@ -104,6 +106,7 @@ def button(number):
                 make_button(button3)
                 pygame.display.update()
         else:
+                button3.color = tron_light
                 make_button(button3)
                 pygame.display.update()
         return
@@ -119,6 +122,7 @@ def button(number):
                 make_button(button4)
                 pygame.display.update()
         else:
+                button4.color = tron_light
                 make_button(button4)
                 pygame.display.update()
         return
@@ -134,6 +138,7 @@ def button(number):
                 make_button(button5)
                 pygame.display.update()
         else:
+                button5.color = tron_light
                 make_button(button5)
                 pygame.display.update()
         return
@@ -149,6 +154,7 @@ def button(number):
                 make_button(button1)
                 pygame.display.update()
         else:
+                button6.color = tron_light
                 make_button(button1)
                 pygame.display.update()
         return
