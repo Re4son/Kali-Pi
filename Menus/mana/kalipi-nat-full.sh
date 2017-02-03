@@ -120,7 +120,7 @@ start() {
         /usr/share/mana-toolkit/firelamb/firelamb.py -i $phy &
 
         # Start net-creds
-        python /usr/share/mana-toolkit/net-creds/net-creds.py -i $phy > /var/lib/mana-toolkit/net-creds.log.`date "+%s"`
+        python /usr/share/mana-toolkit/net-creds/net-creds.py -i $phy > /var/lib/mana-toolkit/net-creds.log.`date "+%s"`&
 
 
 }
