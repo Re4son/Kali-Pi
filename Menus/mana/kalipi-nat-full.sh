@@ -12,11 +12,10 @@
 ## Adjust these
 upstream=eth0
 phy=wlan1
-##conf=${MENUDIR}/mana/hostapd-kalipi-nat-full.conf
-conf=/home/pi/Kali-Pi/Menus/mana/hostapd-kalipi-nat-full.conf
+conf=/home/pi/Kali-Pi/Menus/mana/hostapd-mana.conf
 hostapd=/usr/lib/mana-toolkit/hostapd
 cmdline="${hostapd} ${conf}"
-hostname WRT54G
+HOSTNAME=WRT54G
 ## End adjustment
 
 PROGLONG=$(realpath $0)

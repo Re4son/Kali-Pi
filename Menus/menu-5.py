@@ -28,6 +28,27 @@ tron_inverse = tron_yel
 #############################
 ##    Local Functions      ##
 
+def check_mana():
+    try:
+        check = "sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd mana_get_state | grep 'ENABLE'"
+        status = kalipi.run_cmd(check)
+        if ("ENABLE" in status):
+            return True
+        else:
+            return False
+    except:
+        return False
+
+def check_mana_loud():
+    try:
+        check = "sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd mana_loud_state | grep 'ENABLE'"
+        status = kalipi.run_cmd(check)
+        if ("ENABLE" in status):
+            return True
+        else:
+            return False
+    except:
+        return False
 
 ##    Local Functions      ##
 #############################
@@ -37,15 +58,15 @@ tron_inverse = tron_yel
 ##        Buttons          ##
 
 # define all of the buttons
-titleButton = Button("                      EvilAP - Mana", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
-button1 = Button(labelPadding * " " + "   NAT Full", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button2 = Button(labelPadding * " " + " NAT Simple", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button3 = Button(labelPadding * " " + "No Upstream", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button4 = Button(labelPadding * " " + "   NU-EAP", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button5 = Button(labelPadding * " " + "NU-EAP only", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button6 = Button(labelPadding * " " + "    NU-All", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+titleButton = Button("                   EvilAP - Custom", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
+button1 = Button(labelPadding * " " + "  AP Open", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button2 = Button(labelPadding * " " + "  AP Secure", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button3 = Button(labelPadding * " " + "       Mana", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
+button4 = Button(labelPadding * " " + "       Beef", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button5 = Button(labelPadding * " " + "   Firelamb", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
+button6 = Button(labelPadding * " " + "  Mana Loud", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
 button7 = Button(labelPadding * " " + "       <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button8 = Button(labelPadding * " " + "Clean  Mana", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+button8 = Button(labelPadding * " " + "  DNS2Proxy", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 button9 = Button(labelPadding * " " + "       >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
 
 
@@ -67,13 +88,14 @@ def button(number):
         if button1.disable == 1:
             return
 
-        # NAT Full
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-full.sh"
+        # Hostapd Open
+        script=os.environ["MENUDIR"] + "mana/manaSimple.sh"
         if kalipi.toggle_script(script):
                 button1.color = green
                 make_button(button1)
                 pygame.display.update()
         else:
+                button1.color = tron_light
                 make_button(button1)
                 pygame.display.update()
         return
@@ -82,43 +104,50 @@ def button(number):
         if button2.disable == 1:
             return
 
-        # NAT Simple
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-simple.sh"
+        # Hostapd Secure
+        script=os.environ["MENUDIR"] + "mana/manaSecure.sh"
+
         if kalipi.toggle_script(script):
+        # Stop Service
                 button2.color = green
                 make_button(button2)
                 pygame.display.update()
         else:
+        #Start Service
+                button2.color = tron_light
                 make_button(button2)
                 pygame.display.update()
-        return
 
     if number == 3:
         if button3.disable == 1:
             return
 
-        # No Upstream
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream.sh"
-        if kalipi.toggle_script(script):
-                button3.color = green
+        #Mana Attack
+        if check_mana():
+        # Stop Mana
+                kalipi.run_cmd("sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd mana_disable")
+                button3.color = tron_light
                 make_button(button3)
                 pygame.display.update()
         else:
+        # Start Mana
+                run_cmd("sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd mana_enable")
+                button3.color = green
                 make_button(button3)
                 pygame.display.update()
-        return
 
     if number == 4:
         if button4.disable == 1:
             return
 
-        # No Upstream EAP
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eap.sh"
-        if kalipi.toggle_script(script):
+        # Beef
+        if kalipi.toggle_service("beef-xss"):
                 button4.color = green
                 make_button(button4)
                 pygame.display.update()
+
         else:
+                button4.color = tron_light
                 make_button(button4)
                 pygame.display.update()
         return
@@ -127,13 +156,14 @@ def button(number):
         if button5.disable == 1:
             return
 
-        # No Upstream EAP only
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eaponly.sh"
-        if kalipi.toggle_script(script):
+        # FireLamb
+        firelamb="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/firelamb.sh"
+        if kalipi.toggle_script(firelamb):
                 button5.color = green
                 make_button(button5)
                 pygame.display.update()
         else:
+                button5.color = red
                 make_button(button5)
                 pygame.display.update()
         return
@@ -142,16 +172,19 @@ def button(number):
         if button6.disable == 1:
             return
 
-        # No Upstream All
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-all.sh"
-        if kalipi.toggle_script(script):
-                button1.color = green
-                make_button(button1)
+        #Mana Loud Attack
+        if check_mana_loud():
+        #Stop Mana
+                kalipi.run_cmd("sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd mana_loud_off")
+                button6.color = tron_light
+                make_button(button6)
                 pygame.display.update()
         else:
-                make_button(button1)
+        #Start Mana Loud Attack
+                kalipi.run_cmd("sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd mana_loud_on")
+                button6.color = green
+                make_button(button6)
                 pygame.display.update()
-        return
 
     if number == 7:
         if button7.disable == 1:
@@ -159,7 +192,7 @@ def button(number):
 
         # Previous page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-3.py"
+        page=os.environ["MENUDIR"] + "menu-4.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
@@ -167,9 +200,18 @@ def button(number):
         if button8.disable == 1:
             return
 
-        #Clean mana
-        script=os.environ["MENUDIR"] + "mana/cleanmana.sh"
-        kalipi.run_cmd("/usr/bin/sudo ${script")
+                #DNS2Proxy
+        script=os.environ["MENUDIR"] + "dns2proxy/dns2proxy.sh"
+        if kalipi.toggle_script(script):
+        #Stop Service
+                button8.color = green
+                make_button(button8)
+                pygame.display.update()
+        else:
+        #Start Service
+                button8.color = tron_light
+                make_button(button8)
+                pygame.display.update()
         return
 
     if number == 9:
@@ -178,7 +220,7 @@ def button(number):
 
         # Next page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-5.py"
+        page=os.environ["MENUDIR"] + "menu-9.py"
         os.execvp("python", ["python", page])
         sys.exit()
 ##        Buttons          ##
@@ -207,13 +249,12 @@ def main (argv):
         make_button(button1)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-full.sh"
-        if kalipi.check_script(script):
+        if kalipi.check_process("hostapd", "mana.conf"):
             button1.color = green
             make_button(button1)
         else:
+            button1.color = tron_light
             make_button(button1)
-
 
     # Button 2
     button2.disable = 0  # "1" disables button
@@ -222,13 +263,12 @@ def main (argv):
         make_button(button2)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-simple.sh"
-        if kalipi.check_script(script):
+        if kalipi.check_process("hostapd", "wpa2.conf"):
             button2.color = green
             make_button(button2)
         else:
+            button2.color = tron_light
             make_button(button2)
-
 
     # Button 3
     button3.disable = 0  # "1" disables button
@@ -236,13 +276,13 @@ def main (argv):
     if button3.disable == 1:
         make_button(button3)
     else:
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream.sh"
-        if kalipi.check_script(script):
+        # Add button launch code here
+        if check_mana():
             button3.color = green
             make_button(button3)
         else:
+            button3.color = tron_light
             make_button(button3)
-
 
     # Second Row
     # Button 4
@@ -252,13 +292,12 @@ def main (argv):
         make_button(button4)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eap.sh"
-        if kalipi.check_script(script):
+        if kalipi.check_service("beef-xss"):
             button4.color = green
             make_button(button4)
         else:
+            button4.color = tron_light
             make_button(button4)
-
 
     # Button 5
     button5.disable = 0  # "1" disables button
@@ -267,25 +306,26 @@ def main (argv):
         make_button(button5)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eaponly.sh"
-        if kalipi.check_script(script):
+        firelamb="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/firelamb.sh"
+        if kalipi.check_script(firelamb):
             button5.color = green
             make_button(button5)
         else:
+            button5.color = red
             make_button(button5)
 
     # Button 6
-    button6.disable = 0  # "1" disables button
+    button6.disable = 1  # "1" disables button
 
     if button6.disable == 1:
         make_button(button6)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eaponly.sh"
-        if kalipi.check_script(script):
+        if check_mana_loud():
             button6.color = green
             make_button(button6)
         else:
+            button6.color = tron_light
             make_button(button6)
 
     # Third Row
@@ -305,7 +345,12 @@ def main (argv):
         make_button(button8)
     else:
         # Add button launch code here
-        make_button(button8)
+        if check_process("python", "dns2proxy.py"):
+            button8.color = green
+            make_button(button8)
+        else:
+            button8.color = tron_light
+            make_button(button8)
 
     # Button 9
     button9.disable = 0  # "1" disables button
