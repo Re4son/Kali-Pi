@@ -85,7 +85,7 @@ stop() {
         echo "--------------------------------"
         if [[ -z "${PID}" ]]; then
             echo "${PROGSHORT} is not running (missing PID)."
-        elif [[ -e "/proc/${PID}/cmdline" && "`tr -d '\0' < /proc/${PID}/cmdline`" == *"$( echo -e "${cmdline}" | tr -d '[:space:]')"* ]]; then
+        elif [[ -e /proc/${PID}/cmdline && "`tr -d '\0' < /proc/${PID}/cmdline`" == *"$( echo -e "${cmdline}" | tr -d '[:space:]')"* ]]; then
             kill ${PID}
             rm /tmp/crackapd.run
             EXNODE=`cat $conf | grep ennode | cut -f2 -d"="`
@@ -103,3 +103,30 @@ stop() {
             echo "${PROGSHORT} is not running (tested PID: ${PID})."
         fi
 }
+case "$1" in
+    start)
+       start
+       ;;
+    stop)
+       stop
+       ;;
+    restart)
+        stop
+        start
+        ;;
+    force-reload)
+        ;;
+    status)
+        if [[ -z "${PID}" ]]; then
+            echo "${PROGSHORT} is not running (missing PID)."
+        elif [[ -e /proc/${PID}/cmdline && "`tr -d '\0' < /proc/${PID}/cmdline`" == *"$( echo -e ${cmdline} | tr -d '[:space:]')"* ]]; then
+            echo "${PROGSHORT} is running (PID: ${PID})."
+            exit 1
+        else
+            echo "${PROGSHORT} is not running (tested PID: ${PID})."
+            exit 0
+        fi
+        ;;
+    *)
+       echo "Usage: $0 {start|stop|status|restart}"
+esac

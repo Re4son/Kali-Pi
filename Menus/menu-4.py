@@ -168,8 +168,22 @@ def button(number):
             return
 
         #Clean mana
-        script=os.environ["MENUDIR"] + "mana/cleanmana.sh"
-        kalipi.run_cmd("/usr/bin/sudo ${script")
+        script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/cleanmana.sh"
+        kalipi.run_cmd(script)
+        button1.color = tron_light
+        make_button(button1)
+        button2.color = tron_light
+        make_button(button2)
+        button3.color = tron_light
+        make_button(button3)
+        button4.color = tron_light
+        make_button(button4)
+        button5.color = tron_light
+        make_button(button5)
+        button6.color = tron_light
+        make_button(button6)
+        button8.color = tron_light
+        make_button(button8)
         return
 
     if number == 9:
@@ -207,7 +221,7 @@ def main (argv):
         make_button(button1)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-full.sh"
+        script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-full.sh"
         if kalipi.check_script(script):
             button1.color = green
             make_button(button1)
@@ -222,7 +236,7 @@ def main (argv):
         make_button(button2)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-simple.sh"
+        script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-simple.sh"
         if kalipi.check_script(script):
             button2.color = green
             make_button(button2)
@@ -236,7 +250,7 @@ def main (argv):
     if button3.disable == 1:
         make_button(button3)
     else:
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream.sh"
+        script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream.sh"
         if kalipi.check_script(script):
             button3.color = green
             make_button(button3)
@@ -252,7 +266,7 @@ def main (argv):
         make_button(button4)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eap.sh"
+        script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eap.sh"
         if kalipi.check_script(script):
             button4.color = green
             make_button(button4)
@@ -267,7 +281,7 @@ def main (argv):
         make_button(button5)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eaponly.sh"
+        script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eaponly.sh"
         if kalipi.check_script(script):
             button5.color = green
             make_button(button5)
@@ -281,7 +295,7 @@ def main (argv):
         make_button(button6)
     else:
         # Add button launch code here
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eaponly.sh"
+        script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream-eaponly.sh"
         if kalipi.check_script(script):
             button6.color = green
             make_button(button6)

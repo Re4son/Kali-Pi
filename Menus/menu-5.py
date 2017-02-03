@@ -271,7 +271,7 @@ def main (argv):
             make_button(button2)
 
     # Button 3
-    button3.disable = 0  # "1" disables button
+    button3.disable = 1  # "1" disables button
 
     if button3.disable == 1:
         make_button(button3)
