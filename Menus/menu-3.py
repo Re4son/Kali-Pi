@@ -56,6 +56,13 @@ def toggle_snort():
         return False
 
 
+# Check msf session status
+def check_msf():
+    if 'SCREEN -R -S msf' in commands.getoutput('/bin/ps -ef'):
+        return True
+    else:
+        return False
+
 ##    Local Functions      ##
 #############################
 
@@ -95,11 +102,23 @@ def button(number):
             return
 
 	# Metasploit
-        pygame.quit()
         process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
-        call("/usr/bin/msfconsole", shell=True)
+        pygame.quit()
+        kalipi.run_cmd("/usr/bin/sudo -u pi screen -R -S msf msfconsole")
         process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
         os.execv(__file__, sys.argv)
+
+        if check_msf():
+                button1.color = green
+                make_button(button1)
+                pygame.display.update()
+
+        else:
+                button1.color = tron_light
+                make_button(button1)
+                pygame.display.update()
+        return
+
 
     if number == 2:
         if button2.disable == 1:
@@ -220,7 +239,12 @@ def main (argv):
         make_button(button1)
     else:
         # Add button launch code here
-        make_button(button1)
+        if check_msf():
+            button1.color = green
+            make_button(button1)
+        else:
+            button1.color = tron_light
+            make_button(button1)
 
     # Button 2
     button2.disable = 0  # "1" disables button

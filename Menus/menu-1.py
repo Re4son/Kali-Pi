@@ -36,6 +36,13 @@ def check_vnc():
     else:
         return False
 
+# Check Terminal session status
+def check_terminal():
+    if 'SCREEN -R -S term' in commands.getoutput('/bin/ps -ef'):
+        return True
+    else:
+        return False
+
 
 ##    Local Functions      ##
 #############################
@@ -136,8 +143,21 @@ def button(number):
 	# Terminal
         process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
         pygame.quit()
-        kalipi.run_cmd("/usr/bin/sudo -u pi screen -RR")
+        kalipi.run_cmd("/usr/bin/sudo -u pi screen -R -S term")
+        process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
         os.execv(__file__, sys.argv)
+
+        if check_terminal():
+		button6.color = green
+		make_button(button6)
+		pygame.display.update()
+
+	else:
+		button6.color = tron_light
+		make_button(button6)
+		pygame.display.update()
+	return
+
 
     if number == 7:
         if button7.disable == 1:
@@ -250,7 +270,12 @@ def main (argv):
         make_button(button6)
     else:
         # Add button launch code here
-        make_button(button6)
+        if check_terminal():
+            button6.color = green
+            make_button(button6)
+        else:
+            button6.color = tron_light
+            make_button(button6)
 
     # Third Row
     # Button 7
