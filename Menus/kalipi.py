@@ -2,9 +2,12 @@
 import sys, os, pygame, subprocess, commands, time, socket
 from pygame.locals import *
 from subprocess import *
-os.environ["SDL_FBDEV"] = "/dev/fb1"
-os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
-os.environ["SDL_MOUSEDRV"] = "TSLIB"
+if "TFT" in os.environ and os.environ["TFT"] == "0":
+    pass
+else:
+    os.environ["SDL_FBDEV"] = "/dev/fb1"
+    os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
+    os.environ["SDL_MOUSEDRV"] = "TSLIB"
 
 #############################
 ## Global display settings ##
@@ -31,7 +34,11 @@ tron_ora = (255, 202,   0)
 # Initialize pygame modules individually (to avoid ALSA errors) and hide mouse
 pygame.font.init()
 pygame.display.init()
-pygame.mouse.set_visible(0)
+
+if "TFT" in os.environ and os.environ["TFT"] == "0":
+    pygame.mouse.set_visible(1)
+else:
+    pygame.mouse.set_visible(0)
 
 ###########################
 ##  Screen layouts       ##

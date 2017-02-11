@@ -9,20 +9,18 @@
 
 
 ## Adjust these:
-export KPSCREENSIZE=2.8     ## Screensize in inch, Options= 3.5, 2.8
+export KPSCREENSIZE=3.5     ## Screensize in inch, Options= 3.5, 2.8
 export KPLAYOUT=9           ## Number of buttons - Currently only 9 is supported
 export KPPIN=0              ## Set to "1" to enforce PIN authentication, run ./set-pin to change PIN
-export KPTIMEOUT=2          ## Minutes before screensaver kicks in, comment out for screensaver off
+##export KPTIMEOUT=2          ## Minutes before screensaver kicks in, comment out for screensaver off
 ## End adjustments
 
-
-export FRAMEBUFFER=/dev/fb1
+export TFT=0                ## Set to 1 for TFT output, 0 for X Window
 export MENUDIR="/home/pi/Kali-Pi/Menus/"
-export TFT=1                ## Set to 1 for TFT output, 0 for PC screen
 while true; do
 ## Loop to make it a bit more difficult to bypass PIN
 
-    setterm -term linux -back default -fore black -clear all
+setterm -term linux -back default -fore white -clear all
 
     if [ $KPPIN == "1" ]; then
         startpage="menu-pin.py menu-1.py"
@@ -31,7 +29,6 @@ while true; do
     else
         startpage="menu-1.py"
         /usr/bin/clear
-        /bin/bash $MENUDIR/launch-bg.sh
         /usr/bin/env python $MENUDIR$startpage
     fi
 
