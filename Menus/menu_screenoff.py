@@ -64,7 +64,7 @@ def screen_off():
     process = subprocess.call("setterm -term linux -back black -fore black -clear all", shell=True)
 
 
-def main (argv):
+def screensaver(argv):
 
     ## Initialise backlight control
     global backlightControl
@@ -94,4 +94,4 @@ def main (argv):
         time.sleep(0.4)
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    screensaver(sys.argv[1:])

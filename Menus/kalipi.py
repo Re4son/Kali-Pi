@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import sys, os, pygame, subprocess, commands, time, socket
+import sys, os, os.path, pygame, subprocess, commands, time, socket
+import RPi.GPIO as GPIO
 from pygame.locals import *
 from subprocess import *
 if "TFT" in os.environ and os.environ["TFT"] == "0":
@@ -30,15 +31,6 @@ orange   = (255, 127,   0)
 tron_ora = (255, 202,   0)
 
 
-# Set up the base menu you can customize your menu with the colors above
-# Initialize pygame modules individually (to avoid ALSA errors) and hide mouse
-pygame.font.init()
-pygame.display.init()
-
-if "TFT" in os.environ and os.environ["TFT"] == "0":
-    pygame.mouse.set_visible(1)
-else:
-    pygame.mouse.set_visible(0)
 
 ###########################
 ##  Screen layouts       ##
@@ -52,7 +44,7 @@ if os.environ["KPSCREENSIZE"] == "3.5":
         screen_y = 320
 
         size = width, height = screen_x, screen_y
-        screen = pygame.display.set_mode(size)
+##        screen = pygame.display.set_mode(size)
 
         #Define the aspect of the menu
         originX = 40
@@ -73,7 +65,7 @@ else:
         screen_y = 240
 
         size = width, height = screen_x, screen_y
-        screen = pygame.display.set_mode(size)
+##        screen = pygame.display.set_mode(size)
 
         #Define the aspect of the menu
         originX = 22
@@ -89,9 +81,6 @@ else:
 ###########################
 
 
-# Background Color
-screen.fill(black)
-
 class Button(object):
         text = ""
         xpo = ""
@@ -99,17 +88,44 @@ class Button(object):
         height = ""
         width = ""
         color = ""
+        fntColor = ""
         fntSize = ""
         disable = ""
-        def __init__(self, text, xpo, ypo, height, width, color, fntSize, disable=0):
+        def __init__(self, text, xpo, ypo, height, width, color, fntColor, fntSize, disable=0):
                 self.text = text
                 self.xpo = xpo
                 self.ypo = ypo
                 self.height = height
                 self.width = width
                 self.color = color
+                self.fntColor = fntColor
                 self.fntSize = fntSize
                 self.disable = disable
+        def draw(self):
+                if self.disable == 1:
+                    self.fntColor = grey
+
+                if self.color == tron_blu:
+                    pygame.draw.rect(screen.canvas, tron_blu, (self.xpo-10,self.ypo-10,self.width,self.height),3)
+                    pygame.draw.rect(screen.canvas, tron_whi, (self.xpo-9,self.ypo-9,self.width-1,self.height-1),1)
+                    pygame.draw.rect(screen.canvas, tron_blu, (self.xpo-8,self.ypo-8,self.width-2,self.height-2),1)
+                    font=pygame.font.Font(None,self.fntSize)
+                    label=font.render(str(self.text), 1, (self.fntColor))
+                    screen.canvas.blit(label,(self.xpo,self.ypo+7))
+                elif self.color == tron_ora:
+                    pygame.draw.rect(screen.canvas, tron_ora, (self.xpo-10,self.ypo-10,self.width,self.height),3)
+                    pygame.draw.rect(screen.canvas, tron_yel, (self.xpo-9,self.ypo-9,self.width-1,self.height-1),1)
+                    pygame.draw.rect(screen.canvas, tron_ora, (self.xpo-8,self.ypo-8,self.width-2,self.height-2),1)
+                    font=pygame.font.Font(None,self.fntSize)
+                    label=font.render(str(self.text), 1, (self.fntColor))
+                    screen.canvas.blit(label,(self.xpo,self.ypo+7))
+                else:
+                    pygame.draw.rect(screen.canvas, self.color, (self.xpo-10,self.ypo-10,self.width,self.height),3)
+                    pygame.draw.rect(screen.canvas, self.color, (self.xpo-9,self.ypo-9,self.width-1,self.height-1),1)
+                    pygame.draw.rect(screen.canvas, self.color, (self.xpo-8,self.ypo-8,self.width-2,self.height-2),1)
+                    font=pygame.font.Font(None,self.fntSize)
+                    label=font.render(str(self.text), 1, (self.fntColor))
+                    screen.canvas.blit(label,(self.xpo,self.ypo+7))
 
 
 ## Global display settings ##
@@ -118,6 +134,34 @@ class Button(object):
 
 #############################
 ##   Global Functions      ##
+
+# Initialis the screen
+def screen():
+    pygame.font.init()
+    pygame.display.init()
+
+    if "TFT" in os.environ and os.environ["TFT"] == "0":
+        pygame.mouse.set_visible(1)
+    else:
+        pygame.mouse.set_visible(0)
+        screen.canvas = pygame.display.set_mode(size)
+
+    # Background Color
+    screen.canvas.fill(black)
+    return True
+
+# Draw the outer border
+def border(color):
+    if color == tron_blu:
+        pygame.draw.rect(screen.canvas, tron_blu, (0,0,screen_x-1,screen_y-1),8)
+        pygame.draw.rect(screen.canvas, tron_whi, (2,2,screen_x-5,screen_y-5),2)
+    if color == tron_ora:
+        pygame.draw.rect(screen.canvas, tron_ora, (0,0,screen_x-1,screen_y-1),8)
+        pygame.draw.rect(screen.canvas, tron_yel, (2,2,screen_x-5,screen_y-5),2)
+    else:
+        pygame.draw.rect(screen.canvas, color, (0,0,screen_x-1,screen_y-1),8)
+        pygame.draw.rect(screen.canvas, color, (2,2,screen_x-5,screen_y-5),2)
+
 
 # Get todays date
 def get_date():
@@ -293,6 +337,72 @@ def get_retPage():
         retPage = str(sys.argv[1])
     return retPage
 
+# Screensaver
+def screensaver(retPage="menu-1.py"):
+
+    ## Initialise backlight control
+
+    if os.path.isfile("/sys/class/backlight/soc:backlight/brightness"):
+        # kernel 4.4 STMP GPIO on/off for ada 3.5r
+        backlightControl="3.5r"
+    else:
+        # GPIO 18 backlight control
+        # Initialise GPIO
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(18, GPIO.OUT)
+        backlightControl="GPIO18"
+
+    #While loop to manage touch screen inputs
+    screen_off(backlightControl)
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                screen_on(retPage, backlightControl)
+                return()
+                #Debug:
+                #ensure there is always a safe way to end the program if the touch screen fails
+                ##if event.type == KEYDOWN:
+                ##    if event.key == K_ESCAPE:
+                ##        sys.exit()
+        time.sleep(0.4)
+
+# Turn screen on
+def screen_on(retPage, backlightControl):
+
+    if os.environ["KPPIN"] != "1":
+        launch_bg=os.environ["MENUDIR"] + "launch-bg.sh"
+        process = subprocess.call(launch_bg, shell=True)
+
+    pygame.quit()
+    if backlightControl == "3.5r":
+        process = subprocess.call("echo '1' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
+    else:
+        backlight = GPIO.PWM(18, 1023)
+        backlight.start(100)
+        GPIO.cleanup()
+    if os.environ["KPPIN"] == "1":
+        page=os.environ["MENUDIR"] + "menu-pin.py"
+        args = [page, retPage]
+    else:
+        page=os.environ["MENUDIR"] + retPage
+        args = [page]
+
+    os.execvp("python", ["python"] + args)
+
+# Turn screen off
+def screen_off(backlightControl):
+
+    screen.canvas.fill(black)
+    pygame.display.update()
+    if backlightControl == "3.5r":
+        process = subprocess.call("echo '0' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
+    else:
+        backlight = GPIO.PWM(18, 0.1)
+        backlight.start(0)
+
+    process = subprocess.call("setterm -term linux -back black -fore white -clear all", shell=True)
+    return()
+
 # Input loop for touch event
 def inputLoop(retPage="menu-1.py"):
     #############################
@@ -327,11 +437,7 @@ def inputLoop(retPage="menu-1.py"):
                 break
 
         ## Screensaver
-        pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_screenoff.py"
-        args = [page, retPage]
-        os.execvp("python", ["python"] + args)
-        sys.exit()
+        screensaver(retPage)
 
     else:
         #While loop to manage touch screen inputs
