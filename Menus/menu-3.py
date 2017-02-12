@@ -3,27 +3,6 @@ import kalipi
 from kalipi import *
 
 
-#############################
-## Global display settings ##
-
-#++++++++++++++++++++++++++++#
-#+   Select color scheme    +#
-
-# Tron theme orange
-##tron_regular = tron_ora
-##tron_light = tron_yel
-##tron_inverse = tron_whi
-
-# Tron theme blue
-tron_regular = tron_blu
-tron_light = tron_whi
-tron_inverse = tron_yel
-
-#+           End            +#
-#++++++++++++++++++++++++++++#
-
-## Global display settings ##
-#############################
 
 #############################
 ##    Local Functions      ##
@@ -71,28 +50,17 @@ def check_msf():
 ##        Buttons          ##
 
 # define all of the buttons
-titleButton = Button("                        Misc Tools", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_inverse, titleFont)
-button1 = Button(labelPadding * " " + "  Metasploit", originX, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button2 = Button(labelPadding * " " + "  SDR-Scan", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button3 = Button(labelPadding * " " + "     Kismet", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_light, labelFont)
-button4 = Button(labelPadding * " " + "    OpenVAS", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button5 = Button(labelPadding * " " + "      Snort", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button6 = Button(labelPadding * " " + "  PulledPork", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_light, labelFont)
-button7 = Button(labelPadding * " " + "        <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button8 = Button(labelPadding * " " + " Screen Off", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+titleButton = Button("                        Misc Tools", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_blu, tron_ora, titleFont)
+button1 = Button(labelPadding * " " + "  Metasploit", originX, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button2 = Button(labelPadding * " " + "  SDR-Scan", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button3 = Button(labelPadding * " " + "     Kismet", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button4 = Button(labelPadding * " " + "    OpenVAS", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button5 = Button(labelPadding * " " + "      Snort", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button6 = Button(labelPadding * " " + "  PulledPork", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button7 = Button(labelPadding * " " + "        <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button8 = Button(labelPadding * " " + " Screen Off", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 
-
-def make_button(button):
-    if button.disable == 1:
-        button.color = grey
-
-    pygame.draw.rect(screen, tron_regular, (button.xpo-10,button.ypo-10,button.width,button.height),3)
-    pygame.draw.rect(screen, tron_light, (button.xpo-9,button.ypo-9,button.width-1,button.height-1),1)
-    pygame.draw.rect(screen, tron_regular, (button.xpo-8,button.ypo-8,button.width-2,button.height-2),1)
-    font=pygame.font.Font(None,button.fntSize)
-    label=font.render(str(button.text), 1, (button.color))
-    screen.blit(label,(button.xpo,button.ypo+7))
 
 # Define each button press action
 def button(number):
@@ -109,13 +77,13 @@ def button(number):
         os.execv(__file__, sys.argv)
 
         if check_msf():
-                button1.color = green
-                make_button(button1)
+                button1.fntColor = green
+                button1.draw()
                 pygame.display.update()
 
         else:
-                button1.color = tron_light
-                make_button(button1)
+                button1.fntColor = tron_whi
+                button1.draw()
                 pygame.display.update()
         return
 
@@ -145,13 +113,13 @@ def button(number):
 
 	# OpenVAS
         if toggle_openvas():
-                button4.color = green
-                make_button(button4)
+                button4.fntColor = green
+                button4.draw()
                 pygame.display.update()
 
         else:
-                button4.color = tron_light
-                make_button(button4)
+                button4.fntColor = tron_whi
+                button4.draw()
                 pygame.display.update()
         return
 
@@ -161,13 +129,13 @@ def button(number):
 
         # Snort
         if toggle_snort():
-                button5.color = green
-                make_button(button5)
+                button5.fntColor = green
+                button5.draw()
                 pygame.display.update()
 
         else:
-                button5.color = tron_light
-                make_button(button5)
+                button5.fntColor = tron_whi
+                button5.draw()
                 pygame.display.update()
         return
 
@@ -196,12 +164,9 @@ def button(number):
             return
 
         # Screen off
-        pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_screenoff.py"
         retPage="menu-3.py"
-        args = [page, retPage]
-        os.execvp("python", ["python"] + args)
-        sys.exit()
+        kalipi.screensaver(retPage)
+        menu3()
 
     if number == 9:
         if button9.disable == 1:
@@ -217,10 +182,12 @@ def button(number):
 #############################
 
 
-def main (argv):
+def menu3():
 
+    # Init screen
+    kalipi.screen()
     # Outer Border
-    pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
+    kalipi.border(tron_blu)
 
     #############################
     ##        Buttons          ##
@@ -229,78 +196,78 @@ def main (argv):
     # See variables at the top of the document to adjust the menu
 
     # Title
-    make_button(titleButton)
+    titleButton.draw()
 
     # First Row
     # Button 1
     button1.disable = 0  # "1" disables button
 
     if button1.disable == 1:
-        make_button(button1)
+        button1.draw()
     else:
         # Add button launch code here
         if check_msf():
-            button1.color = green
-            make_button(button1)
+            button1.fntColor = green
+            button1.draw()
         else:
-            button1.color = tron_light
-            make_button(button1)
+            button1.fntColor = tron_whi
+            button1.draw()
 
     # Button 2
     button2.disable = 0  # "1" disables button
 
     if button2.disable == 1:
-        make_button(button2)
+        button2.draw()
     else:
         # Add button launch code here
-        make_button(button2)
+        button2.draw()
 
     # Button 3
     button3.disable = 0  # "1" disables button
 
     if button3.disable == 1:
-        make_button(button3)
+        button3.draw()
     else:
         # Add button launch code here
-        make_button(button3)
+        button3.draw()
 
     # Second Row
     # Button 4
     button4.disable = 1  # "1" disables button
 
     if button4.disable == 1:
-        make_button(button4)
+        button4.draw()
     else:
         # Add button launch code here
         if check_service("openvas-manager"):
-            button4.color = green
-            make_button(button4)
+            button4.fntColor = green
+            button4.draw()
         else:
-            button4.color = tron_light
-            make_button(button4)
+            button4.fntColor = tron_whi
+            button4.draw()
 
     # Button 5
     button5.disable = 1  # "1" disables button
 
     if button5.disable == 1:
-        make_button(button5)
+        button5.draw()
     else:
         # Add button launch code here
         if check_service("snortbarn"):
-            button5.color = green
-            make_button(button5)
+            button5.fntColor = green
+            button5.draw()
         else:
-            button5.color = tron_light
-            make_button(button5)
+            button5.fntColor = tron_whi
+            button5.draw()
 
     # Button 6
     button6.disable = 1  # "1" disables button
 
     if button6.disable == 1:
-        make_button(button6)
+        button6.draw()
     else:
         # Add button launch code here
-        make_button(button6)
+        button6.draw()
 
 
     # Third Row
@@ -308,28 +275,28 @@ def main (argv):
     button7.disable = 0  # "1" disables button
 
     if button7.disable == 1:
-        make_button(button7)
+        button7.draw()
     else:
         # Add button launch code here
-        make_button(button7)
+        button7.draw()
 
     # Button 8
     button8.disable = 0  # "1" disables button
 
     if button8.disable == 1:
-        make_button(button8)
+        button8.draw()
     else:
         # Add button launch code here
-        make_button(button8)
+        button8.draw()
 
     # Button 9
     button9.disable = 0  # "1" disables button
 
     if button9.disable == 1:
-        make_button(button9)
+        button9.draw()
     else:
         # Add button launch code here
-        make_button(button9)
+        button9.draw()
 
     ##        Buttons          ##
     #############################
@@ -346,4 +313,4 @@ def main (argv):
     #############################
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    menu3()
