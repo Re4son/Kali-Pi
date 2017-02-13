@@ -42,6 +42,13 @@ def check_msf():
     else:
         return False
 
+# Check kismet session status
+def check_kismet():
+    if 'SCREEN -R -S kismet' in commands.getoutput('/bin/ps -ef'):
+        return True
+    else:
+        return False
+
 ##    Local Functions      ##
 #############################
 
@@ -103,9 +110,22 @@ def button(number):
             return
 
         # Kismet
+        process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
         pygame.quit()
-        subprocess.call("/usr/bin/sudo -u pi /usr/bin/kismet", shell=True)
+        kalipi.run_cmd("/usr/bin/sudo -u pi screen -R -S kismet /usr/bin/kismet")
+        process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
         os.execv(__file__, sys.argv)
+
+        if check_kismet():
+                button3.fntColor = green
+                button3.draw()
+                pygame.display.update()
+
+        else:
+                button3.fntColor = tron_whi
+                button3.draw()
+                pygame.display.update()
+        return
 
     if number == 4:
         if button4.disable == 1:
@@ -229,7 +249,12 @@ def menu3():
         button3.draw()
     else:
         # Add button launch code here
-        button3.draw()
+        if check_kismet():
+            button3.fntColor = green
+            button3.draw()
+        else:
+            button3.fntColor = tron_whi
+            button3.draw()
 
     # Second Row
     # Button 4
