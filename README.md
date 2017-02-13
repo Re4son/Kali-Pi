@@ -32,9 +32,8 @@ I came accross [garthvh's project featured on Adafruit](https://blog.adafruit.co
 
 ### Start Screen
 
-The first menu is menu_kali-1.py, which provides the following options:
 
-![menu-1](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-1-1.png)
+![menu](https://whitedome.com.au/re4son/wp-content/uploads/2017/02/SFKP-NextGen.gif)
 
 All functions are self explainatory.
 After exiting and application, the screen returns back to the last menu.
@@ -44,42 +43,16 @@ You can turn it back on by pressing anywhere on the screen.
 
 Using the ">>>" button, we can scroll to the next screen, namely "menu_kali-2.py"
 
-### menu-2.py
+The buttons allow us to stop and start services
 
-This script allows us to stop and start services:
-
-![menu-2.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2b.png)
-
-Press a button to start a service.
-
-The button changes to green when the service is running:
-
-![running service](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-2b-on.png)
-
+The button changes to green when the service is running
 Press the button again to stop the service.
-
-
-### menu-3.py
-
-Some more applications:
-
-![menu-3.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-3-1.png)
-
-
-### menu_kali-4.py
-
-![menu-4.py](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-4.png)
-
-### menu-9.py
-The last script displays some health information:
-
-![menu-9](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-9.png)
 
 
 ### menu-pin.py
 The variable "KPPIN" in the file ~/menu can be set to "1" to enable PIN authentication to hide the menus from spying eyes:
 
-![menu-pin](https://whitedome.com.au/re4son/wp-content/uploads/2017/01/menu-pin.png)
+![menu-pin](https://whitedome.com.au/re4son/wp-content/uploads/2017/02/menu-pin2.png)
 
 
 ### Screensaver
