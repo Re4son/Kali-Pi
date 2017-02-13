@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=X-Menu
+Comment=
+Exec=/home/pi/Kali-Pi/X-menu
+Icon=gnome-window-manager
+Path=/home/pi/Kali-Pi/
+Terminal=false
+StartupNotify=false
