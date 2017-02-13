@@ -8,28 +8,6 @@ pin = ""
 c = 0  # Character counter for PIN
 
 
-#############################
-## Global display settings ##
-
-#++++++++++++++++++++++++++++#
-#+   Select color scheme    +#
-
-# Tron theme orange
-##tron_regular = tron_ora
-##tron_light = tron_yel
-##tron_inverse = tron_whi
-
-# Tron theme blue
-tron_regular = tron_blu
-tron_light = tron_whi
-tron_inverse = tron_yel
-
-#+           End            +#
-#++++++++++++++++++++++++++++#
-
-## Global display settings ##
-#############################
-
 
 # Overwrite dimensions
 
@@ -50,19 +28,19 @@ newTitleFont = titleFont / 3 * 2
 ###########################
 
 # define all of the buttons
-titleButton = Button("       Environmental Survey    -    Humidity Sensor    ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_inverse, newTitleFont)
-button1 = Button(" " * 18 + "1", newOriginX, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button2 = Button(" " * 18 + "2", newOriginX + newButtonWidth + newSpacing, newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button3 = Button(" " + " " * 18 + "3", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button4 = Button(" " + " " * 18 + "4", newOriginX, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button5 = Button(" " + " " * 18 + "5", newOriginX + newButtonWidth + newSpacing, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button6 = Button(" " + " " * 18 + "6", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button7 = Button(" " + " " * 18 + "7", newOriginX, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button8 = Button(" " + " " * 18 + "8", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button9 = Button(" " + " " * 18 + "9", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-buttonc = Button(newLabelPadding * " " + "          CLEAR", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-button0 = Button(" " * 18 + "0", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
-buttone = Button(newLabelPadding * " " + "          ENTER", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_light, newLabelFont)
+titleButton = Button("       Environmental Survey    -    Humidity Sensor    ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_blu, tron_ora, newTitleFont)
+button1 = Button(" " * 18 + "1", newOriginX, newOriginY, newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button2 = Button(" " * 18 + "2", newOriginX + newButtonWidth + newSpacing, newOriginY, newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button3 = Button(" " + " " * 18 + "3", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY, newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button4 = Button(" " + " " * 18 + "4", newOriginX, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button5 = Button(" " + " " * 18 + "5", newOriginX + newButtonWidth + newSpacing, newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button6 = Button(" " + " " * 18 + "6", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + newButtonHeight + newSpacing, newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button7 = Button(" " + " " * 18 + "7", newOriginX, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button8 = Button(" " + " " * 18 + "8", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button9 = Button(" " + " " * 18 + "9", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 2) + (newSpacing * 2), newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+buttonc = Button(newLabelPadding * " " + "          CLEAR", newOriginX, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+button0 = Button(" " * 18 + "0", newOriginX + newButtonWidth + newSpacing, newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
+buttone = Button(newLabelPadding * " " + "          ENTER", newOriginX + (newButtonWidth * 2) + (newSpacing * 2), newOriginY + (newButtonHeight * 3) + (newSpacing * 3), newButtonHeight, newButtonWidth, tron_blu, tron_whi, newLabelFont)
 
 
 #############################
@@ -113,12 +91,9 @@ def verifyPin():
     global pin, c
 
     if pin == "":
-        pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_screenoff.py"
         retPage=kalipi.get_retPage()
-        args = [page, retPage]
-        os.execvp("python", ["python"] + args)
-        sys.exit()
+        kalipi.screensaver(retPage)
+        menuPin()
     elif pin == "111":
         pygame.quit()
         page=os.environ["MENUDIR"] + "menu-9p.py"
@@ -159,17 +134,6 @@ def verifyPin():
 
 ##    Local Functions      ##
 #############################
-
-def make_button(button):
-    if button.disable == 1:
-        button.color = grey
-
-    pygame.draw.rect(screen, tron_regular, (button.xpo-10,button.ypo-10,button.width,button.height),3)
-    pygame.draw.rect(screen, tron_light, (button.xpo-9,button.ypo-9,button.width-1,button.height-1),1)
-    pygame.draw.rect(screen, tron_regular, (button.xpo-8,button.ypo-8,button.width-2,button.height-2),1)
-    font=pygame.font.Font(None,button.fntSize)
-    label=font.render(str(button.text), 1, (button.color))
-    screen.blit(label,(button.xpo,button.ypo+7))
 
 # Define each button press action
 def button(number):
@@ -292,12 +256,14 @@ def button(number):
 ##        sys.exit()
 
 
-def main (argv):
+def menuPin (argv):
 
     global c
 
+    # Init screen
+    kalipi.screen()
     # Outer Border
-    pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
+    kalipi.border(tron_blu)
 
     #############################
     ##        Buttons          ##
@@ -307,35 +273,35 @@ def main (argv):
 
 
     # Title
-    make_button(titleButton)
+    titleButton.draw()
 
     # First Row
     # Button 1
     button1.disable = 0  # "1" disables button
 
     if button1.disable == 1:
-        make_button(button1)
+        button1.draw()
     else:
         # Add button launch code here
-        make_button(button1)
+        button1.draw()
 
     # Button 2
     button2.disable = 0  # "1" disables button
 
     if button2.disable == 1:
-        make_button(button2)
+        button2.draw()
     else:
         # Add button launch code here
-        make_button(button2)
+        button2.draw()
 
     # Button 3
     button3.disable = 0  # "1" disables button
 
     if button3.disable == 1:
-        make_button(button3)
+        button3.draw()
     else:
         # Add button launch code here
-        make_button(button3)
+        button3.draw()
 
 
     # Second Row
@@ -343,29 +309,28 @@ def main (argv):
     button4.disable = 0  # "1" disables button
 
     if button4.disable == 1:
-        make_button(button4)
+        button4.draw()
     else:
         # Add button launch code here
-        make_button(button4)
+        button4.draw()
 
     # Button 5
     button5.disable = 0  # "1" disables button
 
     if button5.disable == 1:
-        make_button(button5)
+        button5.draw()
     else:
         # Add button launch code here
-        make_button(button5)
-
+        button5.draw()
 
     # Button 6
     button6.disable = 0  # "1" disables button
 
     if button6.disable == 1:
-        make_button(button6)
+        button6.draw()
     else:
         # Add button launch code here
-        make_button(button6)
+        button6.draw()
 
 
     # Third Row
@@ -373,55 +338,55 @@ def main (argv):
     button7.disable = 0  # "1" disables button
 
     if button7.disable == 1:
-        make_button(button7)
+        button7.draw()
     else:
         # Add button launch code here
-        make_button(button7)
+        button7.draw()
 
     # Button 8
     button8.disable = 0  # "1" disables button
 
     if button8.disable == 1:
-        make_button(button8)
+        button8.draw()
     else:
         # Add button launch code here
-        make_button(button8)
+        button8.draw()
 
     # Button 9
     button9.disable = 0  # "1" disables button
 
     if button9.disable == 1:
-        make_button(button9)
+        button9.draw()
     else:
         # Add button launch code here
-        make_button(button9)
+        button9.draw()
 
     # Button c
     buttonc.disable = 0  # "1" disables button
 
     if buttonc.disable == 1:
-        make_button(buttonc)
+        buttonc.draw()
     else:
         # Add button launch code here
-        make_button(buttonc)
+        buttonc.draw()
 
     # Button 0
     button0.disable = 0  # "1" disables button
 
     if button0.disable == 1:
-        make_button(button0)
+        button0.draw()
     else:
         # Add button launch code here
-        make_button(button0)
+        button0.draw()
 
     # Button e
     buttone.disable = 0  # "1" disables button
 
     if buttone.disable == 1:
-        make_button(buttone)
+        buttone.draw()
     else:
         # Add button launch code here
-        make_button(buttone)
+        buttone.draw()
 
     ##        Buttons          ##
     #############################
@@ -445,14 +410,14 @@ def main (argv):
                     num = local_on_touch()
                     button(num)
                     if c > 0:
-                        pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
-                        new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, green, newTitleFont * 2)
-                        make_button(new_titleButton)
+                        pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                        new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_blu, green, newTitleFont * 2)
+                        new_titleButton.draw()
                         if c > 15:
                             c = 0
                     else:
-                        pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
-                        make_button(titleButton)
+                        pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                        titleButton.draw()
 
                 #Debug:
                 #ensure there is always a safe way to end the program if the touch screen fails
@@ -469,12 +434,9 @@ def main (argv):
                 break
 
         ## Screensaver
-        pygame.quit()
-        page=os.environ["MENUDIR"] + "menu_screenoff.py"
         retPage=kalipi.get_retPage()
-        args = [page, retPage]
-        os.execvp("python", ["python"] + args)
-        sys.exit()
+        kalipi.screensaver(retPage)
+        menuPin()
 
 
     else:
@@ -512,4 +474,4 @@ def main (argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    menuPin(sys.argv[1:])
