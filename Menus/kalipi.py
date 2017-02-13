@@ -10,8 +10,8 @@ else:
     os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
     os.environ["SDL_MOUSEDRV"] = "TSLIB"
 
-#############################
-## Global display settings ##
+#####################################################
+##           Global display settings               ##
 
 
 # colors    R    G    B
@@ -80,7 +80,14 @@ else:
 ##  Screen layouts       ##
 ###########################
 
+##           Global display settings               ##
+#####################################################
 
+
+#############################
+##   Global Functions      ##
+
+# Create button
 class Button(object):
         text = ""
         xpo = ""
@@ -128,13 +135,6 @@ class Button(object):
                     screen.canvas.blit(label,(self.xpo,self.ypo+7))
 
 
-## Global display settings ##
-#############################
-
-
-#############################
-##   Global Functions      ##
-
 # Initialis the screen
 def screen():
     pygame.font.init()
@@ -155,7 +155,7 @@ def border(color):
     if color == tron_blu:
         pygame.draw.rect(screen.canvas, tron_blu, (0,0,screen_x-1,screen_y-1),8)
         pygame.draw.rect(screen.canvas, tron_whi, (2,2,screen_x-5,screen_y-5),2)
-    if color == tron_ora:
+    elif color == tron_ora:
         pygame.draw.rect(screen.canvas, tron_ora, (0,0,screen_x-1,screen_y-1),8)
         pygame.draw.rect(screen.canvas, tron_yel, (2,2,screen_x-5,screen_y-5),2)
     else:

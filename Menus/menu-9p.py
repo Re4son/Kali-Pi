@@ -4,31 +4,7 @@ from kalipi import *
 
 
 #############################
-## Global display settings ##
-
-#++++++++++++++++++++++++++++#
-#+   Select color scheme    +#
-
-# Tron theme orange
-tron_regular = tron_ora
-tron_light = tron_yel
-tron_inverse = tron_whi
-
-# Tron theme blue
-##tron_regular = tron_blu
-##tron_light = tron_whi
-##tron_inverse = tron_yel
-
-#+           End            +#
-#++++++++++++++++++++++++++++#
-
-## Global display settings ##
-#############################
-
-#############################
 ##    Local Functions      ##
-
-
 
 ##    Local Functions      ##
 #############################
@@ -38,23 +14,12 @@ tron_inverse = tron_whi
 ##        Buttons          ##
 
 # define all of the buttons
-label1 = Button(labelPadding * " " + kalipi.get_clock(), originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_light, labelFont)
-label2 = Button(labelPadding * " " + kalipi.get_temp(), originX, originY, buttonHeight, buttonWidth * 3 + spacing * 2, tron_light, labelFont)
-label3 = Button(labelPadding * " " + kalipi.get_volts(), originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth * 3 + spacing * 2, tron_light, labelFont)
-button7 = Button(labelPadding * " " + "       <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
-button9 = Button(labelPadding * " " + "     Refresh", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_light, labelFont)
+label1 = Button(labelPadding * " " + " ", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_ora, tron_yel, labelFont)
+label2 = Button(labelPadding * " " + " ", originX, originY, buttonHeight, buttonWidth * 3 + spacing * 2, tron_ora, tron_yel, labelFont)
+label3 = Button(labelPadding * " " + " ", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth * 3 + spacing * 2, tron_ora, tron_yel, labelFont)
+button7 = Button(labelPadding * " " + "       <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_ora, tron_yel, labelFont)
+button9 = Button(labelPadding * " " + "     Refresh", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_ora, tron_yel, labelFont)
 
-
-def make_button(button):
-    if button.disable == 1:
-        button.color = grey
-
-    pygame.draw.rect(screen, tron_regular, (button.xpo-10,button.ypo-10,button.width,button.height),3)
-    pygame.draw.rect(screen, tron_light, (button.xpo-9,button.ypo-9,button.width-1,button.height-1),1)
-    pygame.draw.rect(screen, tron_regular, (button.xpo-8,button.ypo-8,button.width-2,button.height-2),1)
-    font=pygame.font.Font(None,button.fntSize)
-    label=font.render(str(button.text), 1, (button.color))
-    screen.blit(label,(button.xpo,button.ypo+7))
 
 # Define each button press action
 def button(number):
@@ -77,16 +42,18 @@ def button(number):
 
         # Refresh
         pygame.quit()
-        os.execv(__file__, sys.argv)
+        menu9p()
 
 ##        Buttons          ##
 #############################
 
 
-def main (argv):
+def menu9p():
 
+    # Init screen
+    kalipi.screen()
     # Outer Border
-    pygame.draw.rect(screen, tron_light, (0,0,screen_x,screen_y),10)
+    kalipi.border(tron_ora)
 
     #############################
     ##        Buttons          ##
@@ -96,34 +63,37 @@ def main (argv):
 
     # First Row
     # label 1
-    make_button(label1)
+    label1.text=labelPadding * " " + kalipi.get_clock()
+    label1.draw()
 
     # Second Row
     # Button 2
-    make_button(label2)
+    label2.text=labelPadding * " " + kalipi.get_temp()
+    label2.draw()
 
     # Third Row
     # Label 3
-    make_button(label3)
+    label3.text=labelPadding * " " + kalipi.get_volts()
+    label3.draw()
 
     # Fourth Row
     # Button 7
     button7.disable = 0  # "1" disables button
 
     if button7.disable == 1:
-        make_button(button7)
+        button7.draw()
     else:
         # Add button launch code here
-        make_button(button7)
+        button7.draw()
 
     # Button 9
     button9.disable = 0  # "1" disables button
 
     if button9.disable == 1:
-        make_button(button9)
+        button9.draw()
     else:
         # Add button launch code here
-        make_button(button9)
+        button9.draw()
 
     ##        Buttons          ##
     #############################
@@ -139,4 +109,4 @@ def main (argv):
     #############################
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    menu9p()
