@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, os, pygame.display, subprocess, commands, time, socket
+import sys, os, pygame, subprocess, commands, time, socket
 import RPi.GPIO as GPIO
 from pygame.locals import *
 if "TFT" in os.environ and os.environ["TFT"] == "0":
