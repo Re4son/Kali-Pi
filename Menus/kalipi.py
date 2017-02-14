@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-import sys, os, os.path, pygame, subprocess, commands, time, socket
+import sys, os, pygame.display, subprocess, commands, time, socket
 import RPi.GPIO as GPIO
 from pygame.locals import *
-from subprocess import *
 if "TFT" in os.environ and os.environ["TFT"] == "0":
     pass
 else:
@@ -189,14 +188,14 @@ def get_hostname():
 
 def get_temp():
     command = "vcgencmd measure_temp"
-    process = Popen(command.split(), stdout=PIPE)
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
     temp = 'Temp: ' + output[5:-1]
     return temp
 
 def get_clock():
     command = "vcgencmd measure_clock arm"
-    process = Popen(command.split(), stdout=PIPE)
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
     clock = output.split("=")
     clock = int(clock[1][:-1]) / 1024 /1024
@@ -205,14 +204,14 @@ def get_clock():
 
 def get_volts():
     command = "vcgencmd measure_volts"
-    process = Popen(command.split(), stdout=PIPE)
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
     volts = 'Core:   ' + output[5:-1]
     return volts
 
 # Run command
 def run_cmd(cmd):
-    process = Popen(cmd.split(), stdout=PIPE)
+    process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
     return output
 
@@ -244,7 +243,7 @@ def toggle_service(srvc):
 # Check script
 def check_script(script):
     check = script + " status"
-    status = call(check, shell=True)
+    status = subprocess.call(check, shell=True)
     if (status == 1) :
         return True
     else:
@@ -255,12 +254,12 @@ def toggle_script(script):
     check = script + " status"
     start = script + " start"
     stop = script + " stop"
-    status = call(check, shell=True)
+    status = subprocess.call(check, shell=True)
     if (status == 1) :
-        call(stop, shell=True)
+        subprocess.call(stop, shell=True)
         return False
     else:
-        call(start, shell=True)
+        subprocess.call(start, shell=True)
         return True
 
 #This function is used to kill a process.
