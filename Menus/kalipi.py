@@ -345,6 +345,9 @@ def screensaver(retPage="menu-1.py"):
     if os.path.isfile("/sys/class/backlight/soc:backlight/brightness"):
         # kernel 4.4 STMP GPIO on/off for ada 3.5r
         backlightControl="3.5r"
+    elif os.path.isfile("/sys/class/backlight/24-hat-pwm/brightness"):
+        # kernel 4.4 STMP GPIO on/off for 4d-24-hat
+        backlightControl="4dpi-24"
     else:
         # GPIO 18 backlight control
         # Initialise GPIO
@@ -376,6 +379,8 @@ def screen_on(retPage, backlightControl):
     pygame.quit()
     if backlightControl == "3.5r":
         process = subprocess.call("echo '1' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
+    elif backlightControl == "4dpi-24":
+        process = subprocess.call("echo '80' > /sys/class/backlight/24-hat-pwm/brightness", shell=True)
     else:
         backlight = GPIO.PWM(18, 1023)
         backlight.start(100)
@@ -396,6 +401,8 @@ def screen_off(backlightControl):
     pygame.display.update()
     if backlightControl == "3.5r":
         process = subprocess.call("echo '0' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
+    elif backlightControl == "4dpi-24":
+        process = subprocess.call("echo '0' > /sys/class/backlight/24-hat-pwm/brightness", shell=True)
     else:
         backlight = GPIO.PWM(18, 0.1)
         backlight.start(0)
