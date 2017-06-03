@@ -3,8 +3,13 @@ import sys, os, pygame, subprocess, commands, time, socket
 import RPi.GPIO as GPIO
 from pygame.locals import *
 if "TFT" in os.environ and os.environ["TFT"] == "0":
+    # No TFT screen
     pass
+if "TFT" in os.environ and os.environ["TFT"] == "2":
+    # TFT screen with mouse
+    os.environ["SDL_FBDEV"] = "/dev/fb1"
 else:
+    # TFT touchscreen
     os.environ["SDL_FBDEV"] = "/dev/fb1"
     os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
     os.environ["SDL_MOUSEDRV"] = "TSLIB"
@@ -139,7 +144,7 @@ def screen():
     pygame.font.init()
     pygame.display.init()
 
-    if "TFT" in os.environ and os.environ["TFT"] == "0":
+    if "TFT" in os.environ and (os.environ["TFT"] == "0" or os.environ["TFT"] == "2"):
         pygame.mouse.set_visible(1)
     else:
         pygame.mouse.set_visible(0)
