@@ -1,0 +1,12 @@
+[Unit]
+Description=Bluetooth Personal Area Network
+After=bluetooth.service systemd-networkd.service
+Requires=systemd-networkd.service
+PartOf=bluetooth.service
+
+[Service]
+Type=notify
+ExecStart=/usr/local/sbin/BT-AP
+
+[Install]
+WantedBy=bluetooth.target
