@@ -1,0 +1,25 @@
+#!/bin/bash
+##########################################################################
+##                                                                      ##
+## Script to start a Bluetooth AP                                       ##
+## Requires:                                                            ##
+## - bt-pan:                                                            ##
+##   https://github.com/Re4son/Kali-Pi/raw/master/Menus/RAS-AP/bt-pan   ##
+## - brctl:                                                             ##
+##   sudo apt install bridge-utils                                      ##
+##                                                                      ##
+##   Credits to Mike Kazantsev                                          ##
+##                                                                      ##
+##########################################################################
+
+br=bnep
+
+[[ -n "$(brctl show $br 2>&1 1>/dev/null)" ]] && {
+  brctl addbr $br
+  brctl setfd $br 0
+  brctl stp $br off
+  ip addr add 10.1.2.3/24 dev $br
+  ip link set $br up
+}
+
+exec bt-pan --debug server $br
