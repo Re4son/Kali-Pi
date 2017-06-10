@@ -1,0 +1,4 @@
+[NetDev]
+Name=pan
+Kind=bridge
+ForwardDelaySec=0
