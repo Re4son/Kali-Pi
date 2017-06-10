@@ -1,23 +1,8 @@
 # Bluetooth PAN AP
 
-## Prerequisites:
-`apt install python-systemd python3-systemd bridge-utils `
-
 ## PAN Access Point installation:  
 
-`cp bt-pan /usr/local/sbin/`  
-`cp pan /usr/local/sbin/`  
-`cp BT-AP /usr/local/sbin/`  
-`cp pan.netdev /etc/systemd/network/`  
-`cp pan.network /etc/systemd/network/`  
-`cp pan.service /etc/systemd/system/`  
-`chmod +x /usr/local/sbin/bt-pan`  
-`chmod +x /usr/local/sbin/pan`  
-`chmod +x /usr/local/sbin/BT-AP`  
-
-`systemctl daemon-reload`  
-`systemctl restart systemd-networkd`  
-`systemctl start pan`  
+`./bt-pan-ap-install`  
 
 ### Pair client and connect:  
 `bluetoothctl`  
@@ -30,8 +15,7 @@
 
 ## Bluetooth PAN Client installation  
 
-`cp pan-client.network /etc/systemd/network/`  
-`cp pan@.service /etc/systemd/system/`  
+`bt-pan-client-install`  
 `systemctl start pan@00:11:22:33:44:55 ## <- Address of your AP`  
 
 
