@@ -1,0 +1,6 @@
+[Unit]
+Description=Bluetooth Personal Area Network client
+
+[Service]
+Type=notify
+ExecStart=/usr/local/sbin/bt-pan --debug --systemd client %I --wait
