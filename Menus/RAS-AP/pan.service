@@ -6,7 +6,7 @@ PartOf=bluetooth.service
 
 [Service]
 Type=notify
-ExecStart=/usr/local/sbin/BT-AP
+ExecStart=/usr/local/sbin/pan
 
 [Install]
 WantedBy=bluetooth.target
