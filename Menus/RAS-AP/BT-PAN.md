@@ -1,5 +1,8 @@
 # Bluetooth PAN AP
 
+## Prerequisites:
+`apt install python-systemd python3-systemd bridge-utils `
+
 ## PAN Access Point installation:  
 
 `cp bt-pan /usr/local/sbin/`  
