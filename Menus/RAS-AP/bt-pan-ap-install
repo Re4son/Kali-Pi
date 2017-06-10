@@ -1,0 +1,15 @@
+#!/bin/bash
+sudo apt install python-systemd python3-systemd bridge-utils
+sudo cp bt-pan /usr/local/sbin/
+sudo cp pan /usr/local/sbin/
+sudo cp BT-AP /usr/local/sbin/
+sudo cp pan.netdev /etc/systemd/network/
+sudo cp pan.network /etc/systemd/network/
+sudo cp pan.service /etc/systemd/system/
+sudo chmod +x /usr/local/sbin/bt-pan
+sudo chmod +x /usr/local/sbin/pan
+sudo chmod +x /usr/local/sbin/BT-AP
+sudo systemctl daemon-reload
+sudo systemctl restart systemd-networkd
+sudo systemctl start pan
+echo "Bluetooth PAN AP installed"

@@ -1,0 +1,8 @@
+#!/bin/bash
+cp pan-client.network /etc/systemd/network/
+cp pan@.service /etc/systemd/system/
+
+echo "Bluetooth PAN client installed"
+echo "To start the service, run:"
+echo "systemctl start pan@00:11:22:33:44:55 ## <- Address of your AP"
+
