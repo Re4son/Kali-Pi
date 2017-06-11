@@ -1,0 +1,22 @@
+#!/bin/bash
+######################################################
+##                                                  ##
+## Installation of PAN AP on non-Sticky-Fingers OS  ##
+##                                                  ##
+######################################################
+
+
+sudo apt install python-systemd python3-systemd bridge-utils
+sudo wget -O /usr/local/sbin/bt-pan https://github.com/Re4son/Kali-Pi/raw/master/Menus/RAS-AP/bt-pan
+sudo wget -O /usr/local/sbin/pan https://github.com/Re4son/Kali-Pi/raw/master/Menus/RAS-AP/pan
+sudo wget -O /usr/local/sbin/BT-AP https://github.com/Re4son/Kali-Pi/raw/master/Menus/RAS-AP/BT-AP
+sudo wget -O /etc/systemd/network/pan.netdev https://github.com/Re4son/Kali-Pi/raw/master/Menus/RAS-AP/pan.netdev
+sudo wget -O /etc/systemd/network/pan.network https://github.com/Re4son/Kali-Pi/raw/master/Menus/RAS-AP/pan.network
+sudo wget -O /etc/systemd/system/pan.service https://github.com/Re4son/Kali-Pi/raw/master/Menus/RAS-AP/pan.service
+sudo chmod +x /usr/local/sbin/bt-pan
+sudo chmod +x /usr/local/sbin/pan
+sudo chmod +x /usr/local/sbin/BT-AP
+sudo systemctl daemon-reload
+sudo systemctl restart systemd-networkd
+sudo systemctl start pan
+echo "Bluetooth PAN AP installed"
