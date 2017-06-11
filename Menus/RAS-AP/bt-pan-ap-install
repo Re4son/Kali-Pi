@@ -11,5 +11,4 @@ sudo chmod +x /usr/local/sbin/pan
 sudo chmod +x /usr/local/sbin/BT-AP
 sudo systemctl daemon-reload
 sudo systemctl restart systemd-networkd
-sudo systemctl start pan
 echo "Bluetooth PAN AP installed"

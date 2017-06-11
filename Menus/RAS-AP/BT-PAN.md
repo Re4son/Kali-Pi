@@ -4,6 +4,15 @@
 
 `./bt-pan-ap-install`  
 
+## PAN Access Point operation:
+
+`systemctl start pan` to start the service  
+`systemctl stop pan` to stop the service  
+`systemctl enable pan` to start the service automatically on boot  
+
+
+###
+
 ### Pair client and connect:  
 `bluetoothctl`  
 `agent on`  
