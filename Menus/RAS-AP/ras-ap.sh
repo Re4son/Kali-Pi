@@ -25,7 +25,7 @@ start() {
         sed -i "s/^interface=.*$/interface=$phy/" $conf
         $hostapd $conf&
         sleep 5
-        ifconfig $phy 192.168.201.1 netmask 255.255.255.0
+        ip addr add 192.168.201.1/24 dev $phy
         route add -net 192.168.201.0 netmask 255.255.255.0 gw 192.168.201.1
 
         dnsmasq -z -C $MENUDIR/RAS-AP/dnsmasq-dhcpd.conf -i $phy -I lo
@@ -50,6 +50,7 @@ stop() {
         pkill dnsmasq
         pkill hostapd
         pkill python
+	ip addr del 192.168.201.1/24 dev $phy
 
 }
 
