@@ -20,7 +20,7 @@ start() {
         service network-manager stop
         rfkill unblock wlan
 
-        ifconfig $phy up
+        ip link set dev $phy up
 
         sed -i "s/^interface=.*$/interface=$phy/" $conf
         $hostapd $conf&
