@@ -12,6 +12,13 @@ start() {
 	echo "--------------------------------"
 	echo "   START Remote Access WiFi AP"
 	echo "--------------------------------"
+        if [ -f /usr/bin/nexutil ]; then
+            sleep 2; $MENUDIR/RAS-AP/mon0up
+        fi
+        if [ -f /var/lib/misc/dnsmasq.leases ]; then
+            rm /var/lib/misc/dnsmasq.leases
+        fi
+
         upstream=eth0
         phy=wlan0
         conf=$MENUDIR/RAS-AP/ras-ap.conf
@@ -51,7 +58,9 @@ stop() {
         pkill hostapd
         pkill python
 	ip addr del 192.168.201.1/24 dev $phy
-
+        if [ -f /usr/bin/nexutil ]; then
+            $MENUDIR/RAS-AP/mon0down
+        fi
 }
 
 case "$1" in
