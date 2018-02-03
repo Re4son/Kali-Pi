@@ -5,7 +5,7 @@ from pygame.locals import *
 if "TFT" in os.environ and os.environ["TFT"] == "0":
     # No TFT screen
     pass
-if "TFT" in os.environ and os.environ["TFT"] == "2":
+elif "TFT" in os.environ and os.environ["TFT"] == "2":
     # TFT screen with mouse
     os.environ["SDL_FBDEV"] = "/dev/fb1"
 else:
