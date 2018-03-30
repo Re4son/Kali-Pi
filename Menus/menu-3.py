@@ -164,9 +164,11 @@ def button(number):
             return
 
         # Pulledpork
+	process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
 	pygame.quit()
-	cmd="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "pulledpork.sh"
-	call(cmd, shell=True)
+	cmd="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "Pulledpork/pulledpork.sh"
+	subprocess.call(cmd, shell=True)
+	process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
         os.execv(__file__, sys.argv)
 
     if number == 7:
