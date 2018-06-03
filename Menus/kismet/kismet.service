@@ -1,0 +1,11 @@
+[Unit]
+Description=Kismet service for Kali-Pi
+After=network.service
+Requires=networking.service
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/sudo -u pi /usr/local/bin/kismet --silent --daemonize --homedir /home/pi/Kali-Pi/Menus/kismet
+
+[Install]
+WantedBy=multi-user.target
