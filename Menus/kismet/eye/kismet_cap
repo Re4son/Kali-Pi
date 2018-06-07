@@ -1,0 +1,20 @@
+#!/bin/sh /etc/rc.common
+# kismet_cap init script
+# Copyright (C) 2018 re4son [at] re4son.com
+ 
+START=90
+STOP=10
+
+rhost=192.168.254.1
+rport=3501
+ 
+start() {        
+        echo start kismet remote capture
+        kismet_cap_linux_wifi --connect $rhost:$rport --source=wlan0:name=eye0 --daemonize
+		kismet_cap_linux_wifi --connect $rhost:$rport --source=wlan1:name=eye1 --daemonize
+}                 
+ 
+stop() {          
+        echo stop kismet remote capture
+        pgrep kismet | xargs kill 
+}

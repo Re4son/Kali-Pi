@@ -3,9 +3,29 @@ import kalipi
 from kalipi import *
 
 
+#############################
+##  Kismet version         ##
+if "KISMETVER" in os.environ and os.environ["KISMETVER"] == "2":
+    kismetver = 2
+else:
+    kismetver = 1
+
 
 #############################
 ##    Local Functions      ##
+
+# Toggle Kismet
+def toggle_kismet():
+    check = "/bin/systemctl status kismet"
+    start = "/bin/systemctl start kismet"
+    stop = "/bin/systemctl stop kismet"
+    status = run_cmd(check)
+    if ("is running" in status) or ("active (running)") in status:
+        run_cmd(stop)
+        return False
+    else:
+	run_cmd(start)
+        return True
 
 # Toggle OpenVAS
 def toggle_openvas():
@@ -48,6 +68,7 @@ def check_kismet():
         return True
     else:
         return False
+
 
 ##    Local Functions      ##
 #############################
@@ -110,22 +131,34 @@ def button(number):
             return
 
         # Kismet
-        process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
-        pygame.quit()
-        kalipi.run_cmd("/usr/bin/sudo -u pi screen -R -S kismet /usr/bin/kismet")
-        process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
-        os.execv(__file__, sys.argv)
+        if kismetver == 1:
+            process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
+            pygame.quit()
+            kalipi.run_cmd("/usr/bin/sudo -u pi screen -R -S kismet /usr/bin/kismet")
+            process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
+            os.execv(__file__, sys.argv)
 
-        if check_kismet():
-                button3.fntColor = green
-                button3.draw()
-                pygame.display.update()
+            if check_kismet():
+                    button3.fntColor = green
+                    button3.draw()
+                    pygame.display.update()
 
-        else:
-                button3.fntColor = tron_whi
-                button3.draw()
-                pygame.display.update()
-        return
+            else:
+                    button3.fntColor = tron_whi
+                    button3.draw()
+                    pygame.display.update()
+            return
+        else: # Kismet github version
+            if toggle_kismet():
+                    button3.fntColor = green
+                    button3.draw()
+                    pygame.display.update()
+
+            else:
+                    button3.fntColor = tron_whi
+                    button3.draw()
+                    pygame.display.update()
+            return
 
     if number == 4:
         if button4.disable == 1:
@@ -249,12 +282,20 @@ def menu3():
         button3.draw()
     else:
         # Add button launch code here
-        if check_kismet():
-            button3.fntColor = green
-            button3.draw()
+        if kismetver == 1:
+            if check_kismet():
+                button3.fntColor = green
+                button3.draw()
+            else:
+                button3.fntColor = tron_whi
+                button3.draw()
         else:
-            button3.fntColor = tron_whi
-            button3.draw()
+            if check_service("kismet"):
+                button3.fntColor = green
+                button3.draw()
+            else:
+                button3.fntColor = tron_whi
+                button3.draw()
 
     # Second Row
     # Button 4
