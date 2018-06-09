@@ -62,9 +62,9 @@ if os.environ["KPSCREENSIZE"] == "5.0":
         spacing = 10
         buttonWidth = 230
         buttonHeight = 88
-        labelFont = 50
-        labelPadding = 1
-        labelYOffset = 13
+        labelFont = 45
+        labelPadding = 2
+        labelYOffset = 16
         titleFont = 60
 
 ## 3.5" screens: ##
@@ -152,21 +152,21 @@ class Button(object):
                     pygame.draw.rect(screen.canvas, tron_blu, (self.xpo-8,self.ypo-8,self.width-2,self.height-2),1)
                     font=pygame.font.Font(None,self.fntSize)
                     label=font.render(str(self.text), 1, (self.fntColor))
-                    screen.canvas.blit(label,(self.xpo,self.ypo+12))
+                    screen.canvas.blit(label,(self.xpo,self.ypo+labelYOffset))
                 elif self.color == tron_ora:
                     pygame.draw.rect(screen.canvas, tron_ora, (self.xpo-10,self.ypo-10,self.width,self.height),3)
                     pygame.draw.rect(screen.canvas, tron_yel, (self.xpo-9,self.ypo-9,self.width-1,self.height-1),1)
                     pygame.draw.rect(screen.canvas, tron_ora, (self.xpo-8,self.ypo-8,self.width-2,self.height-2),1)
                     font=pygame.font.Font(None,self.fntSize)
                     label=font.render(str(self.text), 1, (self.fntColor))
-                    screen.canvas.blit(label,(self.xpo,self.ypo+7))
+                    screen.canvas.blit(label,(self.xpo,self.ypo+labelYOffset))
                 else:
                     pygame.draw.rect(screen.canvas, self.color, (self.xpo-10,self.ypo-10,self.width,self.height),3)
                     pygame.draw.rect(screen.canvas, self.color, (self.xpo-9,self.ypo-9,self.width-1,self.height-1),1)
                     pygame.draw.rect(screen.canvas, self.color, (self.xpo-8,self.ypo-8,self.width-2,self.height-2),1)
                     font=pygame.font.Font(None,self.fntSize)
                     label=font.render(str(self.text), 1, (self.fntColor))
-                    screen.canvas.blit(label,(self.xpo,self.ypo+7))
+                    screen.canvas.blit(label,(self.xpo,self.ypo+labelYOffset))
 
 
 # Initialis the screen
@@ -174,7 +174,7 @@ def screen():
     pygame.font.init()
     pygame.display.init()
 
-    if "TFT" in os.environ and (os.environ["TFT"] == "3" or os.environ["TFT"] == "2"):
+    if "TFT" in os.environ and (os.environ["TFT"] == "0" or os.environ["TFT"] == "2"):
         pygame.mouse.set_visible(1)
     else:
         pygame.mouse.set_visible(0)

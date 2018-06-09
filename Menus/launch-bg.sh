@@ -6,8 +6,11 @@ case $KPSCREENSIZE in
     3.5)
         BACKGROUND="Pictures/Kali-Pi-3.5.jpg"
         ;;
+    5.0)
+        BACKGROUND="Pictures/Kali-Pi-5.0.jpg"
+        ;;
     *)
         exit 1
 esac
 setterm -term linux -back default -fore black -clear all
-fbi -t 2 -1 -d /dev/fb1 -noverbose -a $MENUDIR$BACKGROUND
+fbi -t 2 -1 -d $FRAMEBUFFER -noverbose -a $MENUDIR$BACKGROUND
