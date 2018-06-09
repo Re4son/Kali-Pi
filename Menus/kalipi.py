@@ -8,6 +8,12 @@ if "TFT" in os.environ and os.environ["TFT"] == "0":
 elif "TFT" in os.environ and os.environ["TFT"] == "2":
     # TFT screen with mouse
     os.environ["SDL_FBDEV"] = "/dev/fb1"
+elif "TFT" in os.environ and os.environ["TFT"] == "3":
+    # TFT touchscreen
+    os.environ["SDL_FBDEV"] = "/dev/fb0"
+    os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
+    os.environ["SDL_MOUSEDRV"] = "TSLIB"
+
 else:
     # TFT touchscreen
     os.environ["SDL_FBDEV"] = "/dev/fb1"
@@ -39,8 +45,30 @@ tron_ora = (255, 202,   0)
 ###########################
 ##  Screen layouts       ##
 
+## 5.0" screens: ##
+if os.environ["KPSCREENSIZE"] == "5.0":
+#  9 Button Layout  #
+    if os.environ["KPLAYOUT"] == "9":
+        #set size of the screen
+        screen_x = 800
+        screen_y = 480
+
+        size = width, height = screen_x, screen_y
+##        screen = pygame.display.set_mode(size)
+
+        #Define the aspect of the menu
+        originX = 50
+        originY = 160
+        spacing = 10
+        buttonWidth = 230
+        buttonHeight = 88
+        labelFont = 50
+        labelPadding = 1
+        labelYOffset = 13
+        titleFont = 60
+
 ## 3.5" screens: ##
-if os.environ["KPSCREENSIZE"] == "3.5":
+elif os.environ["KPSCREENSIZE"] == "3.5":
 #  9 Button Layout  #
     if os.environ["KPLAYOUT"] == "9":
         #set size of the screen
@@ -58,6 +86,7 @@ if os.environ["KPSCREENSIZE"] == "3.5":
         buttonHeight = 55
         labelFont = 24
         labelPadding = 3
+        labelYOffset = 7
         titleFont = 34
 
 # 2.8" Screens:
@@ -79,6 +108,7 @@ else:
         buttonHeight = 48
         labelFont = 19
         labelPadding = 0
+        labelYOffset = 7
         titleFont = 26
 
 ##  Screen layouts       ##
@@ -122,7 +152,7 @@ class Button(object):
                     pygame.draw.rect(screen.canvas, tron_blu, (self.xpo-8,self.ypo-8,self.width-2,self.height-2),1)
                     font=pygame.font.Font(None,self.fntSize)
                     label=font.render(str(self.text), 1, (self.fntColor))
-                    screen.canvas.blit(label,(self.xpo,self.ypo+7))
+                    screen.canvas.blit(label,(self.xpo,self.ypo+12))
                 elif self.color == tron_ora:
                     pygame.draw.rect(screen.canvas, tron_ora, (self.xpo-10,self.ypo-10,self.width,self.height),3)
                     pygame.draw.rect(screen.canvas, tron_yel, (self.xpo-9,self.ypo-9,self.width-1,self.height-1),1)
@@ -144,7 +174,7 @@ def screen():
     pygame.font.init()
     pygame.display.init()
 
-    if "TFT" in os.environ and (os.environ["TFT"] == "0" or os.environ["TFT"] == "2"):
+    if "TFT" in os.environ and (os.environ["TFT"] == "3" or os.environ["TFT"] == "2"):
         pygame.mouse.set_visible(1)
     else:
         pygame.mouse.set_visible(0)
