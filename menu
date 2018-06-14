@@ -15,7 +15,7 @@ export KPPIN=0              ## Set to "1" to enforce PIN authentication, run ./s
 export KPTIMEOUT=2          ## Minutes before screensaver kicks in, comment out for screensaver off
 export KISMETVER=1          ## Set to "2" to launch kismet github version, "1" to use classic stable version
 export TFT=1                ## Set to "0": no TFT screen, "1": TFT touchscreen,
-                                      "2": TFT screen with external mouse, or "2": HDMI touchscreen 
+                            ##        "2": TFT screen with external mouse, or "3": HDMI touchscreen 
 ## End adjustments
 
 
