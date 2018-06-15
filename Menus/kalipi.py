@@ -406,13 +406,10 @@ def screensaver(retPage="menu-1.py"):
 
     #While loop to manage touch screen inputs
     screen_off(backlightControl)
-    time.sleep(1)
     state = [False for x in range(10)]
-    position = [(0,0) for x in range(10)]
     while 1:
         if SCREEN==4:
             for touch in ts.poll():
-                position[touch.slot] = (touch.x, touch.y)
                 if state[touch.slot] != touch.valid:
                     if touch.valid:
                         screen_on(retPage, backlightControl)
@@ -467,7 +464,7 @@ def screen_off(backlightControl):
         process = subprocess.call("echo '0' > /sys/class/backlight/24-hat-pwm/brightness", shell=True)
     elif backlightControl == "pi70":
         process = subprocess.call("echo '1' > /sys/class/backlight/rpi_backlight/bl_power", shell=True)
-    ##else:
+    else:
         backlight = GPIO.PWM(18, 0.1)
         backlight.start(0)
 
