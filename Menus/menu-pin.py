@@ -46,9 +46,12 @@ buttone = Button(newLabelPadding * " " + "          ENTER", newOriginX + (newBut
 #############################
 ##    Local Functions      ##
 
-def local_on_touch():
+def local_on_touch(posx=0, posy=0):
     # get the position that was touched
-    touch_pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+    if SCREEN==4:
+        touch_pos = (posx, posy)
+    else:
+        touch_pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
     #  x_min                 x_max   y_min                y_max
     # button 1 event
     if newOriginX <= touch_pos[0] <= (newOriginX + newButtonWidth) and newOriginY <= touch_pos[1] <= (newOriginY + newButtonHeight):
@@ -401,23 +404,40 @@ def menuPin (argv):
 
         #While loop to manage touch screen inputs
         t = timeout
+        state = [False for x in range(10)]
 
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    t = timeout
-                    pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-                    num = local_on_touch()
-                    button(num)
-                    if c > 0:
-                        pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
-                        new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_blu, green, newTitleFont * 2)
-                        new_titleButton.draw()
-                        if c > 15:
-                            c = 0
-                    else:
-                        pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
-                        titleButton.draw()
+            if SCREEN==4:
+                for touch in ts.poll():
+                    if state[touch.slot] != touch.valid:
+                        if touch.valid:
+                            num = local_on_touch(touch.x, touch.y)
+                            button(num)
+                            if c > 0:
+                                pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                                new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_blu, green, newTitleFont * 2)
+                                new_titleButton.draw()
+                                if c > 15:
+                                    c = 0
+                            else:
+                                pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                                titleButton.draw()
+            else:
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        t = timeout
+                        pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                        num = local_on_touch()
+                        button(num)
+                        if c > 0:
+                            pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                            new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_blu, green, newTitleFont * 2)
+                            new_titleButton.draw()
+                            if c > 15:
+                                c = 0
+                        else:
+                            pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                            titleButton.draw()
 
                 #Debug:
                 #ensure there is always a safe way to end the program if the touch screen fails
@@ -442,21 +462,38 @@ def menuPin (argv):
     else:
 
         #While loop to manage touch screen inputs
+        state = [False for x in range(10)]
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-                    num = local_on_touch()
-                    button(num)
-                    if c > 0:
-                        pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
-                        new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, green, newTitleFont * 2)
-                        make_button(new_titleButton)
-                        if c > 15:
-                            c = 0
-                    else:
-                        pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
-                        make_button(titleButton)
+            if SCREEN==4:
+                for touch in ts.poll():
+                    if state[touch.slot] != touch.valid:
+                        if touch.valid:
+                            num = local_on_touch(touch.x, touch.y)
+                            button(num)
+                            if c > 0:
+                                pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                                new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_blu, green, newTitleFont * 2)
+                                new_titleButton.draw()
+                                if c > 15:
+                                    c = 0
+                            else:
+                                pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                                titleButton.draw()
+            else:
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                        num = local_on_touch()
+                        button(num)
+                        if c > 0:
+                            pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                            new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, green, newTitleFont * 2)
+                            new_titleButton.draw()
+                            if c > 15:
+                                c = 0
+                        else:
+                            pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                            make_button(titleButton)
 
                #Debug:
                #ensure there is always a safe way to end the program if the touch screen fails

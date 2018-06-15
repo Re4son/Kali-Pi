@@ -12,14 +12,21 @@
 export KPSCREENSIZE=2.8     ## Screensize in inch, Options= 5.0, 3.5, 2.8
 export KPLAYOUT=9           ## Number of buttons - Currently only 9 is supported
 export KPPIN=0              ## Set to "1" to enforce PIN authentication, run ./set-pin to change PIN
-export KPTIMEOUT=2          ## Minutes before screensaver kicks in, comment out for screensaver off
+#export KPTIMEOUT=2         ## Minutes before screensaver kicks in, comment out for screensaver off
 export KISMETVER=1          ## Set to "2" to launch kismet github version, "1" to use classic stable version
-export TFT=1                ## Set to "0": no TFT screen, "1": TFT touchscreen,
-                            ##        "2": TFT screen with external mouse, or "3": HDMI touchscreen 
+export TFT=4                ## Set to "0": no TFT screen,
+                            ##        "1": TFT touchscreen,
+                            ##        "2": TFT screen with external mouse,
+                            ##        "3": resistive HDMI touchscreen, or
+                            ##        "4": Raspberry Pi 7" Touchscreen 
 ## End adjustments
 
 
-export FRAMEBUFFER=/dev/fb1
+if [ $TFT == "1" ] || [ $TFT == "2" ]; then
+    export FRAMEBUFFER=/dev/fb1
+else
+    export FRAMEBUFFER=/dev/fb0
+fi
 export MENUDIR="/home/pi/Kali-Pi/Menus/"
 while true; do
 ## Loop to make it a bit more difficult to bypass PIN
@@ -37,8 +44,8 @@ while true; do
         /usr/bin/env python $MENUDIR$startpage
     fi
 
-    if [ $? -eq 37 ]; then
-        break
-    fi
+ ##   if [ $? -eq 37 ]; then
+ ##       break
+ ##   fi
 
 done

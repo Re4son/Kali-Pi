@@ -4,18 +4,27 @@ import RPi.GPIO as GPIO
 from pygame.locals import *
 if "TFT" in os.environ and os.environ["TFT"] == "0":
     # No TFT screen
+    SCREEN=0
     pass
 elif "TFT" in os.environ and os.environ["TFT"] == "2":
     # TFT screen with mouse
+    SCREEN=2
     os.environ["SDL_FBDEV"] = "/dev/fb1"
 elif "TFT" in os.environ and os.environ["TFT"] == "3":
-    # TFT touchscreen
+    # HDMI touchscreen
+    SCREEN=3
     os.environ["SDL_FBDEV"] = "/dev/fb0"
     os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
     os.environ["SDL_MOUSEDRV"] = "TSLIB"
-
+elif "TFT" in os.environ and os.environ["TFT"] == "4":
+    # Raspberry Pi 7" touchscreen
+    SCREEN=4
+    from ft5406 import Touchscreen
+    os.environ["SDL_FBDEV"] = "/dev/fb0"
+    ts = Touchscreen()
 else:
     # TFT touchscreen
+    SCREEN=1
     os.environ["SDL_FBDEV"] = "/dev/fb1"
     os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
     os.environ["SDL_MOUSEDRV"] = "TSLIB"
@@ -169,7 +178,7 @@ class Button(object):
                     screen.canvas.blit(label,(self.xpo,self.ypo+labelYOffset))
 
 
-# Initialis the screen
+# Initialise the screen
 def screen():
     pygame.font.init()
     pygame.display.init()
@@ -327,9 +336,12 @@ def check_process(proc, file=":"):
     except:
         return False
 
-def on_touch():
+def on_touch(posx=0, posy=0):
     # get the position that was touched
-    touch_pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+    if SCREEN==4:
+      touch_pos = (posx, posy)
+    else:
+      touch_pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
     #  x_min                 x_max   y_min                y_max
     # button 1 event
     if originX <= touch_pos[0] <= (originX + buttonWidth) and originY <= touch_pos[1] <= (originY + buttonHeight):
@@ -383,6 +395,8 @@ def screensaver(retPage="menu-1.py"):
     elif os.path.isfile("/sys/class/backlight/24-hat-pwm/brightness"):
         # kernel 4.4 STMP GPIO on/off for 4d-24-hat
         backlightControl="4dpi-24"
+    elif os.path.isfile("/sys/class/backlight/rpi_backlight/bl_power"):
+        backlightControl="pi70"
     else:
         # GPIO 18 backlight control
         # Initialise GPIO
@@ -392,11 +406,22 @@ def screensaver(retPage="menu-1.py"):
 
     #While loop to manage touch screen inputs
     screen_off(backlightControl)
+    time.sleep(1)
+    state = [False for x in range(10)]
+    position = [(0,0) for x in range(10)]
     while 1:
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                screen_on(retPage, backlightControl)
-                return()
+        if SCREEN==4:
+            for touch in ts.poll():
+                position[touch.slot] = (touch.x, touch.y)
+                if state[touch.slot] != touch.valid:
+                    if touch.valid:
+                        screen_on(retPage, backlightControl)
+                        return()
+        else:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    screen_on(retPage, backlightControl)
+                    return()
                 #Debug:
                 #ensure there is always a safe way to end the program if the touch screen fails
                 ##if event.type == KEYDOWN:
@@ -407,19 +432,21 @@ def screensaver(retPage="menu-1.py"):
 # Turn screen on
 def screen_on(retPage, backlightControl):
 
-    if os.environ["KPPIN"] != "1":
-        launch_bg=os.environ["MENUDIR"] + "launch-bg.sh"
-        process = subprocess.call(launch_bg, shell=True)
-
     pygame.quit()
     if backlightControl == "3.5r":
         process = subprocess.call("echo '1' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
     elif backlightControl == "4dpi-24":
         process = subprocess.call("echo '80' > /sys/class/backlight/24-hat-pwm/brightness", shell=True)
+    elif backlightControl == "pi70":
+        process = subprocess.call("echo '0' > /sys/class/backlight/rpi_backlight/bl_power", shell=True)
     else:
         backlight = GPIO.PWM(18, 1023)
         backlight.start(100)
         GPIO.cleanup()
+    if os.environ["KPPIN"] != "1":
+        launch_bg=os.environ["MENUDIR"] + "launch-bg.sh"
+        process = subprocess.call(launch_bg, shell=True)
+
     if os.environ["KPPIN"] == "1":
         page=os.environ["MENUDIR"] + "menu-pin.py"
         args = [page, retPage]
@@ -438,12 +465,15 @@ def screen_off(backlightControl):
         process = subprocess.call("echo '0' > /sys/class/backlight/soc\:backlight/brightness", shell=True)
     elif backlightControl == "4dpi-24":
         process = subprocess.call("echo '0' > /sys/class/backlight/24-hat-pwm/brightness", shell=True)
-    else:
+    elif backlightControl == "pi70":
+        process = subprocess.call("echo '1' > /sys/class/backlight/rpi_backlight/bl_power", shell=True)
+    ##else:
         backlight = GPIO.PWM(18, 0.1)
         backlight.start(0)
 
     process = subprocess.call("setterm -term linux -back black -fore white -clear all", shell=True)
     return()
+
 
 # Input loop for touch event
 def inputLoop(retPage="menu-1.py"):
@@ -455,13 +485,22 @@ def inputLoop(retPage="menu-1.py"):
 
         #While loop to manage touch screen inputs
         t = timeout
+        state = [False for x in range(10)]
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    t = timeout
-                    pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-                    num = on_touch()
-                    return(num)
+            if SCREEN==4:
+                for touch in ts.poll():
+                    if state[touch.slot] != touch.valid:
+                        if touch.valid:
+                            t = timeout
+                            num = on_touch(touch.x, touch.y)
+                            return(num) 
+            else:
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        t = timeout
+                        pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                        num = on_touch()
+                        return(num)
 
                 #Debug
                 #ensure there is always a safe way to end the program if the touch screen fails
@@ -483,12 +522,20 @@ def inputLoop(retPage="menu-1.py"):
 
     else:
         #While loop to manage touch screen inputs
-        while 1:
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
-                    num = on_touch()
-                    return(num)
+        state = [False for x in range(10)]
+        while True:
+            if SCREEN==4:
+                for touch in ts.poll():
+                    if state[touch.slot] != touch.valid:
+                        if touch.valid:
+                            num = on_touch(touch.x, touch.y)
+                            return(num) 
+            else:
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
+                        num = on_touch()
+                        return(num)
 
                 #Debug:
                 #ensure there is always a safe way to end the program if the touch screen fails
