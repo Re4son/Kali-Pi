@@ -100,7 +100,7 @@ def button(number):
 	# Metasploit
         process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
         pygame.quit()
-        kalipi.run_cmd("/usr/bin/sudo -u pi screen -R -S msf msfconsole")
+        kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER + " screen -R -S msf msfconsole")
         process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
         os.execv(__file__, sys.argv)
 
@@ -134,7 +134,7 @@ def button(number):
         if kismetver == 1:
             process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
             pygame.quit()
-            kalipi.run_cmd("/usr/bin/sudo -u pi screen -R -S kismet /usr/bin/kismet")
+            kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER + " screen -R -S kismet /usr/bin/kismet")
             process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
             os.execv(__file__, sys.argv)
 

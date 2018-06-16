@@ -62,7 +62,7 @@ def button(number):
 	# X TFT
         pygame.quit()
         ## Requires "Anybody" in dpkg-reconfigure x11-common if we have scrolled pages previously
-        ## kalipi.run_cmd("/usr/bin/sudo -u pi FRAMEBUFFER=/dev/fb1 startx")
+        ## kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER + " FRAMEBUFFER=/dev/fb1 startx")
         kalipi.run_cmd("/usr/bin/sudo FRAMEBUFFER=/dev/fb1 startx")
         os.execv(__file__, sys.argv)
 
@@ -73,7 +73,7 @@ def button(number):
         # X HDMI
         pygame.quit()
         ## Requires "Anybody" in dpkg-reconfigure x11-common if we have scrolled pages previously
-        ## kalipi.run_cmd("/usr/bin/sudo -u pi FRAMEBUFFER=/dev/fb0 startx")
+        ## kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER + " FRAMEBUFFER=/dev/fb0 startx")
         kalipi.run_cmd("/usr/bin/sudo FRAMEBUFFER=/dev/fb0 startx")
         os.execv(__file__, sys.argv)
 
@@ -111,7 +111,7 @@ def button(number):
 	# Terminal
         process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
         pygame.quit()
-        kalipi.run_cmd("/usr/bin/sudo -u pi screen -R -S term")
+        kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER + " screen -R -S term")
         process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
         os.execv(__file__, sys.argv)
 

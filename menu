@@ -21,13 +21,19 @@ export TFT=1                ## Set to "0": no TFT screen,
                             ##        "4": Raspberry Pi 7" Touchscreen 
 ## End adjustments
 
+if [ -z "$SUDO_USER" ]; then
+    SUDO_USER=pi
+fi
+export KPUSER="$SUDO_USER"
 
 if [ $TFT == "1" ] || [ $TFT == "2" ]; then
     export FRAMEBUFFER=/dev/fb1
 else
     export FRAMEBUFFER=/dev/fb0
 fi
-export MENUDIR="/home/pi/Kali-Pi/Menus/"
+#export MENUDIR="/home/pi/Kali-Pi/Menus/"
+export MENUDIR=`dirname "$0"`/Menus/
+
 while true; do
 ## Loop to make it a bit more difficult to bypass PIN
 
