@@ -411,6 +411,7 @@ def menuPin (argv):
                 for touch in ts.poll():
                     if state[touch.slot] != touch.valid:
                         if touch.valid:
+                            t = timeout
                             num = local_on_touch(touch.x, touch.y)
                             button(num)
                             if c > 0:
@@ -486,14 +487,14 @@ def menuPin (argv):
                         num = local_on_touch()
                         button(num)
                         if c > 0:
-                            pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
-                            new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, green, newTitleFont * 2)
+                            pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                            new_titleButton = Button("      " + c * "* ", newOriginX, newOriginX, buttonHeight, buttonWidth * 3  + spacing * 2, tron_blu, green, newTitleFont * 2)
                             new_titleButton.draw()
                             if c > 15:
                                 c = 0
                         else:
-                            pygame.draw.rect(screen, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
-                            make_button(titleButton)
+                            pygame.draw.rect(screen.canvas, black, (newOriginX, newOriginX,buttonWidth * 3, buttonHeight),0)
+                            titleButton.draw()
 
                #Debug:
                #ensure there is always a safe way to end the program if the touch screen fails
