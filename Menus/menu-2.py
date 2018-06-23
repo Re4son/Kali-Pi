@@ -21,6 +21,19 @@ def toggle_ntopng():
     except:
         return False
 
+# Check VNC status
+def check_vnc():
+    if 'vnc :1' in commands.getoutput('/bin/ps -ef'):
+        return True
+    else:
+        return False
+
+# Check Terminal session status
+def check_terminal():
+    if 'SCREEN -R -S term' in commands.getoutput('/bin/ps -ef'):
+        return True
+    else:
+        return False
 
 ##    Local Functions      ##
 #############################
@@ -39,7 +52,7 @@ button5 = Button(labelPadding * " " + "   darkstat", originX + buttonWidth + spa
 button6 = Button(labelPadding * " " + "    ntopng", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button7 = Button(labelPadding * " " + "        <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button8 = Button(labelPadding * " " + " Screen Off", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button9 = Button(labelPadding * " " + "VNC Server", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 
 
 
@@ -167,11 +180,20 @@ def button(number):
         if button9.disable == 1:
             return
 
-        # Next page
-        pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-3.py"
-        os.execvp("python", ["python", page])
-        sys.exit()
+        # VNC
+        if check_vnc():
+                kalipi.run_cmd("/usr/bin/vncserver -kill :1")
+                button9.fntColor = tron_whi
+                button9.draw()
+                pygame.display.update()
+
+        else:
+                kalipi.run_cmd("/usr/bin/vncserver :1")
+                button9.fntColor = green
+                button9.draw()
+                pygame.display.update()
+        return
+
 ##        Buttons          ##
 #############################
 
@@ -298,14 +320,19 @@ def menu2():
         # Add button launch code here
         button8.draw()
 
-    # Button 9
+    # Button 5
     button9.disable = 0  # "1" disables button
 
     if button9.disable == 1:
-        button9.draw()
+        button5.draw()
     else:
         # Add button launch code here
-        button9.draw()
+        if check_vnc():
+            button9.fntColor = green
+            button9.draw()
+        else:
+            button9.fntColor = tron_whi
+            button9.draw()
 
     ##        Buttons          ##
     #############################

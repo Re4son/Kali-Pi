@@ -35,11 +35,11 @@ button1 = Button(labelPadding * " " + "       Exit", originX, originY, buttonHei
 button2 = Button(labelPadding * " " + "  X on TFT", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button3 = Button(labelPadding * " " + " X on HDMI", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button4 = Button(labelPadding * " " + "  Shutdown", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button5 = Button(labelPadding * " " + "VNC Server", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button5 = Button(labelPadding * " " + " Misc Tools", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button6 = Button(labelPadding * " " + "  Terminal", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu,tron_whi, labelFont)
 button7 = Button(labelPadding * " " + "    Reboot", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button8 = Button(labelPadding * " " + " Screen Off", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button9 = Button(labelPadding * " " + "  Services", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 
 
 
@@ -90,19 +90,11 @@ def button(number):
         if button5.disable == 1:
             return
 
-	# VNC
-	if check_vnc():
-		kalipi.run_cmd("/usr/bin/vncserver -kill :1")
-		button5.fntColor = tron_whi
-		button5.draw()
-		pygame.display.update()
-
-	else:
-		kalipi.run_cmd("/usr/bin/vncserver :1")
-		button5.fntColor = green
-		button5.draw()
-		pygame.display.update()
-	return
+        # Next page
+        pygame.quit()
+        page=os.environ["MENUDIR"] + "menu-3.py"
+        os.execvp("python", ["python", page])
+        sys.exit()
 
     if number == 6:
         if button6.disable == 1:
@@ -222,13 +214,7 @@ def menu1():
     if button5.disable == 1:
         button5.draw()
     else:
-        # Add button launch code here
-        if check_vnc():
-	    button5.fntColor = green
-	    button5.draw()
-        else:
-	    button5.fntColor = tron_whi
-	    button5.draw()
+	button5.draw()
 
     # Button 6
     button6.disable = 0  # "1" disables button

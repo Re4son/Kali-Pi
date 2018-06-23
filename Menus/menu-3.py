@@ -208,7 +208,7 @@ def button(number):
 
         # Previous page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-2.py"
+        page=os.environ["MENUDIR"] + "menu-1.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
