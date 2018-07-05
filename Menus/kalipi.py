@@ -55,6 +55,28 @@ tron_ora = (255, 202,   0)
 ###########################
 ##  Screen layouts       ##
 
+## 7.0" screens: ##
+if os.environ["KPSCREENSIZE"] == "7.0":
+#  9 Button Layout  #
+    if os.environ["KPLAYOUT"] == "9":
+        #set size of the screen
+        screen_x = 800
+        screen_y = 480
+
+        size = width, height = screen_x, screen_y
+##        screen = pygame.display.set_mode(size)
+
+        #Define the aspect of the menu
+        originX = 50
+        originY = 160
+        spacing = 10
+        buttonWidth = 230
+        buttonHeight = 88
+        labelFont = 45
+        labelPadding = 2
+        labelYOffset = 16
+        titleFont = 60
+
 ## 5.0" screens: ##
 if os.environ["KPSCREENSIZE"] == "5.0":
 #  9 Button Layout  #

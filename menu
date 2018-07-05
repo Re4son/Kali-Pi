@@ -9,7 +9,7 @@
 
 
 ## Adjust these:
-export KPSCREENSIZE=2.8     ## Screensize in inch, Options= 5.0, 3.5, 2.8
+export KPSCREENSIZE=2.8     ## Screensize in inch, Options= 7.0, 5.0, 3.5, 2.8
 export KPLAYOUT=9           ## Number of buttons - Currently only 9 is supported
 export KPPIN=0              ## Set to "1" to enforce PIN authentication, run ./set-pin to change PIN
 #export KPTIMEOUT=2         ## Minutes before screensaver kicks in, comment out for screensaver off
