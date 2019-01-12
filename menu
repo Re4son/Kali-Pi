@@ -10,6 +10,7 @@
 
 ## Adjust these:
 export KPSCREENSIZE=2.8     ## Screensize, Options: 
+                            ##                      7.0 = 800 x 480
                             ##                      5.0 = 800 x 480
                             ##                      3.5 = 430 x 320
                             ##                      2.8 = 320 x 240
