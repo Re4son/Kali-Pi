@@ -22,6 +22,12 @@ elif "TFT" in os.environ and os.environ["TFT"] == "4":
     from ft5406 import Touchscreen
     os.environ["SDL_FBDEV"] = "/dev/fb0"
     ts = Touchscreen()
+elif "TFT" in os.environ and os.environ["TFT"] == "5":
+    # Pimoroni HyperPixel 4.0" touchscreen
+    SCREEN=5
+    from hp4ts import Touchscreen
+    os.environ["SDL_FBDEV"] = "/dev/fb0"
+    ts = Touchscreen()
 else:
     # TFT touchscreen
     SCREEN=1
@@ -339,7 +345,7 @@ def check_process(proc, file=":"):
 
 def on_touch(posx=0, posy=0):
     # get the position that was touched
-    if SCREEN==4:
+    if SCREEN == "4" or SCREEN == "5":
       touch_pos = (posx, posy)
     else:
       touch_pos = (pygame.mouse.get_pos() [0], pygame.mouse.get_pos() [1])
@@ -398,6 +404,8 @@ def screensaver(retPage="menu-1.py"):
         backlightControl="4dpi-24"
     elif os.path.isfile("/sys/class/backlight/rpi_backlight/bl_power"):
         backlightControl="pi70"
+    elif os.path.isfile("/sys/class/backlight/rpi_backlight/brightness"):
+        backlightControl="hyperpixel4"
     else:
         # GPIO 18 backlight control
         # Initialise GPIO
@@ -437,6 +445,8 @@ def screen_on(retPage, backlightControl):
         process = subprocess.call("echo '80' > /sys/class/backlight/24-hat-pwm/brightness", shell=True)
     elif backlightControl == "pi70":
         process = subprocess.call("echo '0' > /sys/class/backlight/rpi_backlight/bl_power", shell=True)
+    elif backlightControl == "hyperpixel4":
+        process = subprocess.call("echo '0' > /sys/class/backlight/rpi_backlight/brightness", shell=True)
     else:
         backlight = GPIO.PWM(18, 1023)
         backlight.start(100)
@@ -465,6 +475,8 @@ def screen_off(backlightControl):
         process = subprocess.call("echo '0' > /sys/class/backlight/24-hat-pwm/brightness", shell=True)
     elif backlightControl == "pi70":
         process = subprocess.call("echo '1' > /sys/class/backlight/rpi_backlight/bl_power", shell=True)
+    elif backlightControl == "hyperpixel4":
+        process = subprocess.call("echo '1' > /sys/class/backlight/rpi_backlight/brightness", shell=True)
     else:
         backlight = GPIO.PWM(18, 0.1)
         backlight.start(0)
@@ -485,7 +497,7 @@ def inputLoop(retPage="menu-1.py"):
         t = timeout
         state = [False for x in range(10)]
         while True:
-            if SCREEN==4:
+            if SCREEN == "4" or SCREEN == "5":
                 for touch in ts.poll():
                     if state[touch.slot] != touch.valid:
                         if touch.valid:

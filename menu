@@ -9,7 +9,10 @@
 
 
 ## Adjust these:
-export KPSCREENSIZE=2.8     ## Screensize in inch, Options= 5.0, 3.5, 2.8
+export KPSCREENSIZE=2.8     ## Screensize, Options: 
+                            ##                      5.0 = 800 x 480
+                            ##                      3.5 = 430 x 320
+                            ##                      2.8 = 320 x 240
 export KPLAYOUT=9           ## Number of buttons - Currently only 9 is supported
 export KPPIN=0              ## Set to "1" to enforce PIN authentication, run ./set-pin to change PIN
 #export KPTIMEOUT=2         ## Minutes before screensaver kicks in, comment out for screensaver off
@@ -19,6 +22,7 @@ export TFT=1                ## Set to "0": no TFT screen,
                             ##        "2": TFT screen with external mouse,
                             ##        "3": resistive HDMI touchscreen, or
                             ##        "4": Raspberry Pi 7" Touchscreen 
+                            ##        "5": Pimoroni HyperPixel 4.0
 ## End adjustments
 
 if [ -z "$SUDO_USER" ]; then
