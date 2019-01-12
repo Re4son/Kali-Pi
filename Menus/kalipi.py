@@ -4,27 +4,27 @@ import RPi.GPIO as GPIO
 from pygame.locals import *
 if "TFT" in os.environ and os.environ["TFT"] == "0":
     # No TFT screen
-    SCREEN=0
+    SCREEN = "0"
     pass
 elif "TFT" in os.environ and os.environ["TFT"] == "2":
     # TFT screen with mouse
-    SCREEN=2
+    SCREEN = "2"
     os.environ["SDL_FBDEV"] = "/dev/fb1"
 elif "TFT" in os.environ and os.environ["TFT"] == "3":
     # HDMI touchscreen
-    SCREEN=3
+    SCREEN = "3"
     os.environ["SDL_FBDEV"] = "/dev/fb0"
     os.environ["SDL_MOUSEDEV"] = "/dev/input/touchscreen"
     os.environ["SDL_MOUSEDRV"] = "TSLIB"
 elif "TFT" in os.environ and os.environ["TFT"] == "4":
     # Raspberry Pi 7" touchscreen
-    SCREEN=4
+    SCREEN = "4"
     from ft5406 import Touchscreen
     os.environ["SDL_FBDEV"] = "/dev/fb0"
     ts = Touchscreen()
 elif "TFT" in os.environ and os.environ["TFT"] == "5":
     # Pimoroni HyperPixel 4.0" touchscreen
-    SCREEN=5
+    SCREEN = "5"
     from hp4ts import Touchscreen
     os.environ["SDL_FBDEV"] = "/dev/fb0"
     ts = Touchscreen()
@@ -61,6 +61,7 @@ tron_ora = (255, 202,   0)
 ###########################
 ##  Screen layouts       ##
 
+
 ## 7.0" screens: ##
 if os.environ["KPSCREENSIZE"] == "7.0":
 #  9 Button Layout  #
@@ -84,7 +85,7 @@ if os.environ["KPSCREENSIZE"] == "7.0":
         titleFont = 60
 
 ## 5.0" screens: ##
-if os.environ["KPSCREENSIZE"] == "5.0":
+elif os.environ["KPSCREENSIZE"] == "5.0":
 #  9 Button Layout  #
     if os.environ["KPLAYOUT"] == "9":
         #set size of the screen
@@ -439,7 +440,7 @@ def screensaver(retPage="menu-1.py"):
     screen_off(backlightControl)
     state = [False for x in range(10)]
     while 1:
-        if SCREEN==4:
+        if SCREEN == "4" or SCREEN == "5":
             for touch in ts.poll():
                 if state[touch.slot] != touch.valid:
                     if touch.valid:
@@ -556,7 +557,7 @@ def inputLoop(retPage="menu-1.py"):
         #While loop to manage touch screen inputs
         state = [False for x in range(10)]
         while True:
-            if SCREEN==4:
+            if SCREEN == "4" or SCREEN == "5":
                 for touch in ts.poll():
                     if state[touch.slot] != touch.valid:
                         if touch.valid:
