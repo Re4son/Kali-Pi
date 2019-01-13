@@ -15,5 +15,5 @@ case $KPSCREENSIZE in
     *)
         exit 1
 esac
-##setterm -term linux -back default -fore black -clear all
+setterm -term linux -back default -fore black -clear all
 fbi -t 2 -1 -d $FRAMEBUFFER -noverbose -a $MENUDIR$BACKGROUND
