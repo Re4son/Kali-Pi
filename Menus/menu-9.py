@@ -30,7 +30,7 @@ def button(number):
 
         # Previous page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-4.py"
+        page=os.environ["MENUDIR"] + "menu-5.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
@@ -108,4 +108,4 @@ def menu9():
     #############################
 
 if __name__ == "__main__":
-    menu9()
+menu9()
