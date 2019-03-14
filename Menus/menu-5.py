@@ -16,8 +16,8 @@ from kalipi import *
 
 # define all of the buttons
 titleButton = Button("                      My custom menu", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_blu, tron_ora, titleFont)
-button1 = Button(labelPadding * " " + "   Warberry", originX, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button2 = Button(labelPadding * " " + " Bettercap", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button1 = Button(labelPadding * " " + "   Bettercap", originX, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button2 = Button(labelPadding * " " + " Warberry", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button3 = Button(labelPadding * " " + "  Wifiphisher.", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button4 = Button(labelPadding * " " + "   to add", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 button5 = Button(labelPadding * " " + "to add", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
@@ -35,7 +35,7 @@ def button(number):
             return
 
         # NAT Full
-        script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-full.sh"
+        run_cmd("sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd bettercap_enable")
         if kalipi.toggle_script(script):
                 button1.fntColor = green
                 button1.draw()
@@ -320,4 +320,5 @@ def menu5():
     #############################
 
 if __name__ == "__main__":
-menu5()
+    menu5()
+
