@@ -34,7 +34,7 @@ def button(number):
         if button1.disable == 1:
             return
 
-        # NAT Full
+        # Bettercap
         run_cmd("sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd bettercap_enable")
         if kalipi.toggle_script(script):
                 button1.fntColor = green
@@ -50,7 +50,7 @@ def button(number):
         if button2.disable == 1:
             return
 
-        # NAT Simple
+        # Warberry
         script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-simple.sh"
         if kalipi.toggle_script(script):
                 button2.fntColor = green
@@ -66,7 +66,7 @@ def button(number):
         if button3.disable == 1:
             return
 
-        # No Upstream
+        # Wifiphiser
         script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-noupstream.sh"
         if kalipi.toggle_script(script):
                 button3.fntColor = green
