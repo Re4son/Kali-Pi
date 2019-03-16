@@ -36,7 +36,7 @@ def button(number):
 
 
         # Bettercap
-        run_cmd("sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd bettercap_enable")
+        script="/usr/bin/sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd bettercap_enable"
         if kalipi.toggle_script(script):
                 button1.fntColor = green
                 button1.draw()
