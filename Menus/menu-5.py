@@ -34,6 +34,7 @@ def button(number):
         if button1.disable == 1:
             return
 
+
         # Bettercap
         run_cmd("sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd bettercap_enable")
         if kalipi.toggle_script(script):
@@ -49,6 +50,7 @@ def button(number):
     if number == 2:
         if button2.disable == 1:
             return
+
 
         # Warberry
         script="/usr/bin/sudo bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-simple.sh"
