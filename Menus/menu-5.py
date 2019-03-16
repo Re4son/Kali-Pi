@@ -6,6 +6,12 @@ from kalipi import *
 #############################
 ##    Local Functions      ##
 
+# Check bettercap session status
+def check_bettercap():
+    if 'SCREEN -R -S bettercap' in commands.getoutput('/bin/ps -ef'):
+        return True
+    else:
+        return False
 
 ##    Local Functions      ##
 #############################
@@ -36,16 +42,24 @@ def button(number):
 
 
         # Bettercap
-        script="/usr/bin/sudo /usr/lib/mana-toolkit/hostapd_cli -p /var/run/hostapd bettercap_enable"
-        if kalipi.toggle_script(script):
+        process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
+        pygame.quit()
+        #kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER + " screen -R -S bettercap /usr/bin/bettercap")
+        kalipi.run_cmd("screen -R -S bettercap /usr/bin/bettercap")
+        process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
+        os.execv(__file__, sys.argv)
+
+        if check_bettercap():
                 button1.fntColor = green
                 button1.draw()
                 pygame.display.update()
+
         else:
-                button1.fntColor = tron_light
+                button1.fntColor = tron_whi
                 button1.draw()
                 pygame.display.update()
         return
+
 
     if number == 2:
         if button2.disable == 1:
@@ -198,8 +212,7 @@ def menu5():
         button1.draw()
     else:
         # Add button launch code here
-        script="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "mana/kalipi-nat-full.sh"
-        if kalipi.check_script(script):
+        if check_bettercap():
             button1.fntColor = green
             button1.draw()
         else:
